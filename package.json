@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "nodemon --watch src --exec ts-node src/index.js",
     "build": "npx prisma generate tsc -p tsconfig.json",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev"
