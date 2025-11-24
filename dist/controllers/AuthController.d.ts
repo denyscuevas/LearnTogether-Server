@@ -1,3 +1,2 @@
-import express from "express";
-export declare const register: (req: express.Request, res: express.Response) => Promise<express.Response<any, Record<string, any>>>;
+export {};
 //# sourceMappingURL=AuthController.d.ts.map

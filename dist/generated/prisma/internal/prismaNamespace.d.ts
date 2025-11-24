@@ -1,5 +1,4 @@
 import * as runtime from "@prisma/client/runtime/client";
-import type * as Prisma from "../models.ts";
 import { type PrismaClient } from "./class.ts";
 export type * from '../models.ts';
 export type DMMF = typeof runtime.DMMF;
@@ -229,10 +228,7 @@ export type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma_
  */
 export type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T;
 export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>;
-type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>;
-export declare const ModelName: {
-    readonly test: "test";
-};
+export declare const ModelName: {};
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
     extArgs: runtime.Types.Extensions.InternalArgs;
@@ -244,85 +240,10 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "test";
+        modelProps: never;
         txIsolationLevel: TransactionIsolationLevel;
     };
-    model: {
-        test: {
-            payload: Prisma.$testPayload<ExtArgs>;
-            fields: Prisma.testFieldRefs;
-            operations: {
-                findUnique: {
-                    args: Prisma.testFindUniqueArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload> | null;
-                };
-                findUniqueOrThrow: {
-                    args: Prisma.testFindUniqueOrThrowArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                findFirst: {
-                    args: Prisma.testFindFirstArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload> | null;
-                };
-                findFirstOrThrow: {
-                    args: Prisma.testFindFirstOrThrowArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                findMany: {
-                    args: Prisma.testFindManyArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>[];
-                };
-                create: {
-                    args: Prisma.testCreateArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                createMany: {
-                    args: Prisma.testCreateManyArgs<ExtArgs>;
-                    result: BatchPayload;
-                };
-                createManyAndReturn: {
-                    args: Prisma.testCreateManyAndReturnArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>[];
-                };
-                delete: {
-                    args: Prisma.testDeleteArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                update: {
-                    args: Prisma.testUpdateArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                deleteMany: {
-                    args: Prisma.testDeleteManyArgs<ExtArgs>;
-                    result: BatchPayload;
-                };
-                updateMany: {
-                    args: Prisma.testUpdateManyArgs<ExtArgs>;
-                    result: BatchPayload;
-                };
-                updateManyAndReturn: {
-                    args: Prisma.testUpdateManyAndReturnArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>[];
-                };
-                upsert: {
-                    args: Prisma.testUpsertArgs<ExtArgs>;
-                    result: runtime.Types.Utils.PayloadToResult<Prisma.$testPayload>;
-                };
-                aggregate: {
-                    args: Prisma.TestAggregateArgs<ExtArgs>;
-                    result: runtime.Types.Utils.Optional<Prisma.AggregateTest>;
-                };
-                groupBy: {
-                    args: Prisma.testGroupByArgs<ExtArgs>;
-                    result: runtime.Types.Utils.Optional<Prisma.TestGroupByOutputType>[];
-                };
-                count: {
-                    args: Prisma.testCountArgs<ExtArgs>;
-                    result: runtime.Types.Utils.Optional<Prisma.TestCountAggregateOutputType> | number;
-                };
-            };
-        };
-    };
+    model: {};
 } & {
     other: {
         payload: any;
@@ -356,57 +277,6 @@ export declare const TransactionIsolationLevel: {
     readonly Serializable: "Serializable";
 };
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
-export declare const TestScalarFieldEnum: {
-    readonly id: "id";
-    readonly name: "name";
-    readonly createdAt: "createdAt";
-};
-export type TestScalarFieldEnum = (typeof TestScalarFieldEnum)[keyof typeof TestScalarFieldEnum];
-export declare const SortOrder: {
-    readonly asc: "asc";
-    readonly desc: "desc";
-};
-export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
-export declare const QueryMode: {
-    readonly default: "default";
-    readonly insensitive: "insensitive";
-};
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
-/**
- * Field references
- */
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>;
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>;
-/**
- * Reference to a field of type 'String'
- */
-export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>;
-/**
- * Reference to a field of type 'String[]'
- */
-export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>;
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>;
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>;
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>;
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>;
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -484,9 +354,7 @@ export type PrismaClientOptions = ({
      */
     omit?: GlobalOmitConfig;
 };
-export type GlobalOmitConfig = {
-    test?: Prisma.testOmit;
-};
+export type GlobalOmitConfig = {};
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {
     level: LogLevel;

@@ -49,7 +49,6 @@
     "emitDeclarationOnly": true
 },
   "exclude": [
-    "prisma/**",
     "prisma.config.ts",
     "node_modules",
     "dist",

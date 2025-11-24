@@ -25,9 +25,7 @@ export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullCl
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
 export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
-export declare const ModelName: {
-    readonly test: "test";
-};
+export declare const ModelName: {};
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
     readonly ReadUncommitted: "ReadUncommitted";
@@ -36,20 +34,4 @@ export declare const TransactionIsolationLevel: {
     readonly Serializable: "Serializable";
 };
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
-export declare const TestScalarFieldEnum: {
-    readonly id: "id";
-    readonly name: "name";
-    readonly createdAt: "createdAt";
-};
-export type TestScalarFieldEnum = (typeof TestScalarFieldEnum)[keyof typeof TestScalarFieldEnum];
-export declare const SortOrder: {
-    readonly asc: "asc";
-    readonly desc: "desc";
-};
-export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
-export declare const QueryMode: {
-    readonly default: "default";
-    readonly insensitive: "insensitive";
-};
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
 //# sourceMappingURL=prismaNamespaceBrowser.d.ts.map

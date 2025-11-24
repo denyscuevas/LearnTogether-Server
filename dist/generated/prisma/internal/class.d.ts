@@ -9,8 +9,8 @@ export interface PrismaClientConstructor {
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Tests
-   * const tests = await prisma.test.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -26,8 +26,8 @@ export interface PrismaClientConstructor {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Tests
- * const tests = await prisma.test.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -111,17 +111,6 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
         extArgs: ExtArgs;
     }>>;
-    /**
- * `prisma.test`: Exposes CRUD operations for the **test** model.
-  * Example usage:
-  * ```ts
-  * // Fetch zero or more Tests
-  * const tests = await prisma.test.findMany()
-  * ```
-  */
-    get test(): Prisma.testDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map
