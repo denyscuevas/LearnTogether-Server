@@ -50,6 +50,12 @@
 },
   "exclude": [
     "prisma/**",
-    "prisma.config.ts"
+    "prisma.config.ts",
+    "node_modules",
+    "dist",
+    "*/.d.ts"
+  ],
+  "include": [
+    "src/**/*"
   ]
 }
