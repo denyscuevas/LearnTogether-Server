@@ -1,4 +1,5 @@
 {
+
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
@@ -44,6 +45,11 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "emitDeclarationOnly": true
+},
+  "exclude": [
+    "prisma/**",
+    "prisma.config.ts"
+  ]
 }
