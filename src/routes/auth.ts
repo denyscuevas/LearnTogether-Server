@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator'
-import { register } from "../controllers/AuthController.ts";
+import { register, login } from "../controllers/AuthController.ts";
 
 // Express router paths for auth routes
 const router = express.Router();
@@ -26,6 +26,17 @@ router.post("/register",
 ],
     register);
 
-
+// Login auth route with validation
+router.post(
+    "/login",
+    [
+        body("email").isEmail().trim().toLowerCase().
+        withMessage("Please enter a valid email").
+        matches(/@uwindsor\.ca$/).
+        withMessage("Please enter a valid @uwindsor email"),
+        body("password").notEmpty().withMessage("Valid password required"),
+    ],
+    login
+)
 
 export default router;
