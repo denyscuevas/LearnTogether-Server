@@ -1,0 +1,9 @@
+### POST Register a User Test Route
+POST {{ BASE_URL}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email" : "testuser@uwindsor.ca",
+  "password": "newPassword@123",
+  "password_confirmation": "newPassword@123"
+}
