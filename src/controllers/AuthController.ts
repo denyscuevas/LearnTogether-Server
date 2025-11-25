@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
 import { validationResult } from 'express-validator'
 import express from "express";
+import { generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 
 // Register logic to create a new User
 export const register = async (req: express.Request, res: express.Response) => {
@@ -140,13 +141,27 @@ export const login = async (req: express.Request, res: express.Response) => {
             expiresIn: '30m',
         });
 
-        // Generate a JWT refresh token for long-lived future authentication requests and sign it to the user
-        const refreshToken = jwt.sign({
-                id: existingUser.id,
-                email: existingUser.email
-            }, process.env.JWT_REFRESH_SECRET,
-            { expiresIn: '7d' }
-        );
+        // Generate a refresh token using secure, random utility functions
+        const refreshToken = generateRawToken();
+        const salt = await bcrypt.genSalt(10);
+        const hashedRefreshToken = await bcrypt.hash(refreshToken, salt);
+
+        // Store the refresh token in the database (hashed), with a 7-day expiration
+        await prisma.refreshToken.create({
+            data: {
+                userId: existingUser.id,
+                tokenHash: hashedRefreshToken,
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            }
+        });
+
+        // Forward the refresh token to the frontend in an HTTP Cookie
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
 
         // Returning the success response
         return res.status(200).json({
