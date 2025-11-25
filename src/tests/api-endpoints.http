@@ -1,7 +1,9 @@
-### POST Register a Test
-POST http://localhost:8080/api/auth/register
+### POST Register a User Test Route
+POST {{ BASE_URL}}/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "TejBaidwan1"
+  "email" : "testuser@uwindsor.ca",
+  "password": "newPassword@123",
+  "password_confirmation": "newPassword@123"
 }
