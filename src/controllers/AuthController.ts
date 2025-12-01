@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { validationResult } from 'express-validator'
 import express from "express";
 import { generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
+import {addEmailJobToQueue} from "../services/emailQueue.ts";
+import {generateOTP, hashOTP} from "../utils/otp.ts";
 
 // Register logic to create a new User
 export const register = async (req: express.Request, res: express.Response) => {
@@ -61,9 +63,16 @@ export const register = async (req: express.Request, res: express.Response) => {
             }
         });
 
+        const rawOTP = generateOTP();
+        const otpHash = await hashOTP(rawOTP);
+        const expiresAt = new Date(Date.now() + 30 * 60 * 1000)
+
+        // Add the email request to the queue
+        await addEmailJobToQueue(newUser.email, rawOTP, newUser.id, "sendVerificationEmail")
+
         // Return the success response
         return res.status(201).json({
-            message: "User created successfully",
+            message: "User created successfully! Please check your inbox for a verification email.",
             user: newUser.id
         });
     } catch (error) {
@@ -114,7 +123,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         // Compare the entered plaintext password to the stored hashed password
         const passwordMatch = await bcrypt.compare(password, existingUser.passwordHash);
 
-        // Indicate the password doesn't;t match without leaking account existence or absence
+        // Indicate the password doesn't match without leaking account existence or absence
         if (!passwordMatch) {
             return res.status(400).json({
                 message: "Invalid email or password",

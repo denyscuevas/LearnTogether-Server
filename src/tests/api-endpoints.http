@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser@uwindsor.ca",
+  "email": "baidwant@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,6 +13,6 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser@uwindsor.ca",
+  "email": "baidwant@uwindsor.ca",
   "password": "newPassword@123"
 }
