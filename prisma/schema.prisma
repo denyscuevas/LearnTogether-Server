@@ -27,13 +27,12 @@ model User {
 
 // A refresh token model
 model RefreshToken {
-  id                 String                   @id @default(uuid())
-  userId             String
-  tokenHash          String                   @unique
-  createdAt          DateTime                 @default(now())
-  expiresAt          DateTime
-  revokedAt          DateTime?
-  verificationTokens EmailVerificationToken[]
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  revokedAt DateTime?
 
   User User @relation(fields: [userId], references: [id])
 
@@ -49,9 +48,7 @@ model EmailVerificationToken {
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  RefreshToken   RefreshToken? @relation(fields: [refreshTokenId], references: [id])
-  refreshTokenId String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])

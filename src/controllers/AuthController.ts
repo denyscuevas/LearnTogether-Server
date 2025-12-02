@@ -5,7 +5,8 @@ import { validationResult } from 'express-validator'
 import express from "express";
 import { generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 import {addEmailJobToQueue} from "../services/emailQueue.ts";
-import {generateOTP, hashOTP} from "../utils/otp.ts";
+import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
+import {sendVerificationEmail} from "../services/mailer.ts";
 
 // Register logic to create a new User
 export const register = async (req: express.Request, res: express.Response) => {
@@ -66,6 +67,14 @@ export const register = async (req: express.Request, res: express.Response) => {
         const rawOTP = generateOTP();
         const otpHash = await hashOTP(rawOTP);
         const expiresAt = new Date(Date.now() + 30 * 60 * 1000)
+
+        await prisma.emailVerificationToken.create({
+            data: {
+                userId: newUser.id,
+                tokenHash: otpHash,
+                expiresAt
+            },
+        });
 
         // Add the email request to the queue
         await addEmailJobToQueue(newUser.email, rawOTP, newUser.id, "sendVerificationEmail")
@@ -178,6 +187,151 @@ export const login = async (req: express.Request, res: express.Response) => {
             token,
             user: { id: existingUser.id, email: existingUser.email }
         });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+// Logic to resend a verification link to a user
+export const resendVerification = async (req: express.Request, res: express.Response) => {
+
+    try {
+
+        // Validate the request for any errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            })
+        }
+
+        // Deconstruct the request payload and get the email
+        const { email } = req.body;
+
+        // Check that an email was provided
+        if (!email) {
+            return res.status(400).json({
+                message: "Missing email",
+            })
+        }
+
+        // Look for a user with this email
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        });
+
+        // If the user doesn't exist, this information is not explicitly leaked for security purposes
+        if (!existingUser) {
+            return res.status(400).json({
+                message: "If an email exists, an email has been sent"
+            });
+        }
+
+        // If the user is already verified they wont get another verification email
+        if (existingUser.isVerified) {
+            return res.status(400).json({
+                message: "Please continue to login",
+            })
+        }
+
+        // Generating the OTP, hashing it, and creating a 30-minute TTL
+        const rawOtp = generateOTP();
+        const otpHash = await hashOTP(rawOtp);
+        const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+        // Adding the verification token to the email verification token table
+        await prisma.emailVerificationToken.create({
+            data: {
+                userId: existingUser.id,
+                tokenHash: otpHash,
+                expiresAt
+            }
+        });
+
+        // Adding the email send into the background queue
+        await addEmailJobToQueue(email, rawOtp, existingUser.id, "sendVerificationEmail");
+
+        // Return the success response
+        return res.status(201).json({
+            message: "If an account exists, a reset code has been sent",
+            user: existingUser.id
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+// Logic to verify a users email based on OTP entry logic
+export const verifyEmail = async (req: express.Request, res: express.Response) => {
+
+    try {
+
+        // Validate any errors in the request
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            })
+        }
+
+        // Deconstruct the request and get the provided OTP and the user's ID
+        const { id, otpCode } = req.body;
+
+        // Ensure they have provided both values
+        if (!id || !otpCode) {
+            return res.status(400).json({
+                errors: errors.array(),
+            })
+        }
+
+        // Getting the userId, and looking for the most recent token generated for that user
+        const userId = id;
+        const record = await prisma.emailVerificationToken.findFirst({
+            where: { userId, expiresAt:
+                    { gt: new Date() } },
+            orderBy: { createdAt: "desc" },
+        });
+
+        // If the token is not found indicate as such
+        if (!record) {
+            return res.status(400).json({
+                message: "Token not found or expired",
+            });
+        }
+
+        // Check if the token matches the hashed one
+        const validToken = await verifyOTP(otpCode, record.tokenHash);
+        if (!validToken) {
+            return res.status(400).json({
+                message: "Invalid token",
+            })
+        }
+
+        // Update the user's verification status to true
+        await prisma.user.update({
+            where: {id: userId},
+            data: { isVerified: true }
+        });
+
+        // Delete any verification token associated with this user
+        await prisma.emailVerificationToken.deleteMany({
+            where: {
+                userId
+            }
+        });
+
+        // Return the response message
+        return res.status(200).json({
+            message: "User successfully verified",
+        })
     } catch (error) {
         return res.status(500).json({
             message: "Server error",

@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator'
-import { register, login } from "../controllers/AuthController.ts";
+import {register, login, resendVerification, verifyEmail} from "../controllers/AuthController.ts";
 
 // Express router paths for auth routes
 const router = express.Router();
@@ -38,5 +38,18 @@ router.post(
     ],
     login
 )
+
+// Verify email and resend email routes
+router.get("/verify-email",
+    [
+        body("otpCode").isLength({ min: 6, max: 6})
+    ],
+    verifyEmail);
+
+router.post("/resend-verification",
+    [
+        body("email").isEmail().withMessage("Please enter a valid @uwindsor email")
+    ],
+    resendVerification);
 
 export default router;
