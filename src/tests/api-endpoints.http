@@ -25,6 +25,15 @@ Content-Type: application/json
   "email": "evanproulx@uwindsor.ca"
 }
 
+### POST Send a password reset email
+POST {{ BASE_URL }}/api/auth/request-password-reset
+Content-Type: application/json
+
+{
+  "email": "evanproulx@uwindsor.ca"
+}
+
+
 ### GET Verify a user token for email verification
 GET {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json

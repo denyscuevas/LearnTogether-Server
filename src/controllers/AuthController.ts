@@ -228,7 +228,7 @@ export const resendVerification = async (req: express.Request, res: express.Resp
         // If the user doesn't exist, this information is not explicitly leaked for security purposes
         if (!existingUser) {
             return res.status(400).json({
-                message: "If an email exists, an email has been sent"
+                message: "If an account exists, a verification code has been sent"
             });
         }
 
@@ -258,7 +258,7 @@ export const resendVerification = async (req: express.Request, res: express.Resp
 
         // Return the success response
         return res.status(201).json({
-            message: "If an account exists, a reset code has been sent",
+            message: "If an account exists, a verification code has been sent",
             user: existingUser.id
         });
     } catch (error) {
@@ -333,6 +333,79 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
             message: "User successfully verified",
         })
     } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+// // Check if the request has any validation errors and display them in the response
+// // Return a boolean and the error array to notify if there are any errors
+// export const checkRequestErrors = (req: express.Request, res: express.Response): { boolean: boolean, errors: ValidationError[] } => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//         res.status(400).json({
+//             errors: errors.array()
+//         })
+//         return {boolean: true, errors: errors.array()}
+//     }
+//     return {boolean: false, errors: errors.array()}
+// }
+
+export const requestPasswordReset = async (req: express.Request, res: express.Response) => {
+    try {
+
+        // Validate any errors in the request
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            })
+        }
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                message: "Missing email",
+            })
+        }
+
+        // Find user with matching email
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        })
+
+        // Send vague response if user doesn't exist to prevent leaking account existence
+        if (!user) {
+            return res.status(400).json({
+                message: "If an account exists, a reset code has been sent"
+            })
+        }
+
+        // Generate OTP, hash it, and create a 15 minute TTL
+        const rawOtp = generateOTP();
+        const otpHash = await hashOTP(rawOtp);
+        const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+        // Store token in the table
+        await prisma.passwordResetToken.create({
+            data: {
+                userId: user.id,
+                tokenHash: otpHash,
+                expiresAt
+            }
+        })
+
+        // Send email to specified email address with a reset code
+        await addEmailJobToQueue(email, rawOtp, user.id, "sendPasswordResetEmail");
+
+        return res.status(201).json({
+            message: "If an account exists, a reset code has been sent",
+        })
+    }catch (error) {
         return res.status(500).json({
             message: "Server error",
             error: error
