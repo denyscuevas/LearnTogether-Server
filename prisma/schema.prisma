@@ -13,16 +13,19 @@ datasource db {
   provider = "postgresql"
 }
 
+// A user model
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  passwordHash  String         @unique
-  isVerified    Boolean        @default(false)
-  refreshTokens RefreshToken[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id                     String                   @id @default(uuid())
+  email                  String                   @unique
+  passwordHash           String                   @unique
+  isVerified             Boolean                  @default(false)
+  refreshTokens          RefreshToken[]
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  EmailVerificationToken EmailVerificationToken[]
 }
 
+// A refresh token model
 model RefreshToken {
   id        String    @id @default(uuid())
   userId    String
@@ -30,8 +33,24 @@ model RefreshToken {
   createdAt DateTime  @default(now())
   expiresAt DateTime
   revokedAt DateTime?
-  User      User      @relation(fields: [userId], references: [id])
+
+  User User @relation(fields: [userId], references: [id])
 
   @@index([userId])
+  @@index([tokenHash])
+}
+
+// An email verification token model
+model EmailVerificationToken {
+  id        String   @id @default(uuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
   @@index([tokenHash])
 }
