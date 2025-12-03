@@ -111,6 +111,61 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
         extArgs: ExtArgs;
     }>>;
+    /**
+ * `prisma.user`: Exposes CRUD operations for the **User** model.
+  * Example usage:
+  * ```ts
+  * // Fetch zero or more Users
+  * const users = await prisma.user.findMany()
+  * ```
+  */
+    get user(): Prisma.UserDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.refreshToken`: Exposes CRUD operations for the **RefreshToken** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more RefreshTokens
+      * const refreshTokens = await prisma.refreshToken.findMany()
+      * ```
+      */
+    get refreshToken(): Prisma.RefreshTokenDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.emailVerificationToken`: Exposes CRUD operations for the **EmailVerificationToken** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more EmailVerificationTokens
+      * const emailVerificationTokens = await prisma.emailVerificationToken.findMany()
+      * ```
+      */
+    get emailVerificationToken(): Prisma.EmailVerificationTokenDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.passwordResetToken`: Exposes CRUD operations for the **PasswordResetToken** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more PasswordResetTokens
+      * const passwordResetTokens = await prisma.passwordResetToken.findMany()
+      * ```
+      */
+    get passwordResetToken(): Prisma.PasswordResetTokenDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.passwordHistory`: Exposes CRUD operations for the **PasswordHistory** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more PasswordHistories
+      * const passwordHistories = await prisma.passwordHistory.findMany()
+      * ```
+      */
+    get passwordHistory(): Prisma.PasswordHistoryDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

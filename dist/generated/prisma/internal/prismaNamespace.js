@@ -68,7 +68,11 @@ export const JsonNull = runtime.JsonNull;
  */
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
-    test: 'test'
+    User: 'User',
+    RefreshToken: 'RefreshToken',
+    EmailVerificationToken: 'EmailVerificationToken',
+    PasswordResetToken: 'PasswordResetToken',
+    PasswordHistory: 'PasswordHistory'
 };
 /**
  * Enums
@@ -79,9 +83,40 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
     RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
 });
-export const TestScalarFieldEnum = {
+export const UserScalarFieldEnum = {
     id: 'id',
-    name: 'name',
+    email: 'email',
+    passwordHash: 'passwordHash',
+    isVerified: 'isVerified',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const RefreshTokenScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    tokenHash: 'tokenHash',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt',
+    revokedAt: 'revokedAt'
+};
+export const EmailVerificationTokenScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    tokenHash: 'tokenHash',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt'
+};
+export const PasswordResetTokenScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    tokenHash: 'tokenHash',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt'
+};
+export const PasswordHistoryScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    oldHash: 'oldHash',
     createdAt: 'createdAt'
 };
 export const SortOrder = {
@@ -91,6 +126,10 @@ export const SortOrder = {
 export const QueryMode = {
     default: 'default',
     insensitive: 'insensitive'
+};
+export const NullsOrder = {
+    first: 'first',
+    last: 'last'
 };
 export const defineExtension = runtime.Extensions.defineExtension;
 //# sourceMappingURL=prismaNamespace.js.map
