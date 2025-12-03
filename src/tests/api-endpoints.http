@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "user4@uwindor.ca",
+  "email": "user4@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,8 +13,8 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "user4@uwindsor.ca",
-  "password": "newPassword@123"
+  "email": "user4@uwindr.ca",
+  "password": "neewPassword#123"
 }
 
 ### POST Resending a verification email
@@ -48,7 +48,7 @@ Content-Type: application/json
 
 {
   "email": "user4@uwindsor.ca",
-  "otp": "767511"
+  "otp": "427907"
 }
 
 ### POST Reset password
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 {
   "userId": "0cbff286-c6d7-47ae-93cf-e070138a9a65",
-  "password": "neewPassword#12341",
-  "password_confirmation": "neewPassword#12341"
+  "password": "neewPassword#1244444",
+  "password_confirmation": "neewPassword#1244444"
 }
 

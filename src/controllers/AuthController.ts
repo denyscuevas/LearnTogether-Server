@@ -86,9 +86,7 @@ export const register = async (req: express.Request, res: express.Response) => {
 
 // Login logic to authenticate a User
 export const login = async (req: express.Request, res: express.Response) => {
-
     try {
-
         // Deconstruct the request payload and extract the credentials
         const {email, password} = req.body;
 
@@ -181,7 +179,6 @@ export const login = async (req: express.Request, res: express.Response) => {
 
 // Logic to resend a verification link to a user
 export const resendVerification = async (req: express.Request, res: express.Response) => {
-
     try {
 
         // Deconstruct the request payload and get the email
@@ -495,12 +492,3 @@ export const resetPassword = async (req: express.Request, res: express.Response)
         })
     }
 }
-
-
-
-
-
-
-
-
-
