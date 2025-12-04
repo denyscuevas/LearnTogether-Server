@@ -7,6 +7,7 @@ import {generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 import {addEmailJobToQueue} from "../services/emailQueue.ts";
 import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
 import {sendVerificationEmail} from "../services/mailer.ts";
+import { isExpired } from "../utils/isExpired.ts"
 
 
 // Register logic to create a new User
@@ -53,6 +54,14 @@ export const register = async (req: express.Request, res: express.Response) => {
             data: {
                 email,
                 passwordHash,
+            }
+        });
+
+        // Create a record of the password in the password history table for versioned credentials
+        await prisma.passwordHistory.create({
+            data: {
+                userId: newUser.id,
+                oldHash: passwordHash,
             }
         });
 
@@ -212,6 +221,13 @@ export const resendVerification = async (req: express.Request, res: express.Resp
             })
         }
 
+        // Invalidate all existing email verification tokens for this user before sending a new one
+        await prisma.emailVerificationToken.deleteMany({
+            where: {
+                userId: existingUser.id
+            }
+        });
+
         // Generating the OTP, hashing it, and creating a 30-minute TTL
         const rawOtp = generateOTP();
         const otpHash = await hashOTP(rawOtp);
@@ -279,7 +295,14 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
         if (!validToken) {
             return res.status(400).json({
                 message: "Invalid token",
-            })
+            });
+        }
+
+        // Use the token isExpired helper function to check if the token is expired
+        if (isExpired(record.expiresAt)) {
+            return res.status(400).json({
+                message: "Expired token",
+            });
         }
 
         // Update the user's verification status to true
@@ -332,6 +355,13 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
             })
         }
 
+        // Delete all previous password reset tokens before issuing a new one
+        await prisma.passwordResetToken.deleteMany({
+            where: {
+                userId: user.id
+            }
+        });
+
         // Generate OTP, hash it, and create a 15 minute TTL
         const rawOtp = generateOTP();
         const otpHash = await hashOTP(rawOtp);
@@ -351,6 +381,7 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
 
         return res.status(201).json({
             message: "If an account exists, a reset code has been sent",
+            email: email
         })
     } catch (error) {
         return res.status(500).json({
@@ -377,36 +408,45 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
             return res.status(400).json({
                 message: "Email or OTP is incorrect!"
             })
-        } else {
-            // If the user exists, find the most recent token associated with them
-            const userId = user.id
-            const token = await prisma.passwordResetToken.findFirst({
-                where: {
-                    userId,
-                    expiresAt: {gt: new Date()},
-                }, orderBy: {createdAt: "desc"}
-            })
-
-            // If token is not found, return error
-            if (!token) {
-                return res.status(400).json({message: "OTP was not found or expired"})
-            }
-
-            // Verify OTP with the token hash
-            const isValid = await verifyOTP(otp, token.tokenHash);
-
-            // If invalid, return error
-            if (!isValid) {
-                return res.status(400).json({message: "Invalid code"})
-            } else {
-                // If the OTP is valid, delete all tokens associated with this user
-                await prisma.passwordResetToken.deleteMany({
-                    where: {userId}
-                })
-                // Return success message
-                return res.json({message: "OTP verified", userId: userId})
-            }
         }
+
+        // If the user exists, find the most recent token associated with them
+        const userId = user.id
+        const token = await prisma.passwordResetToken.findFirst({
+            where: {
+                userId,
+                expiresAt: {gt: new Date()},
+            }, orderBy: {createdAt: "desc"}
+        })
+
+        // If token is not found, return error
+        if (!token) {
+            return res.status(400).json({message: "OTP was not found or expired"})
+        }
+
+        // Verify OTP with the token hash
+        const isValid = await verifyOTP(otp, token.tokenHash);
+
+        // If invalid, return error
+        if (!isValid) {
+            return res.status(400).json({message: "Invalid code"})
+        }
+
+        // Ensure the token is not expired
+        if (isExpired(token.expiresAt)) {
+            return res.status(400).json({
+                message: "Expired token",
+            })
+        }
+
+        // If the OTP is valid, delete all tokens associated with this user
+        await prisma.passwordResetToken.deleteMany({
+            where: {userId}
+        })
+
+        // Return success message
+        return res.json({message: "OTP verified", userId: userId})
+
     } catch (error) {
         return res.status(500).json({
             message: "Server error",
