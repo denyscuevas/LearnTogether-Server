@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "evanproulx1@uwindsor.ca",
+  "email": "user4@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,8 +13,8 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "evanproulx1@uwindsor.ca",
-  "password": "newPassword@123"
+  "email": "user4@uwindr.ca",
+  "password": "neewPassword#123"
 }
 
 ### POST Resending a verification email
@@ -22,7 +22,7 @@ POST {{ BASE_URL }}/api/auth/resend-verification
 Content-Type: application/json
 
 {
-  "email": "evanproulx@uwindsor.ca"
+  "email": "evanproulx@windsor.ca"
 }
 
 ### GET Verify a user token for email verification
@@ -30,6 +30,34 @@ GET {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "a93ecffd-7172-42e7-8b12-69278baddda8",
-  "otpCode": "281952"
+  "id": "0cbff286-c6d7-47ae-93cf-e070138a9a65",
+  "otpCode": "879312"
 }
+
+### POST Send a password reset email
+POST {{ BASE_URL }}/api/auth/request-password-reset
+Content-Type: application/json
+
+{
+  "email": "user4@uwindsor.ca"
+}
+
+### POST Verify password reset OTP
+POST {{ BASE_URL }}/api/auth/verify-reset-otp
+Content-Type: application/json
+
+{
+  "email": "user4@uwindsor.ca",
+  "otp": "427907"
+}
+
+### POST Reset password
+POST {{ BASE_URL }}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "userId": "0cbff286-c6d7-47ae-93cf-e070138a9a65",
+  "password": "neewPassword#1244444",
+  "password_confirmation": "neewPassword#1244444"
+}
+

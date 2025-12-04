@@ -1,28 +1,20 @@
 import prisma from "../config/prismaClient.ts";
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
-import { validationResult } from 'express-validator'
+import {validationResult, type ValidationError} from 'express-validator'
 import express from "express";
-import { generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
+import {generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 import {addEmailJobToQueue} from "../services/emailQueue.ts";
 import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
 import {sendVerificationEmail} from "../services/mailer.ts";
 
+
 // Register logic to create a new User
 export const register = async (req: express.Request, res: express.Response) => {
-
     try {
 
-        // Check if there are any validation errors before continuing
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            });
-        }
-
         // Deconstruct the request payload and extract the credentials
-        const { email, password, password_confirmation } = req.body;
+        const {email, password, password_confirmation} = req.body;
 
         // Ensure that the required values have been provided
         if (!email || !password || !password_confirmation) {
@@ -32,7 +24,7 @@ export const register = async (req: express.Request, res: express.Response) => {
         }
 
         // Check if the password and password_confirmation match
-        if(password !== password_confirmation) {
+        if (password !== password_confirmation) {
             return res.status(400).json({
                 message: "Passwords don't match",
             });
@@ -94,19 +86,9 @@ export const register = async (req: express.Request, res: express.Response) => {
 
 // Login logic to authenticate a User
 export const login = async (req: express.Request, res: express.Response) => {
-
     try {
-
-        // Check if there are any validation errors before continuing
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            });
-        }
-
         // Deconstruct the request payload and extract the credentials
-        const { email, password } = req.body;
+        const {email, password} = req.body;
 
         // Ensure that the required values have been provided
         if (!email || !password) {
@@ -140,7 +122,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         }
 
         // Indicate if the user is unverified and how they can do this before being allowed to login
-        if(!existingUser.isVerified) {
+        if (!existingUser.isVerified) {
             return res.status(400).json({
                 message: "Please verify your email",
             })
@@ -185,7 +167,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         return res.status(200).json({
             message: 'User successfully logged in',
             token,
-            user: { id: existingUser.id, email: existingUser.email }
+            user: {id: existingUser.id, email: existingUser.email}
         });
     } catch (error) {
         return res.status(500).json({
@@ -197,19 +179,10 @@ export const login = async (req: express.Request, res: express.Response) => {
 
 // Logic to resend a verification link to a user
 export const resendVerification = async (req: express.Request, res: express.Response) => {
-
     try {
 
-        // Validate the request for any errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            })
-        }
-
         // Deconstruct the request payload and get the email
-        const { email } = req.body;
+        const {email} = req.body;
 
         // Check that an email was provided
         if (!email) {
@@ -228,7 +201,7 @@ export const resendVerification = async (req: express.Request, res: express.Resp
         // If the user doesn't exist, this information is not explicitly leaked for security purposes
         if (!existingUser) {
             return res.status(400).json({
-                message: "If an email exists, an email has been sent"
+                message: "If an account exists, a verification code has been sent"
             });
         }
 
@@ -258,7 +231,7 @@ export const resendVerification = async (req: express.Request, res: express.Resp
 
         // Return the success response
         return res.status(201).json({
-            message: "If an account exists, a reset code has been sent",
+            message: "If an account exists, a verification code has been sent",
             user: existingUser.id
         });
     } catch (error) {
@@ -271,20 +244,12 @@ export const resendVerification = async (req: express.Request, res: express.Resp
 
 // Logic to verify a users email based on OTP entry logic
 export const verifyEmail = async (req: express.Request, res: express.Response) => {
-
     try {
 
-        // Validate any errors in the request
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            })
-        }
-
         // Deconstruct the request and get the provided OTP and the user's ID
-        const { id, otpCode } = req.body;
+        const {id, otpCode} = req.body;
 
+        const errors = validationResult(req);
         // Ensure they have provided both values
         if (!id || !otpCode) {
             return res.status(400).json({
@@ -295,9 +260,11 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
         // Getting the userId, and looking for the most recent token generated for that user
         const userId = id;
         const record = await prisma.emailVerificationToken.findFirst({
-            where: { userId, expiresAt:
-                    { gt: new Date() } },
-            orderBy: { createdAt: "desc" },
+            where: {
+                userId, expiresAt:
+                    {gt: new Date()}
+            },
+            orderBy: {createdAt: "desc"},
         });
 
         // If the token is not found indicate as such
@@ -318,7 +285,7 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
         // Update the user's verification status to true
         await prisma.user.update({
             where: {id: userId},
-            data: { isVerified: true }
+            data: {isVerified: true}
         });
 
         // Delete any verification token associated with this user
@@ -331,6 +298,192 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
         // Return the response message
         return res.status(200).json({
             message: "User successfully verified",
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+export const requestPasswordReset = async (req: express.Request, res: express.Response) => {
+    try {
+
+        const {email} = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                message: "Missing email",
+            })
+        }
+
+        // Find user with matching email
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        })
+
+        // Send vague response if user doesn't exist to prevent leaking account existence
+        if (!user) {
+            return res.status(400).json({
+                message: "If an account exists, a reset code has been sent"
+            })
+        }
+
+        // Generate OTP, hash it, and create a 15 minute TTL
+        const rawOtp = generateOTP();
+        const otpHash = await hashOTP(rawOtp);
+        const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+        // Store token in the table
+        await prisma.passwordResetToken.create({
+            data: {
+                userId: user.id,
+                tokenHash: otpHash,
+                expiresAt
+            }
+        })
+
+        // Send email to specified email address with a reset code
+        await addEmailJobToQueue(email, rawOtp, user.id, "sendPasswordResetEmail");
+
+        return res.status(201).json({
+            message: "If an account exists, a reset code has been sent",
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+export const verifyResetOTP = async (req: express.Request, res: express.Response) => {
+    try {
+        const {email, otp} = req.body;
+
+        // Return error if email or otp is missing
+        if (!email || !otp) {
+            return res.status(400).json({message: "Email and OTP are required!",})
+        }
+
+        // Find user with matching email
+        const user = await prisma.user.findUnique({where: {email: email}});
+
+        // If the user doesn't exist, return error
+        if (!user) {
+            return res.status(400).json({
+                message: "Email or OTP is incorrect!"
+            })
+        } else {
+            // If the user exists, find the most recent token associated with them
+            const userId = user.id
+            const token = await prisma.passwordResetToken.findFirst({
+                where: {
+                    userId,
+                    expiresAt: {gt: new Date()},
+                }, orderBy: {createdAt: "desc"}
+            })
+
+            // If token is not found, return error
+            if (!token) {
+                return res.status(400).json({message: "OTP was not found or expired"})
+            }
+
+            // Verify OTP with the token hash
+            const isValid = await verifyOTP(otp, token.tokenHash);
+
+            // If invalid, return error
+            if (!isValid) {
+                return res.status(400).json({message: "Invalid code"})
+            } else {
+                // If the OTP is valid, delete all tokens associated with this user
+                await prisma.passwordResetToken.deleteMany({
+                    where: {userId}
+                })
+                // Return success message
+                return res.json({message: "OTP verified", userId: userId})
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error
+        })
+    }
+}
+
+export const resetPassword = async (req: express.Request, res: express.Response) => {
+    try {
+        // Destructure the request and print error messages if any values are missing
+        const {userId, password, password_confirmation} = req.body;
+        if (!userId || !password || !password_confirmation) {
+            return res.status(400).json({message: "Missing userId, password, or passwordConfirmation!"})
+        }
+
+        // Get user from the user id and sort their passwords by createdAt
+        const user = await prisma.user.findUnique({
+            where: {id: userId},
+            include: {passwordHistory: {orderBy: {createdAt: "desc"}}}
+        });
+        // Return error if user is not found
+        if (!user) {
+            return res.status(400).json({message: "User not found!"})
+        }
+
+        // Get the user's last 5 passwords
+        const passwordHistory = user.passwordHistory.slice(0, 5);
+
+        // check if any passwords in the history match the new password
+        const results = await Promise.all(
+            passwordHistory.map(entry => bcrypt.compare(password, entry.oldHash))
+        )
+
+        // Return error if any passwords match
+        if (results.includes(true)) {
+            return res.status(400).json({message: "Password cannot be the same as any of your previous passwords!"})
+        }
+
+        // Return error if password and password confirmation do not match
+        if (password !== password_confirmation) {
+            return res.status(400).json({message: "Passwords do not match!"})
+        }
+
+        // Hash the new password
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        // Use transaction to do multiple database operations at once
+        await prisma.$transaction(async (tx) => {
+            // Update the user's password with the new password
+            await tx.user.update({
+                where: {id: userId},
+                data: {passwordHash}
+            })
+
+            // Add new password to the user's password history
+            await tx.passwordHistory.create({
+                data: {userId, oldHash: passwordHash}
+            })
+
+            // Find all previous passwords by the user and sort by createdAt
+            const previousPasswords = await tx.passwordHistory.findMany({
+                where: {userId},
+                orderBy: {createdAt: "desc"}
+            })
+
+            // Check if the user has more than 5 passwords in their history
+            if (previousPasswords.length > 5) {
+                // Delete the oldest passwords up to the 5th password
+                const oldestPassword = previousPasswords.slice(5)
+                await tx.passwordHistory.deleteMany({
+                    where: {id: {in: oldestPassword.map((old) => old.id)}}
+                })
+            }
+
+            // Return success message
+            return res.status(200).json({message: "Password reset successfully!"})
         })
     } catch (error) {
         return res.status(500).json({

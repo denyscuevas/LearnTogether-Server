@@ -1,6 +1,6 @@
 import { Queue, Worker } from 'bullmq'
 import IORedis from 'ioredis'
-import { sendVerificationEmail } from "./mailer.ts";
+import {sendPasswordResetEmail, sendVerificationEmail} from "./mailer.ts";
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -36,6 +36,10 @@ export const emailWorker = new Worker(
         if (job.name === "sendVerificationEmail") {
             const { email, code, userId } = job.data;
             await sendVerificationEmail(email, code, userId);
+            console.log(`Email sent for userId=${userId}, email=${email}`);
+        } else if (job.name === "sendPasswordResetEmail"){
+            const { email, code, userId } = job.data;
+            await sendPasswordResetEmail(email, code);
             console.log(`Email sent for userId=${userId}, email=${email}`);
         }
     },
