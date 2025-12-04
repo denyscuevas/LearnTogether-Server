@@ -56,6 +56,14 @@ export const register = async (req: express.Request, res: express.Response) => {
             }
         });
 
+        // Create a record of the password in the password history table for versioned credentials
+        await prisma.passwordHistory.create({
+            data: {
+                userId: newUser.id,
+                oldHash: passwordHash,
+            }
+        });
+
         const rawOTP = generateOTP();
         const otpHash = await hashOTP(rawOTP);
         const expiresAt = new Date(Date.now() + 30 * 60 * 1000)

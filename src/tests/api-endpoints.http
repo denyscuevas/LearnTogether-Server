@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "user4@uwindsor.ca",
+  "email": "baidwant5@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -22,7 +22,7 @@ POST {{ BASE_URL }}/api/auth/resend-verification
 Content-Type: application/json
 
 {
-  "email": "evanproulx@windsor.ca"
+  "email": "baidwant3@uwindsor.ca"
 }
 
 ### GET Verify a user token for email verification
@@ -30,8 +30,8 @@ GET {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "0cbff286-c6d7-47ae-93cf-e070138a9a65",
-  "otpCode": "879312"
+  "id": "8d02e59a-3646-4372-ba32-ebfb79aa0db2",
+  "otpCode": "193314"
 }
 
 ### POST Send a password reset email
