@@ -7,6 +7,7 @@ import {generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 import {addEmailJobToQueue} from "../services/emailQueue.ts";
 import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
 import {sendVerificationEmail} from "../services/mailer.ts";
+import { isExpired } from "../utils/isExpired.ts"
 
 
 // Register logic to create a new User
@@ -294,7 +295,14 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
         if (!validToken) {
             return res.status(400).json({
                 message: "Invalid token",
-            })
+            });
+        }
+
+        // Use the token isExpired helper function to check if the token is expired
+        if (isExpired(record.expiresAt)) {
+            return res.status(400).json({
+                message: "Expired token",
+            });
         }
 
         // Update the user's verification status to true
