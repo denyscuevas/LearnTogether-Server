@@ -220,6 +220,13 @@ export const resendVerification = async (req: express.Request, res: express.Resp
             })
         }
 
+        // Invalidate all existing email verification tokens for this user before sending a new one
+        await prisma.emailVerificationToken.deleteMany({
+            where: {
+                userId: existingUser.id
+            }
+        });
+
         // Generating the OTP, hashing it, and creating a 30-minute TTL
         const rawOtp = generateOTP();
         const otpHash = await hashOTP(rawOtp);
