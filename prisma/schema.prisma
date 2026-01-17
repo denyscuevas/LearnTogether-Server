@@ -25,6 +25,7 @@ model User {
   EmailVerificationToken EmailVerificationToken[]
   resetTokens            PasswordResetToken[]
   passwordHistory        PasswordHistory[]
+  Profile                Profile[]
 }
 
 // A refresh token model
@@ -84,4 +85,36 @@ model PasswordHistory {
 
   @@index([userId])
   @@index([oldHash])
+}
+
+// Model to store the basic information for a user profile
+model Profile {
+  id             String  @id @default(uuid())
+  userId         String
+  name           String
+  bio            String?
+  major          String
+  yearOfStudy    Int
+  isTutor        Boolean @default(false)
+  isTutee        Boolean @default(false)
+  profilePicture String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([major])
+  @@index([yearOfStudy])
+  @@index([isTutor])
+  @@index([isTutee])
+}
+
+// Model to store Course objects, which will be preseeded
+model Course {
+  id   Int    @id @default(autoincrement())
+  code String @unique
+  name String
+
+  @@index([code])
 }
