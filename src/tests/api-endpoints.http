@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser1@uwindsor.ca",
+  "email": "testuser2@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -84,7 +84,30 @@ Content-Type: application/json
   ]
 }
 
-### Get a users information (ME)
+### GET a users information (ME)
 GET {{ BASE_URL }}/api/profiles/me
 Authorization: Bearer Bearer TOKEN_HERE
+
+### PUT update a users profile
+PUT {{ BASE_URL }}/api/profiles/me
+Authorization: Bearer Bearer TOKEN_HERE
+Content-Type: application/json
+
+{
+  "name": "Linus Torvald",
+  "bio": "Third year CS student interested in tutoring COMP classes.",
+  "major": "Computer Science",
+  "yearOfStudy": 3,
+
+  "isTutor": true,
+  "isTutee": true,
+
+  "tutorCourseIds": [6, 7, 8],
+  "tuteeCourseIds": [23, 26],
+
+  "availability": [
+    { "day": "WED", "startMin": 600, "endMin": 710 },
+    { "day": "FRI", "startMin": 900, "endMin": 1020 }
+  ]
+}
 
