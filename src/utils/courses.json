@@ -1,0 +1,4352 @@
+[
+  {
+    "code": "ACCT-1510",
+    "name": "Principles of Financial Acctg",
+    "faculty": "ACCT",
+    "label": "ACCT-1510 Principles of Financial Acctg"
+  },
+  {
+    "code": "ACCT-2510",
+    "name": "Intro: Financial Acctg Theory",
+    "faculty": "ACCT",
+    "label": "ACCT-2510 Intro: Financial Acctg Theory"
+  },
+  {
+    "code": "ACCT-2520",
+    "name": "Accounting Theory I",
+    "faculty": "ACCT",
+    "label": "ACCT-2520 Accounting Theory I"
+  },
+  {
+    "code": "ACCT-2550",
+    "name": "Principles of Managerial Acctg",
+    "faculty": "ACCT",
+    "label": "ACCT-2550 Principles of Managerial Acctg"
+  },
+  {
+    "code": "ACCT-3520",
+    "name": "Accounting Theory II",
+    "faculty": "ACCT",
+    "label": "ACCT-3520 Accounting Theory II"
+  },
+  {
+    "code": "ACCT-3560",
+    "name": "Adv Mmgt Accounting & Analysis",
+    "faculty": "ACCT",
+    "label": "ACCT-3560 Adv Mmgt Accounting & Analysis"
+  },
+  {
+    "code": "ACCT-3580",
+    "name": "Accounting Information Systems",
+    "faculty": "ACCT",
+    "label": "ACCT-3580 Accounting Information Systems"
+  },
+  {
+    "code": "ACCT-3600",
+    "name": "Auditing I",
+    "faculty": "ACCT",
+    "label": "ACCT-3600 Auditing I"
+  },
+  {
+    "code": "ACCT-3610",
+    "name": "Taxation I",
+    "faculty": "ACCT",
+    "label": "ACCT-3610 Taxation I"
+  },
+  {
+    "code": "ACCT-4570",
+    "name": "Advanced Accounting I",
+    "faculty": "ACCT",
+    "label": "ACCT-4570 Advanced Accounting I"
+  },
+  {
+    "code": "ACCT-4590",
+    "name": "Adv Topics: Managerial Acctg",
+    "faculty": "ACCT",
+    "label": "ACCT-4590 Adv Topics: Managerial Acctg"
+  },
+  {
+    "code": "ACCT-4600",
+    "name": "Auditing II",
+    "faculty": "ACCT",
+    "label": "ACCT-4600 Auditing II"
+  },
+  {
+    "code": "ACCT-4610",
+    "name": "Taxation II",
+    "faculty": "ACCT",
+    "label": "ACCT-4610 Taxation II"
+  },
+  {
+    "code": "ACSC-4030",
+    "name": "Derivative Markets I",
+    "faculty": "ACSC",
+    "label": "ACSC-4030 Derivative Markets I"
+  },
+  {
+    "code": "ACSC-4980",
+    "name": "Life Contingencies I",
+    "faculty": "ACSC",
+    "label": "ACSC-4980 Life Contingencies I"
+  },
+  {
+    "code": "ARSC-3010",
+    "name": "World Civilizations",
+    "faculty": "ARSC",
+    "label": "ARSC-3010 World Civilizations"
+  },
+  {
+    "code": "BIOC-2010",
+    "name": "Organic Chem of Biomolecules",
+    "faculty": "BIOC",
+    "label": "BIOC-2010 Organic Chem of Biomolecules"
+  },
+  {
+    "code": "BIOC-2010",
+    "name": "Laboratory",
+    "faculty": "BIOC",
+    "label": "BIOC-2010 Laboratory"
+  },
+  {
+    "code": "BIOC-2015",
+    "name": "Organic Chem of Biomolecules",
+    "faculty": "BIOC",
+    "label": "BIOC-2015 Organic Chem of Biomolecules"
+  },
+  {
+    "code": "BIOC-3030",
+    "name": "Natural Health Products",
+    "faculty": "BIOC",
+    "label": "BIOC-3030 Natural Health Products"
+  },
+  {
+    "code": "BIOC-3110",
+    "name": "Metabolism II",
+    "faculty": "BIOC",
+    "label": "BIOC-3110 Metabolism II"
+  },
+  {
+    "code": "BIOC-3130",
+    "name": "Protein&Nucleic Acid Chemistry",
+    "faculty": "BIOC",
+    "label": "BIOC-3130 Protein&Nucleic Acid Chemistry"
+  },
+  {
+    "code": "BIOC-3310",
+    "name": "Pharmacology for Health Scie",
+    "faculty": "BIOC",
+    "label": "BIOC-3310 Pharmacology for Health Scie"
+  },
+  {
+    "code": "BIOC-4008",
+    "name": "Nanobiosensors",
+    "faculty": "BIOC",
+    "label": "BIOC-4008 Nanobiosensors"
+  },
+  {
+    "code": "BIOC-4020",
+    "name": "Lipids, Lipoproteins&Signaling",
+    "faculty": "BIOC",
+    "label": "BIOC-4020 Lipids, Lipoproteins&Signaling"
+  },
+  {
+    "code": "BIOC-4030",
+    "name": "Enzymology and Biotechnology",
+    "faculty": "BIOC",
+    "label": "BIOC-4030 Enzymology and Biotechnology"
+  },
+  {
+    "code": "BIOC-4050",
+    "name": "Drug Design",
+    "faculty": "BIOC",
+    "label": "BIOC-4050 Drug Design"
+  },
+  {
+    "code": "BIOL-1111",
+    "name": "Biological Diversity",
+    "faculty": "BIOL",
+    "label": "BIOL-1111 Biological Diversity"
+  },
+  {
+    "code": "BIOL-1111",
+    "name": "Laboratory",
+    "faculty": "BIOL",
+    "label": "BIOL-1111 Laboratory"
+  },
+  {
+    "code": "BIOL-2050",
+    "name": "Human Physiology II",
+    "faculty": "BIOL",
+    "label": "BIOL-2050 Human Physiology II"
+  },
+  {
+    "code": "BIOL-2071",
+    "name": "Intro Microbiology &Techniques",
+    "faculty": "BIOL",
+    "label": "BIOL-2071 Intro Microbiology &Techniques"
+  },
+  {
+    "code": "BIOL-2071",
+    "name": "Laboratory",
+    "faculty": "BIOL",
+    "label": "BIOL-2071 Laboratory"
+  },
+  {
+    "code": "BIOL-2480",
+    "name": "Principles of Neuroscience",
+    "faculty": "BIOL",
+    "label": "BIOL-2480 Principles of Neuroscience"
+  },
+  {
+    "code": "BIOL-3230",
+    "name": "Animal Behaviour",
+    "faculty": "BIOL",
+    "label": "BIOL-3230 Animal Behaviour"
+  },
+  {
+    "code": "BIOL-3250",
+    "name": "Community & Population Ecology",
+    "faculty": "BIOL",
+    "label": "BIOL-3250 Community & Population Ecology"
+  },
+  {
+    "code": "BIOL-4008",
+    "name": "Movement Ecology",
+    "faculty": "BIOL",
+    "label": "BIOL-4008 Movement Ecology"
+  },
+  {
+    "code": "BIOL-4008",
+    "name": "Relationships with Nature",
+    "faculty": "BIOL",
+    "label": "BIOL-4008 Relationships with Nature"
+  },
+  {
+    "code": "BIOL-4212",
+    "name": "Speciation",
+    "faculty": "BIOL",
+    "label": "BIOL-4212 Speciation"
+  },
+  {
+    "code": "BIOL-4262",
+    "name": "Animal Communication",
+    "faculty": "BIOL",
+    "label": "BIOL-4262 Animal Communication"
+  },
+  {
+    "code": "BIOL-4262",
+    "name": "Laboratory",
+    "faculty": "BIOL",
+    "label": "BIOL-4262 Laboratory"
+  },
+  {
+    "code": "BIOL-4450",
+    "name": "Behavioural Neurobiology",
+    "faculty": "BIOL",
+    "label": "BIOL-4450 Behavioural Neurobiology"
+  },
+  {
+    "code": "BIOM-2021",
+    "name": "Human Anatomy",
+    "faculty": "BIOM",
+    "label": "BIOM-2021 Human Anatomy"
+  },
+  {
+    "code": "BIOM-2021",
+    "name": "Laboratory",
+    "faculty": "BIOM",
+    "label": "BIOM-2021 Laboratory"
+  },
+  {
+    "code": "BIOM-2131",
+    "name": "Introductory Molecular Biology",
+    "faculty": "BIOM",
+    "label": "BIOM-2131 Introductory Molecular Biology"
+  },
+  {
+    "code": "BIOM-2131",
+    "name": "Laboratory",
+    "faculty": "BIOM",
+    "label": "BIOM-2131 Laboratory"
+  },
+  {
+    "code": "BIOM-3070",
+    "name": "Medical Microbiology",
+    "faculty": "BIOM",
+    "label": "BIOM-3070 Medical Microbiology"
+  },
+  {
+    "code": "BIOM-3200",
+    "name": "Systems Neuroscience",
+    "faculty": "BIOM",
+    "label": "BIOM-3200 Systems Neuroscience"
+  },
+  {
+    "code": "BIOM-3530",
+    "name": "Advanced Cell Biology",
+    "faculty": "BIOM",
+    "label": "BIOM-3530 Advanced Cell Biology"
+  },
+  {
+    "code": "BIOM-4008",
+    "name": "Neuroscience Methods",
+    "faculty": "BIOM",
+    "label": "BIOM-4008 Neuroscience Methods"
+  },
+  {
+    "code": "BIOM-4510",
+    "name": "Stem Cells",
+    "faculty": "BIOM",
+    "label": "BIOM-4510 Stem Cells"
+  },
+  {
+    "code": "BIOM-4580",
+    "name": "Nutrition: Cellular/Molecular",
+    "faculty": "BIOM",
+    "label": "BIOM-4580 Nutrition: Cellular/Molecular"
+  },
+  {
+    "code": "CHEM-1103",
+    "name": "Topics in General Chemistry",
+    "faculty": "CHEM",
+    "label": "CHEM-1103 Topics in General Chemistry"
+  },
+  {
+    "code": "CHEM-1103",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-1103 Laboratory"
+  },
+  {
+    "code": "CHEM-1110",
+    "name": "General Chemistry II",
+    "faculty": "CHEM",
+    "label": "CHEM-1110 General Chemistry II"
+  },
+  {
+    "code": "CHEM-1110",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-1110 Laboratory"
+  },
+  {
+    "code": "CHEM-2310",
+    "name": "Intro Organic Chemistry II",
+    "faculty": "CHEM",
+    "label": "CHEM-2310 Intro Organic Chemistry II"
+  },
+  {
+    "code": "CHEM-2410",
+    "name": "Intro Physical Chemistry II",
+    "faculty": "CHEM",
+    "label": "CHEM-2410 Intro Physical Chemistry II"
+  },
+  {
+    "code": "CHEM-2410",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-2410 Laboratory"
+  },
+  {
+    "code": "CHEM-2510",
+    "name": "Intro Inorganic Chemistry II",
+    "faculty": "CHEM",
+    "label": "CHEM-2510 Intro Inorganic Chemistry II"
+  },
+  {
+    "code": "CHEM-2510",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-2510 Laboratory"
+  },
+  {
+    "code": "CHEM-3210",
+    "name": "Princ./Instrumental Analysis",
+    "faculty": "CHEM",
+    "label": "CHEM-3210 Princ./Instrumental Analysis"
+  },
+  {
+    "code": "CHEM-3210",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-3210 Laboratory"
+  },
+  {
+    "code": "CHEM-3310",
+    "name": "Intermediate Organic Chemistry",
+    "faculty": "CHEM",
+    "label": "CHEM-3310 Intermediate Organic Chemistry"
+  },
+  {
+    "code": "CHEM-3310",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-3310 Laboratory"
+  },
+  {
+    "code": "CHEM-3315",
+    "name": "Intermediate Organic Chemistry",
+    "faculty": "CHEM",
+    "label": "CHEM-3315 Intermediate Organic Chemistry"
+  },
+  {
+    "code": "CHEM-3400",
+    "name": "Quantum Chemistry",
+    "faculty": "CHEM",
+    "label": "CHEM-3400 Quantum Chemistry"
+  },
+  {
+    "code": "CHEM-3400",
+    "name": "Laboratory",
+    "faculty": "CHEM",
+    "label": "CHEM-3400 Laboratory"
+  },
+  {
+    "code": "CHEM-3909",
+    "name": "Internship Work Term I",
+    "faculty": "CHEM",
+    "label": "CHEM-3909 Internship Work Term I"
+  },
+  {
+    "code": "CHEM-4308",
+    "name": "Advanced Synthetic Methods",
+    "faculty": "CHEM",
+    "label": "CHEM-4308 Advanced Synthetic Methods"
+  },
+  {
+    "code": "CHEM-4600",
+    "name": "Surface Chemistry and Analysis",
+    "faculty": "CHEM",
+    "label": "CHEM-4600 Surface Chemistry and Analysis"
+  },
+  {
+    "code": "CHEM-4908",
+    "name": "Internship Work Term II",
+    "faculty": "CHEM",
+    "label": "CHEM-4908 Internship Work Term II"
+  },
+  {
+    "code": "CIVL-2190",
+    "name": "Materials in Civil&Environ Eng",
+    "faculty": "CIVL",
+    "label": "CIVL-2190 Materials in Civil&Environ Eng"
+  },
+  {
+    "code": "CIVL-2190",
+    "name": "Laboratory",
+    "faculty": "CIVL",
+    "label": "CIVL-2190 Laboratory"
+  },
+  {
+    "code": "CIVL-3520",
+    "name": "Stress Analysis",
+    "faculty": "CIVL",
+    "label": "CIVL-3520 Stress Analysis"
+  },
+  {
+    "code": "CIVL-3520",
+    "name": "Laboratory",
+    "faculty": "CIVL",
+    "label": "CIVL-3520 Laboratory"
+  },
+  {
+    "code": "CIVL-4710",
+    "name": "Hydrology",
+    "faculty": "CIVL",
+    "label": "CIVL-4710 Hydrology"
+  },
+  {
+    "code": "CIVL-4710",
+    "name": "Laboratory",
+    "faculty": "CIVL",
+    "label": "CIVL-4710 Laboratory"
+  },
+  {
+    "code": "CIVL-4720",
+    "name": "Hydraulics",
+    "faculty": "CIVL",
+    "label": "CIVL-4720 Hydraulics"
+  },
+  {
+    "code": "CIVL-4720",
+    "name": "Laboratory",
+    "faculty": "CIVL",
+    "label": "CIVL-4720 Laboratory"
+  },
+  {
+    "code": "CMAF-2010",
+    "name": "New Media Studies",
+    "faculty": "CMAF",
+    "label": "CMAF-2010 New Media Studies"
+  },
+  {
+    "code": "CMAF-2410",
+    "name": "Cinema History II (Post-War)",
+    "faculty": "CMAF",
+    "label": "CMAF-2410 Cinema History II (Post-War)"
+  },
+  {
+    "code": "CMAF-2610",
+    "name": "Public Relns, Media & Society",
+    "faculty": "CMAF",
+    "label": "CMAF-2610 Public Relns, Media & Society"
+  },
+  {
+    "code": "CMAF-2700",
+    "name": "Spkg Truth to Pwr:Voice&Activm",
+    "faculty": "CMAF",
+    "label": "CMAF-2700 Spkg Truth to Pwr:Voice&Activm"
+  },
+  {
+    "code": "CMAF-2750",
+    "name": "Theories-Communication & Media",
+    "faculty": "CMAF",
+    "label": "CMAF-2750 Theories-Communication & Media"
+  },
+  {
+    "code": "CMAF-3020",
+    "name": "Popular Culture",
+    "faculty": "CMAF",
+    "label": "CMAF-3020 Popular Culture"
+  },
+  {
+    "code": "CMAF-3410",
+    "name": "Media Aesthetics",
+    "faculty": "CMAF",
+    "label": "CMAF-3410 Media Aesthetics"
+  },
+  {
+    "code": "CMAF-3990",
+    "name": "Internship I",
+    "faculty": "CMAF",
+    "label": "CMAF-3990 Internship I"
+  },
+  {
+    "code": "CMAF-4350",
+    "name": "Capstone Project II:Writing/Pr",
+    "faculty": "CMAF",
+    "label": "CMAF-4350 Capstone Project II:Writing/Pr"
+  },
+  {
+    "code": "CMAF-4900",
+    "name": "Public Art in the City",
+    "faculty": "CMAF",
+    "label": "CMAF-4900 Public Art in the City"
+  },
+  {
+    "code": "CMAF-4990",
+    "name": "Internship II",
+    "faculty": "CMAF",
+    "label": "CMAF-4990 Internship II"
+  },
+  {
+    "code": "COMP-1000",
+    "name": "Key Concepts in Computer Scie",
+    "faculty": "COMP",
+    "label": "COMP-1000 Key Concepts in Computer Scie"
+  },
+  {
+    "code": "COMP-1000",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-1000 Laboratory"
+  },
+  {
+    "code": "COMP-1047",
+    "name": "Computer Concepts - End-Users",
+    "faculty": "COMP",
+    "label": "COMP-1047 Computer Concepts - End-Users"
+  },
+  {
+    "code": "COMP-1400",
+    "name": "Intro: Algorithms & Prog I",
+    "faculty": "COMP",
+    "label": "COMP-1400 Intro: Algorithms & Prog I"
+  },
+  {
+    "code": "COMP-1400",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-1400 Laboratory"
+  },
+  {
+    "code": "COMP-1410",
+    "name": "Intro: Algorithms & Prog II",
+    "faculty": "COMP",
+    "label": "COMP-1410 Intro: Algorithms & Prog II"
+  },
+  {
+    "code": "COMP-1410",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-1410 Laboratory"
+  },
+  {
+    "code": "COMP-2057",
+    "name": "Introduction to the Internet",
+    "faculty": "COMP",
+    "label": "COMP-2057 Introduction to the Internet"
+  },
+  {
+    "code": "COMP-2067",
+    "name": "Programming for Beginners",
+    "faculty": "COMP",
+    "label": "COMP-2067 Programming for Beginners"
+  },
+  {
+    "code": "COMP-2087",
+    "name": "Programming for Beginners II",
+    "faculty": "COMP",
+    "label": "COMP-2087 Programming for Beginners II"
+  },
+  {
+    "code": "COMP-2097",
+    "name": "Soc Media&Mobile Tech-End User",
+    "faculty": "COMP",
+    "label": "COMP-2097 Soc Media&Mobile Tech-End User"
+  },
+  {
+    "code": "COMP-2120",
+    "name": "Obj-Orientd Progrmg Using Java",
+    "faculty": "COMP",
+    "label": "COMP-2120 Obj-Orientd Progrmg Using Java"
+  },
+  {
+    "code": "COMP-2120",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2120 Laboratory"
+  },
+  {
+    "code": "COMP-2140",
+    "name": "Language, Grammar &Translators",
+    "faculty": "COMP",
+    "label": "COMP-2140 Language, Grammar &Translators"
+  },
+  {
+    "code": "COMP-2140",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2140 Laboratory"
+  },
+  {
+    "code": "COMP-2310",
+    "name": "Theoretical Fdns: Computer Sci",
+    "faculty": "COMP",
+    "label": "COMP-2310 Theoretical Fdns: Computer Sci"
+  },
+  {
+    "code": "COMP-2310",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2310 Laboratory"
+  },
+  {
+    "code": "COMP-2540",
+    "name": "Data Structures & Algorithms",
+    "faculty": "COMP",
+    "label": "COMP-2540 Data Structures & Algorithms"
+  },
+  {
+    "code": "COMP-2540",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2540 Laboratory"
+  },
+  {
+    "code": "COMP-2560",
+    "name": "System Programming",
+    "faculty": "COMP",
+    "label": "COMP-2560 System Programming"
+  },
+  {
+    "code": "COMP-2560",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2560 Laboratory"
+  },
+  {
+    "code": "COMP-2650",
+    "name": "Comp Architre I:Digital Design",
+    "faculty": "COMP",
+    "label": "COMP-2650 Comp Architre I:Digital Design"
+  },
+  {
+    "code": "COMP-2650",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2650 Laboratory"
+  },
+  {
+    "code": "COMP-2660",
+    "name": "Comp Architre II:Micro Program",
+    "faculty": "COMP",
+    "label": "COMP-2660 Comp Architre II:Micro Program"
+  },
+  {
+    "code": "COMP-2660",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2660 Laboratory"
+  },
+  {
+    "code": "COMP-2707",
+    "name": "Advanced Website Design",
+    "faculty": "COMP",
+    "label": "COMP-2707 Advanced Website Design"
+  },
+  {
+    "code": "COMP-2800",
+    "name": "Software Development",
+    "faculty": "COMP",
+    "label": "COMP-2800 Software Development"
+  },
+  {
+    "code": "COMP-2800",
+    "name": "Laboratory",
+    "faculty": "COMP",
+    "label": "COMP-2800 Laboratory"
+  },
+  {
+    "code": "COMP-2980",
+    "name": "Co-op Work Term I",
+    "faculty": "COMP",
+    "label": "COMP-2980 Co-op Work Term I"
+  },
+  {
+    "code": "COMP-3057",
+    "name": "Cyber-Ethics",
+    "faculty": "COMP",
+    "label": "COMP-3057 Cyber-Ethics"
+  },
+  {
+    "code": "COMP-3077",
+    "name": "Web-Based Data Management",
+    "faculty": "COMP",
+    "label": "COMP-3077 Web-Based Data Management"
+  },
+  {
+    "code": "COMP-3150",
+    "name": "Database Management Systems",
+    "faculty": "COMP",
+    "label": "COMP-3150 Database Management Systems"
+  },
+  {
+    "code": "COMP-3220",
+    "name": "Obj-Oriented Software Anal/Des",
+    "faculty": "COMP",
+    "label": "COMP-3220 Obj-Oriented Software Anal/Des"
+  },
+  {
+    "code": "COMP-3250",
+    "name": "Data Analytics I",
+    "faculty": "COMP",
+    "label": "COMP-3250 Data Analytics I"
+  },
+  {
+    "code": "COMP-3300",
+    "name": "Operating Systems Fundamentals",
+    "faculty": "COMP",
+    "label": "COMP-3300 Operating Systems Fundamentals"
+  },
+  {
+    "code": "COMP-3340",
+    "name": "World Wide Web Info System Dev",
+    "faculty": "COMP",
+    "label": "COMP-3340 World Wide Web Info System Dev"
+  },
+  {
+    "code": "COMP-3400",
+    "name": "Adv Obj Orntd Sys Des Usng C++",
+    "faculty": "COMP",
+    "label": "COMP-3400 Adv Obj Orntd Sys Des Usng C++"
+  },
+  {
+    "code": "COMP-3520",
+    "name": "Intro to Computer Graphics",
+    "faculty": "COMP",
+    "label": "COMP-3520 Intro to Computer Graphics"
+  },
+  {
+    "code": "COMP-3710",
+    "name": "Artificial Intell Concepts",
+    "faculty": "COMP",
+    "label": "COMP-3710 Artificial Intell Concepts"
+  },
+  {
+    "code": "COMP-3980",
+    "name": "Co-op Work Term II",
+    "faculty": "COMP",
+    "label": "COMP-3980 Co-op Work Term II"
+  },
+  {
+    "code": "COMP-4110",
+    "name": "Software Verification &Testing",
+    "faculty": "COMP",
+    "label": "COMP-4110 Software Verification &Testing"
+  },
+  {
+    "code": "COMP-4200",
+    "name": "Mobile Application Development",
+    "faculty": "COMP",
+    "label": "COMP-4200 Mobile Application Development"
+  },
+  {
+    "code": "COMP-4250",
+    "name": "Big Data Analytics/DBase Dsgn",
+    "faculty": "COMP",
+    "label": "COMP-4250 Big Data Analytics/DBase Dsgn"
+  },
+  {
+    "code": "COMP-4400",
+    "name": "Principle of Programming Langs",
+    "faculty": "COMP",
+    "label": "COMP-4400 Principle of Programming Langs"
+  },
+  {
+    "code": "COMP-4500",
+    "name": "Modeling and Animation",
+    "faculty": "COMP",
+    "label": "COMP-4500 Modeling and Animation"
+  },
+  {
+    "code": "COMP-4540",
+    "name": "Dsgn &Anlys of Comp Algorithms",
+    "faculty": "COMP",
+    "label": "COMP-4540 Dsgn &Anlys of Comp Algorithms"
+  },
+  {
+    "code": "COMP-4740",
+    "name": "Adv Tpcs: Artificial Intell II",
+    "faculty": "COMP",
+    "label": "COMP-4740 Adv Tpcs: Artificial Intell II"
+  },
+  {
+    "code": "COMP-4770",
+    "name": "Artificial Intellig. for Games",
+    "faculty": "COMP",
+    "label": "COMP-4770 Artificial Intellig. for Games"
+  },
+  {
+    "code": "COMP-4800",
+    "name": "Selected Tpcs in Software Engg",
+    "faculty": "COMP",
+    "label": "COMP-4800 Selected Tpcs in Software Engg"
+  },
+  {
+    "code": "COMP-4970",
+    "name": "Co-op Work Term III",
+    "faculty": "COMP",
+    "label": "COMP-4970 Co-op Work Term III"
+  },
+  {
+    "code": "COMP-4980",
+    "name": "Co-op Work Term IV",
+    "faculty": "COMP",
+    "label": "COMP-4980 Co-op Work Term IV"
+  },
+  {
+    "code": "DRAM-2100",
+    "name": "Speech Communication to Inform",
+    "faculty": "DRAM",
+    "label": "DRAM-2100 Speech Communication to Inform"
+  },
+  {
+    "code": "DRAM-2200",
+    "name": "Voice for the Actor III",
+    "faculty": "DRAM",
+    "label": "DRAM-2200 Voice for the Actor III"
+  },
+  {
+    "code": "DRAM-2240",
+    "name": "Acting for Theatre II",
+    "faculty": "DRAM",
+    "label": "DRAM-2240 Acting for Theatre II"
+  },
+  {
+    "code": "DRAM-2250",
+    "name": "Introductory Acting",
+    "faculty": "DRAM",
+    "label": "DRAM-2250 Introductory Acting"
+  },
+  {
+    "code": "DRAM-2700",
+    "name": "Spkg Truth to Pwr:Voice&Activm",
+    "faculty": "DRAM",
+    "label": "DRAM-2700 Spkg Truth to Pwr:Voice&Activm"
+  },
+  {
+    "code": "DRAM-2770",
+    "name": "Improvisation & Self Dev",
+    "faculty": "DRAM",
+    "label": "DRAM-2770 Improvisation & Self Dev"
+  },
+  {
+    "code": "DRAM-3190",
+    "name": "Studies in Design",
+    "faculty": "DRAM",
+    "label": "DRAM-3190 Studies in Design"
+  },
+  {
+    "code": "DRAM-3220",
+    "name": "Acting/Camera Work in Prog II",
+    "faculty": "DRAM",
+    "label": "DRAM-3220 Acting/Camera Work in Prog II"
+  },
+  {
+    "code": "DRAM-3510",
+    "name": "Production Problems",
+    "faculty": "DRAM",
+    "label": "DRAM-3510 Production Problems"
+  },
+  {
+    "code": "DRAM-3520",
+    "name": "Production Problems",
+    "faculty": "DRAM",
+    "label": "DRAM-3520 Production Problems"
+  },
+  {
+    "code": "DRAM-3520",
+    "name": "Production Design",
+    "faculty": "DRAM",
+    "label": "DRAM-3520 Production Design"
+  },
+  {
+    "code": "DRAM-3520",
+    "name": "Course Coordinator",
+    "faculty": "DRAM",
+    "label": "DRAM-3520 Course Coordinator"
+  },
+  {
+    "code": "DRAM-3530",
+    "name": "Production Problems:Stage Mgmt",
+    "faculty": "DRAM",
+    "label": "DRAM-3530 Production Problems:Stage Mgmt"
+  },
+  {
+    "code": "DRAM-3600",
+    "name": "Drama in Classroom: Apps II",
+    "faculty": "DRAM",
+    "label": "DRAM-3600 Drama in Classroom: Apps II"
+  },
+  {
+    "code": "DRAM-3980",
+    "name": "Intership I: Arts Mgmt Cert",
+    "faculty": "DRAM",
+    "label": "DRAM-3980 Intership I: Arts Mgmt Cert"
+  },
+  {
+    "code": "DRAM-4490",
+    "name": "Directed Studies in Direction",
+    "faculty": "DRAM",
+    "label": "DRAM-4490 Directed Studies in Direction"
+  },
+  {
+    "code": "DRAM-4530",
+    "name": "Dir Stud in screen/stage perf",
+    "faculty": "DRAM",
+    "label": "DRAM-4530 Dir Stud in screen/stage perf"
+  },
+  {
+    "code": "DRAM-4700",
+    "name": "Theatre for Young Audiences",
+    "faculty": "DRAM",
+    "label": "DRAM-4700 Theatre for Young Audiences"
+  },
+  {
+    "code": "DRAM-4790",
+    "name": "Dir St: Drama in Educ & Comm",
+    "faculty": "DRAM",
+    "label": "DRAM-4790 Dir St: Drama in Educ & Comm"
+  },
+  {
+    "code": "ECON-1100",
+    "name": "Introduction to Economics I",
+    "faculty": "ECON",
+    "label": "ECON-1100 Introduction to Economics I"
+  },
+  {
+    "code": "ECON-1110",
+    "name": "Introduction to Economics II",
+    "faculty": "ECON",
+    "label": "ECON-1110 Introduction to Economics II"
+  },
+  {
+    "code": "ECON-2210",
+    "name": "Intermediate Microeconomics I",
+    "faculty": "ECON",
+    "label": "ECON-2210 Intermediate Microeconomics I"
+  },
+  {
+    "code": "ECON-2220",
+    "name": "Intermediate Microeconomics II",
+    "faculty": "ECON",
+    "label": "ECON-2220 Intermediate Microeconomics II"
+  },
+  {
+    "code": "ECON-2310",
+    "name": "Intermediate Macroeconomics I",
+    "faculty": "ECON",
+    "label": "ECON-2310 Intermediate Macroeconomics I"
+  },
+  {
+    "code": "ECON-2320",
+    "name": "Intermediate Macroeconomics II",
+    "faculty": "ECON",
+    "label": "ECON-2320 Intermediate Macroeconomics II"
+  },
+  {
+    "code": "ECON-3060",
+    "name": "Mathematical Economics I",
+    "faculty": "ECON",
+    "label": "ECON-3060 Mathematical Economics I"
+  },
+  {
+    "code": "ECON-3500",
+    "name": "Labour Theory",
+    "faculty": "ECON",
+    "label": "ECON-3500 Labour Theory"
+  },
+  {
+    "code": "ECON-3730",
+    "name": "Intl Econ: Trade Theory&Policy",
+    "faculty": "ECON",
+    "label": "ECON-3730 Intl Econ: Trade Theory&Policy"
+  },
+  {
+    "code": "ECON-4070",
+    "name": "Senior Research Workshop",
+    "faculty": "ECON",
+    "label": "ECON-4070 Senior Research Workshop"
+  },
+  {
+    "code": "ECON-4140",
+    "name": "Intro to Econometric Mthds II",
+    "faculty": "ECON",
+    "label": "ECON-4140 Intro to Econometric Mthds II"
+  },
+  {
+    "code": "ECON-4240",
+    "name": "Advanced Microeconomics II",
+    "faculty": "ECON",
+    "label": "ECON-4240 Advanced Microeconomics II"
+  },
+  {
+    "code": "ECON-4300",
+    "name": "Economics Analysis of Law",
+    "faculty": "ECON",
+    "label": "ECON-4300 Economics Analysis of Law"
+  },
+  {
+    "code": "ECON-4340",
+    "name": "Advanced Macroeconomics II",
+    "faculty": "ECON",
+    "label": "ECON-4340 Advanced Macroeconomics II"
+  },
+  {
+    "code": "ECON-4600",
+    "name": "Cost-Benefit Analysis",
+    "faculty": "ECON",
+    "label": "ECON-4600 Cost-Benefit Analysis"
+  },
+  {
+    "code": "ELEC-2170",
+    "name": "Digital Logic Design",
+    "faculty": "ELEC",
+    "label": "ELEC-2170 Digital Logic Design"
+  },
+  {
+    "code": "ELEC-2170",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-2170 Laboratory"
+  },
+  {
+    "code": "ELEC-2200",
+    "name": "Circuit Analysis II",
+    "faculty": "ELEC",
+    "label": "ELEC-2200 Circuit Analysis II"
+  },
+  {
+    "code": "ELEC-2200",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-2200 Laboratory"
+  },
+  {
+    "code": "ELEC-2260",
+    "name": "Electronics I",
+    "faculty": "ELEC",
+    "label": "ELEC-2260 Electronics I"
+  },
+  {
+    "code": "ELEC-2260",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-2260 Laboratory"
+  },
+  {
+    "code": "ELEC-2280",
+    "name": "Electromagnetic Fields",
+    "faculty": "ELEC",
+    "label": "ELEC-2280 Electromagnetic Fields"
+  },
+  {
+    "code": "ELEC-2280",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-2280 Laboratory"
+  },
+  {
+    "code": "ELEC-2320",
+    "name": "Software Fundamentals",
+    "faculty": "ELEC",
+    "label": "ELEC-2320 Software Fundamentals"
+  },
+  {
+    "code": "ELEC-2320",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-2320 Laboratory"
+  },
+  {
+    "code": "ELEC-4190",
+    "name": "Digital Communications",
+    "faculty": "ELEC",
+    "label": "ELEC-4190 Digital Communications"
+  },
+  {
+    "code": "ELEC-4190",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4190 Laboratory"
+  },
+  {
+    "code": "ELEC-4310",
+    "name": "Control Systems II",
+    "faculty": "ELEC",
+    "label": "ELEC-4310 Control Systems II"
+  },
+  {
+    "code": "ELEC-4310",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4310 Laboratory"
+  },
+  {
+    "code": "ELEC-4350",
+    "name": "Microelectromechanical Systems",
+    "faculty": "ELEC",
+    "label": "ELEC-4350 Microelectromechanical Systems"
+  },
+  {
+    "code": "ELEC-4350",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4350 Laboratory"
+  },
+  {
+    "code": "ELEC-4360",
+    "name": "Computer Communications",
+    "faculty": "ELEC",
+    "label": "ELEC-4360 Computer Communications"
+  },
+  {
+    "code": "ELEC-4360",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4360 Laboratory"
+  },
+  {
+    "code": "ELEC-4440",
+    "name": "Analog Integrated Circuit Desn",
+    "faculty": "ELEC",
+    "label": "ELEC-4440 Analog Integrated Circuit Desn"
+  },
+  {
+    "code": "ELEC-4440",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4440 Laboratory"
+  },
+  {
+    "code": "ELEC-4450",
+    "name": "Power Electronics",
+    "faculty": "ELEC",
+    "label": "ELEC-4450 Power Electronics"
+  },
+  {
+    "code": "ELEC-4450",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4450 Laboratory"
+  },
+  {
+    "code": "ELEC-4490",
+    "name": "Sensor and Vision Systems",
+    "faculty": "ELEC",
+    "label": "ELEC-4490 Sensor and Vision Systems"
+  },
+  {
+    "code": "ELEC-4490",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4490 Laboratory"
+  },
+  {
+    "code": "ELEC-4500",
+    "name": "Power Systems I",
+    "faculty": "ELEC",
+    "label": "ELEC-4500 Power Systems I"
+  },
+  {
+    "code": "ELEC-4500",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4500 Laboratory"
+  },
+  {
+    "code": "ELEC-4570",
+    "name": "Fund-Digital Signal Processg",
+    "faculty": "ELEC",
+    "label": "ELEC-4570 Fund-Digital Signal Processg"
+  },
+  {
+    "code": "ELEC-4570",
+    "name": "Laboratory",
+    "faculty": "ELEC",
+    "label": "ELEC-4570 Laboratory"
+  },
+  {
+    "code": "ENGL-1004",
+    "name": "Later British Literature",
+    "faculty": "ENGL",
+    "label": "ENGL-1004 Later British Literature"
+  },
+  {
+    "code": "ENGL-1010",
+    "name": "Academic Writing",
+    "faculty": "ENGL",
+    "label": "ENGL-1010 Academic Writing"
+  },
+  {
+    "code": "ENGL-1010",
+    "name": "Laboratory",
+    "faculty": "ENGL",
+    "label": "ENGL-1010 Laboratory"
+  },
+  {
+    "code": "ENGL-2020",
+    "name": "Renaissance Literature",
+    "faculty": "ENGL",
+    "label": "ENGL-2020 Renaissance Literature"
+  },
+  {
+    "code": "ENGL-2110",
+    "name": "Romantic Literature",
+    "faculty": "ENGL",
+    "label": "ENGL-2110 Romantic Literature"
+  },
+  {
+    "code": "ENGL-2210",
+    "name": "Canadian Literature",
+    "faculty": "ENGL",
+    "label": "ENGL-2210 Canadian Literature"
+  },
+  {
+    "code": "ENGL-2230",
+    "name": "Modern/Contemp. US LIterature",
+    "faculty": "ENGL",
+    "label": "ENGL-2230 Modern/Contemp. US LIterature"
+  },
+  {
+    "code": "ENGL-2430",
+    "name": "Top. Literary/Cult./Lang Theo",
+    "faculty": "ENGL",
+    "label": "ENGL-2430 Top. Literary/Cult./Lang Theo"
+  },
+  {
+    "code": "ENGL-2520",
+    "name": "African Am Children's Lit",
+    "faculty": "ENGL",
+    "label": "ENGL-2520 African Am Children's Lit"
+  },
+  {
+    "code": "ENGL-3002",
+    "name": "The Personal Essay",
+    "faculty": "ENGL",
+    "label": "ENGL-3002 The Personal Essay"
+  },
+  {
+    "code": "ENGL-3020",
+    "name": "Late Shakespearean Romance",
+    "faculty": "ENGL",
+    "label": "ENGL-3020 Late Shakespearean Romance"
+  },
+  {
+    "code": "ENGL-3120",
+    "name": "Victorians & Disability",
+    "faculty": "ENGL",
+    "label": "ENGL-3120 Victorians & Disability"
+  },
+  {
+    "code": "ENGL-3130",
+    "name": "The Novel and History",
+    "faculty": "ENGL",
+    "label": "ENGL-3130 The Novel and History"
+  },
+  {
+    "code": "ENGL-3310",
+    "name": "Animals and the Environment",
+    "faculty": "ENGL",
+    "label": "ENGL-3310 Animals and the Environment"
+  },
+  {
+    "code": "ENGL-3710",
+    "name": "Constrained Writing",
+    "faculty": "ENGL",
+    "label": "ENGL-3710 Constrained Writing"
+  },
+  {
+    "code": "ENGL-3710",
+    "name": "Experimental Poetry",
+    "faculty": "ENGL",
+    "label": "ENGL-3710 Experimental Poetry"
+  },
+  {
+    "code": "ENGL-4000",
+    "name": "John Donne",
+    "faculty": "ENGL",
+    "label": "ENGL-4000 John Donne"
+  },
+  {
+    "code": "ENGL-4004",
+    "name": "Publishing Practicum",
+    "faculty": "ENGL",
+    "label": "ENGL-4004 Publishing Practicum"
+  },
+  {
+    "code": "ENVE-2200",
+    "name": "Env. Concepts/Applns in Engg",
+    "faculty": "ENVE",
+    "label": "ENVE-2200 Env. Concepts/Applns in Engg"
+  },
+  {
+    "code": "ENVE-2200",
+    "name": "Laboratory",
+    "faculty": "ENVE",
+    "label": "ENVE-2200 Laboratory"
+  },
+  {
+    "code": "ENVE-3630",
+    "name": "Water and Wastewater Treatment",
+    "faculty": "ENVE",
+    "label": "ENVE-3630 Water and Wastewater Treatment"
+  },
+  {
+    "code": "ENVE-3630",
+    "name": "Laboratory",
+    "faculty": "ENVE",
+    "label": "ENVE-3630 Laboratory"
+  },
+  {
+    "code": "ENVE-4710",
+    "name": "Water Dist/Wastewater Collectn",
+    "faculty": "ENVE",
+    "label": "ENVE-4710 Water Dist/Wastewater Collectn"
+  },
+  {
+    "code": "ENVE-4710",
+    "name": "Laboratory",
+    "faculty": "ENVE",
+    "label": "ENVE-4710 Laboratory"
+  },
+  {
+    "code": "ENVE-4720",
+    "name": "Chemical Reaction Engineering",
+    "faculty": "ENVE",
+    "label": "ENVE-4720 Chemical Reaction Engineering"
+  },
+  {
+    "code": "ENVE-4720",
+    "name": "Laboratory",
+    "faculty": "ENVE",
+    "label": "ENVE-4720 Laboratory"
+  },
+  {
+    "code": "ENVE-4730",
+    "name": "Environ Engg Microbiology",
+    "faculty": "ENVE",
+    "label": "ENVE-4730 Environ Engg Microbiology"
+  },
+  {
+    "code": "ESCI-1000",
+    "name": "Natural Hazards and Disasters",
+    "faculty": "ESCI",
+    "label": "ESCI-1000 Natural Hazards and Disasters"
+  },
+  {
+    "code": "ESCI-1111",
+    "name": "Introduction to Earth Science",
+    "faculty": "ESCI",
+    "label": "ESCI-1111 Introduction to Earth Science"
+  },
+  {
+    "code": "ESCI-1111",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-1111 Laboratory"
+  },
+  {
+    "code": "ESCI-1151",
+    "name": "Fund of Geog Info. Systems/Sci",
+    "faculty": "ESCI",
+    "label": "ESCI-1151 Fund of Geog Info. Systems/Sci"
+  },
+  {
+    "code": "ESCI-1151",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-1151 Laboratory"
+  },
+  {
+    "code": "ESCI-2010",
+    "name": "Geology and the Environment",
+    "faculty": "ESCI",
+    "label": "ESCI-2010 Geology and the Environment"
+  },
+  {
+    "code": "ESCI-2210",
+    "name": "Introduction to Climate Change",
+    "faculty": "ESCI",
+    "label": "ESCI-2210 Introduction to Climate Change"
+  },
+  {
+    "code": "ESCI-2300",
+    "name": "Introduction to Oceanography",
+    "faculty": "ESCI",
+    "label": "ESCI-2300 Introduction to Oceanography"
+  },
+  {
+    "code": "ESCI-2400",
+    "name": "Geomorphology",
+    "faculty": "ESCI",
+    "label": "ESCI-2400 Geomorphology"
+  },
+  {
+    "code": "ESCI-2421",
+    "name": "Soils and Sediments",
+    "faculty": "ESCI",
+    "label": "ESCI-2421 Soils and Sediments"
+  },
+  {
+    "code": "ESCI-2421",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-2421 Laboratory"
+  },
+  {
+    "code": "ESCI-2711",
+    "name": "Scripting & Programming in GIS",
+    "faculty": "ESCI",
+    "label": "ESCI-2711 Scripting & Programming in GIS"
+  },
+  {
+    "code": "ESCI-2711",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-2711 Laboratory"
+  },
+  {
+    "code": "ESCI-2721",
+    "name": "Intro to Image Proc. & Remote",
+    "faculty": "ESCI",
+    "label": "ESCI-2721 Intro to Image Proc. & Remote"
+  },
+  {
+    "code": "ESCI-2721",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-2721 Laboratory"
+  },
+  {
+    "code": "ESCI-3610",
+    "name": "Environ Impact Assessment",
+    "faculty": "ESCI",
+    "label": "ESCI-3610 Environ Impact Assessment"
+  },
+  {
+    "code": "ESCI-3610",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-3610 Laboratory"
+  },
+  {
+    "code": "ESCI-3771",
+    "name": "Geo-Web/Geoportal Devlpmnt",
+    "faculty": "ESCI",
+    "label": "ESCI-3771 Geo-Web/Geoportal Devlpmnt"
+  },
+  {
+    "code": "ESCI-3771",
+    "name": "Laboratory",
+    "faculty": "ESCI",
+    "label": "ESCI-3771 Laboratory"
+  },
+  {
+    "code": "ESCI-4500",
+    "name": "Ecosystem Health",
+    "faculty": "ESCI",
+    "label": "ESCI-4500 Ecosystem Health"
+  },
+  {
+    "code": "ESCI-4808",
+    "name": "Environmental Health & Epidemi",
+    "faculty": "ESCI",
+    "label": "ESCI-4808 Environmental Health & Epidemi"
+  },
+  {
+    "code": "ESCI-4808",
+    "name": "Environmental Omics",
+    "faculty": "ESCI",
+    "label": "ESCI-4808 Environmental Omics"
+  },
+  {
+    "code": "ESCI-4808",
+    "name": "Life of the Honey Bee",
+    "faculty": "ESCI",
+    "label": "ESCI-4808 Life of the Honey Bee"
+  },
+  {
+    "code": "ESCI-4808",
+    "name": "Ecotoxology",
+    "faculty": "ESCI",
+    "label": "ESCI-4808 Ecotoxology"
+  },
+  {
+    "code": "ESTU-1100",
+    "name": "Intro to Environmental Studies",
+    "faculty": "ESTU",
+    "label": "ESTU-1100 Intro to Environmental Studies"
+  },
+  {
+    "code": "ESTU-2500",
+    "name": "Concepts for Ecosystem Mgmt",
+    "faculty": "ESTU",
+    "label": "ESTU-2500 Concepts for Ecosystem Mgmt"
+  },
+  {
+    "code": "ESTU-3310",
+    "name": "Great Lakes Water Qual. Agrmnt",
+    "faculty": "ESTU",
+    "label": "ESTU-3310 Great Lakes Water Qual. Agrmnt"
+  },
+  {
+    "code": "FILM-1001",
+    "name": "Film Studies I",
+    "faculty": "FILM",
+    "label": "FILM-1001 Film Studies I"
+  },
+  {
+    "code": "FILM-1110",
+    "name": "Film Production II",
+    "faculty": "FILM",
+    "label": "FILM-1110 Film Production II"
+  },
+  {
+    "code": "FILM-1110",
+    "name": "Laboratory",
+    "faculty": "FILM",
+    "label": "FILM-1110 Laboratory"
+  },
+  {
+    "code": "FILM-2100",
+    "name": "Film Production III",
+    "faculty": "FILM",
+    "label": "FILM-2100 Film Production III"
+  },
+  {
+    "code": "FILM-2100",
+    "name": "Laboratory",
+    "faculty": "FILM",
+    "label": "FILM-2100 Laboratory"
+  },
+  {
+    "code": "FILM-2200",
+    "name": "Documentary Production I",
+    "faculty": "FILM",
+    "label": "FILM-2200 Documentary Production I"
+  },
+  {
+    "code": "FILM-2200",
+    "name": "Laboratory",
+    "faculty": "FILM",
+    "label": "FILM-2200 Laboratory"
+  },
+  {
+    "code": "FILM-3100",
+    "name": "Film Production IV",
+    "faculty": "FILM",
+    "label": "FILM-3100 Film Production IV"
+  },
+  {
+    "code": "FILM-3700",
+    "name": "Directing",
+    "faculty": "FILM",
+    "label": "FILM-3700 Directing"
+  },
+  {
+    "code": "FILM-4105",
+    "name": "Film Production VI",
+    "faculty": "FILM",
+    "label": "FILM-4105 Film Production VI"
+  },
+  {
+    "code": "FINA-2700",
+    "name": "Business Finance I",
+    "faculty": "FINA",
+    "label": "FINA-2700 Business Finance I"
+  },
+  {
+    "code": "FINA-2710",
+    "name": "Business Finance II",
+    "faculty": "FINA",
+    "label": "FINA-2710 Business Finance II"
+  },
+  {
+    "code": "FINA-3710",
+    "name": "Intermediate Finance",
+    "faculty": "FINA",
+    "label": "FINA-3710 Intermediate Finance"
+  },
+  {
+    "code": "FINA-3780",
+    "name": "Financial Markets&Institutions",
+    "faculty": "FINA",
+    "label": "FINA-3780 Financial Markets&Institutions"
+  },
+  {
+    "code": "FINA-3790",
+    "name": "International Financial Mgmt",
+    "faculty": "FINA",
+    "label": "FINA-3790 International Financial Mgmt"
+  },
+  {
+    "code": "FINA-4720",
+    "name": "Portfolio Management",
+    "faculty": "FINA",
+    "label": "FINA-4720 Portfolio Management"
+  },
+  {
+    "code": "FINA-4740",
+    "name": "Corporate Financial Strategy",
+    "faculty": "FINA",
+    "label": "FINA-4740 Corporate Financial Strategy"
+  },
+  {
+    "code": "FREN-1130",
+    "name": "Intermediate French I",
+    "faculty": "FREN",
+    "label": "FREN-1130 Intermediate French I"
+  },
+  {
+    "code": "FREN-1220",
+    "name": "French Language Training II",
+    "faculty": "FREN",
+    "label": "FREN-1220 French Language Training II"
+  },
+  {
+    "code": "FREN-2220",
+    "name": "French Language Training IV",
+    "faculty": "FREN",
+    "label": "FREN-2220 French Language Training IV"
+  },
+  {
+    "code": "FREN-2310",
+    "name": "Introduction to Linguistics II",
+    "faculty": "FREN",
+    "label": "FREN-2310 Introduction to Linguistics II"
+  },
+  {
+    "code": "FREN-2530",
+    "name": "French Enlightenment",
+    "faculty": "FREN",
+    "label": "FREN-2530 French Enlightenment"
+  },
+  {
+    "code": "FREN-3150",
+    "name": "Oral Proficiency in French II",
+    "faculty": "FREN",
+    "label": "FREN-3150 Oral Proficiency in French II"
+  },
+  {
+    "code": "FREN-3290",
+    "name": "Aspects of Translation II",
+    "faculty": "FREN",
+    "label": "FREN-3290 Aspects of Translation II"
+  },
+  {
+    "code": "FREN-3320",
+    "name": "History of the French Language",
+    "faculty": "FREN",
+    "label": "FREN-3320 History of the French Language"
+  },
+  {
+    "code": "FREN-3570",
+    "name": "Contemporary Critical Theory",
+    "faculty": "FREN",
+    "label": "FREN-3570 Contemporary Critical Theory"
+  },
+  {
+    "code": "FREN-3580",
+    "name": "Francophone Lit of the Maghreb",
+    "faculty": "FREN",
+    "label": "FREN-3580 Francophone Lit of the Maghreb"
+  },
+  {
+    "code": "FRSC-1107",
+    "name": "Intro Crime Scn Investigtn",
+    "faculty": "FRSC",
+    "label": "FRSC-1107 Intro Crime Scn Investigtn"
+  },
+  {
+    "code": "FRSC-2007",
+    "name": "Overview of Forensic Science",
+    "faculty": "FRSC",
+    "label": "FRSC-2007 Overview of Forensic Science"
+  },
+  {
+    "code": "FRSC-2101",
+    "name": "Applied Crime Scene Techniques",
+    "faculty": "FRSC",
+    "label": "FRSC-2101 Applied Crime Scene Techniques"
+  },
+  {
+    "code": "FRSC-2101",
+    "name": "Laboratory",
+    "faculty": "FRSC",
+    "label": "FRSC-2101 Laboratory"
+  },
+  {
+    "code": "FRSC-2190",
+    "name": "Forensc Evidence/Cdn Legal Sys",
+    "faculty": "FRSC",
+    "label": "FRSC-2190 Forensc Evidence/Cdn Legal Sys"
+  },
+  {
+    "code": "FRSC-2190",
+    "name": "Laboratory",
+    "faculty": "FRSC",
+    "label": "FRSC-2190 Laboratory"
+  },
+  {
+    "code": "FRSC-3101",
+    "name": "Laboratory in Forensic Science",
+    "faculty": "FRSC",
+    "label": "FRSC-3101 Laboratory in Forensic Science"
+  },
+  {
+    "code": "FRSC-3101",
+    "name": "Laboratory",
+    "faculty": "FRSC",
+    "label": "FRSC-3101 Laboratory"
+  },
+  {
+    "code": "FRSC-3217",
+    "name": "Forensic Serology & DNA Applic",
+    "faculty": "FRSC",
+    "label": "FRSC-3217 Forensic Serology & DNA Applic"
+  },
+  {
+    "code": "FRSC-3231",
+    "name": "Forensic Anthropology",
+    "faculty": "FRSC",
+    "label": "FRSC-3231 Forensic Anthropology"
+  },
+  {
+    "code": "FRSC-4002",
+    "name": "Practicum in Forensic Sciences",
+    "faculty": "FRSC",
+    "label": "FRSC-4002 Practicum in Forensic Sciences"
+  },
+  {
+    "code": "FRSC-4120",
+    "name": "Human Skeletal Variation",
+    "faculty": "FRSC",
+    "label": "FRSC-4120 Human Skeletal Variation"
+  },
+  {
+    "code": "FRSC-4201",
+    "name": "Forensic Chemistry",
+    "faculty": "FRSC",
+    "label": "FRSC-4201 Forensic Chemistry"
+  },
+  {
+    "code": "FRSC-4201",
+    "name": "Laboratory",
+    "faculty": "FRSC",
+    "label": "FRSC-4201 Laboratory"
+  },
+  {
+    "code": "FRSC-4202",
+    "name": "Death Investigation",
+    "faculty": "FRSC",
+    "label": "FRSC-4202 Death Investigation"
+  },
+  {
+    "code": "FRSC-4217",
+    "name": "Adv in Human Identification",
+    "faculty": "FRSC",
+    "label": "FRSC-4217 Adv in Human Identification"
+  },
+  {
+    "code": "GART-1210",
+    "name": "An Intro to Indigenous Topics",
+    "faculty": "GART",
+    "label": "GART-1210 An Intro to Indigenous Topics"
+  },
+  {
+    "code": "GENG-1102",
+    "name": "Engineering Graphics",
+    "faculty": "GENG",
+    "label": "GENG-1102 Engineering Graphics"
+  },
+  {
+    "code": "GENG-1102",
+    "name": "Laboratory",
+    "faculty": "GENG",
+    "label": "GENG-1102 Laboratory"
+  },
+  {
+    "code": "GENG-1110",
+    "name": "Engineering Mechanics I",
+    "faculty": "GENG",
+    "label": "GENG-1110 Engineering Mechanics I"
+  },
+  {
+    "code": "GENG-1110",
+    "name": "Laboratory",
+    "faculty": "GENG",
+    "label": "GENG-1110 Laboratory"
+  },
+  {
+    "code": "GENG-1201",
+    "name": "Cornerstone Design",
+    "faculty": "GENG",
+    "label": "GENG-1201 Cornerstone Design"
+  },
+  {
+    "code": "GENG-1201",
+    "name": "Laboratory",
+    "faculty": "GENG",
+    "label": "GENG-1201 Laboratory"
+  },
+  {
+    "code": "GENG-1202",
+    "name": "Intro Electrical /Computer Eng",
+    "faculty": "GENG",
+    "label": "GENG-1202 Intro Electrical /Computer Eng"
+  },
+  {
+    "code": "GENG-1202",
+    "name": "Laboratory",
+    "faculty": "GENG",
+    "label": "GENG-1202 Laboratory"
+  },
+  {
+    "code": "GENG-2201",
+    "name": "Engineering Design II",
+    "faculty": "GENG",
+    "label": "GENG-2201 Engineering Design II"
+  },
+  {
+    "code": "GENG-2201",
+    "name": "Laboratory",
+    "faculty": "GENG",
+    "label": "GENG-2201 Laboratory"
+  },
+  {
+    "code": "GENG-2220",
+    "name": "Probability/Statistics for Eng",
+    "faculty": "GENG",
+    "label": "GENG-2220 Probability/Statistics for Eng"
+  },
+  {
+    "code": "GENG-2980",
+    "name": "Work Term I",
+    "faculty": "GENG",
+    "label": "GENG-2980 Work Term I"
+  },
+  {
+    "code": "GENG-3400",
+    "name": "Mechatronic Sys Design & Prjct",
+    "faculty": "GENG",
+    "label": "GENG-3400 Mechatronic Sys Design & Prjct"
+  },
+  {
+    "code": "GENG-3980",
+    "name": "Work Term II",
+    "faculty": "GENG",
+    "label": "GENG-3980 Work Term II"
+  },
+  {
+    "code": "GENG-4300",
+    "name": "Intelligent and Digital Mfg",
+    "faculty": "GENG",
+    "label": "GENG-4300 Intelligent and Digital Mfg"
+  },
+  {
+    "code": "GENG-4500",
+    "name": "Artificial Intel-Machine Lrng",
+    "faculty": "GENG",
+    "label": "GENG-4500 Artificial Intel-Machine Lrng"
+  },
+  {
+    "code": "GENG-4980",
+    "name": "Work Term III",
+    "faculty": "GENG",
+    "label": "GENG-4980 Work Term III"
+  },
+  {
+    "code": "GRST-1200",
+    "name": "Intro to Roman Civilization",
+    "faculty": "GRST",
+    "label": "GRST-1200 Intro to Roman Civilization"
+  },
+  {
+    "code": "GRST-2000",
+    "name": "The Fall of Rome",
+    "faculty": "GRST",
+    "label": "GRST-2000 The Fall of Rome"
+  },
+  {
+    "code": "GRST-2210",
+    "name": "Roman Novels",
+    "faculty": "GRST",
+    "label": "GRST-2210 Roman Novels"
+  },
+  {
+    "code": "GRST-2211",
+    "name": "Latin Love Elegy",
+    "faculty": "GRST",
+    "label": "GRST-2211 Latin Love Elegy"
+  },
+  {
+    "code": "GRST-2220",
+    "name": "Roman Art and Archaeology",
+    "faculty": "GRST",
+    "label": "GRST-2220 Roman Art and Archaeology"
+  },
+  {
+    "code": "GRST-3130",
+    "name": "Greek Mythology",
+    "faculty": "GRST",
+    "label": "GRST-3130 Greek Mythology"
+  },
+  {
+    "code": "HIST-1240",
+    "name": "World - 20 Century: 1945-Pres",
+    "faculty": "HIST",
+    "label": "HIST-1240 World - 20 Century: 1945-Pres"
+  },
+  {
+    "code": "HIST-1240",
+    "name": "Laboratory",
+    "faculty": "HIST",
+    "label": "HIST-1240 Laboratory"
+  },
+  {
+    "code": "HIST-2030",
+    "name": "Making Hist: Methods&Practices",
+    "faculty": "HIST",
+    "label": "HIST-2030 Making Hist: Methods&Practices"
+  },
+  {
+    "code": "HIST-2070",
+    "name": "Early Modern England:1485-1714",
+    "faculty": "HIST",
+    "label": "HIST-2070 Early Modern England:1485-1714"
+  },
+  {
+    "code": "HIST-2110",
+    "name": "Islam Hist: Cons, Expans&Empre",
+    "faculty": "HIST",
+    "label": "HIST-2110 Islam Hist: Cons, Expans&Empre"
+  },
+  {
+    "code": "HIST-2440",
+    "name": "Canada Since Confed: 1867-Pres",
+    "faculty": "HIST",
+    "label": "HIST-2440 Canada Since Confed: 1867-Pres"
+  },
+  {
+    "code": "HIST-2470",
+    "name": "Aborigl Ppl Cdn Hist:19th-Pres",
+    "faculty": "HIST",
+    "label": "HIST-2470 Aborigl Ppl Cdn Hist:19th-Pres"
+  },
+  {
+    "code": "HIST-2500",
+    "name": "Women in Canada & US 1870-Pres",
+    "faculty": "HIST",
+    "label": "HIST-2500 Women in Canada & US 1870-Pres"
+  },
+  {
+    "code": "HIST-3820",
+    "name": "Storytelling/Design In Pub His",
+    "faculty": "HIST",
+    "label": "HIST-3820 Storytelling/Design In Pub His"
+  },
+  {
+    "code": "HIST-3970",
+    "name": "Comm/Democracy in 20th Century",
+    "faculty": "HIST",
+    "label": "HIST-3970 Comm/Democracy in 20th Century"
+  },
+  {
+    "code": "HIST-4450",
+    "name": "Pol/Socy - Indl Can 1890-1930s",
+    "faculty": "HIST",
+    "label": "HIST-4450 Pol/Socy - Indl Can 1890-1930s"
+  },
+  {
+    "code": "HIST-4970",
+    "name": "Early Mod Eng 1485-1660",
+    "faculty": "HIST",
+    "label": "HIST-4970 Early Mod Eng 1485-1660"
+  },
+  {
+    "code": "HIST-4970",
+    "name": "Comm. & Democ. in 20th Century",
+    "faculty": "HIST",
+    "label": "HIST-4970 Comm. & Democ. in 20th Century"
+  },
+  {
+    "code": "HIST-4970",
+    "name": "1880 Detroit: Guilded Age Digi",
+    "faculty": "HIST",
+    "label": "HIST-4970 1880 Detroit: Guilded Age Digi"
+  },
+  {
+    "code": "IACS-2170",
+    "name": "Speaking Truth to Power: Voice",
+    "faculty": "IACS",
+    "label": "IACS-2170 Speaking Truth to Power: Voice"
+  },
+  {
+    "code": "IACS-3500",
+    "name": "Pract Strat/Soc Change",
+    "faculty": "IACS",
+    "label": "IACS-3500 Pract Strat/Soc Change"
+  },
+  {
+    "code": "IACS-4500",
+    "name": "Practicum in Social Change",
+    "faculty": "IACS",
+    "label": "IACS-4500 Practicum in Social Change"
+  },
+  {
+    "code": "ICDS-2010",
+    "name": "Dis.Studies/Theories & Culture",
+    "faculty": "ICDS",
+    "label": "ICDS-2010 Dis.Studies/Theories & Culture"
+  },
+  {
+    "code": "ICDS-3020",
+    "name": "Hist Approaches-People w/Dis",
+    "faculty": "ICDS",
+    "label": "ICDS-3020 Hist Approaches-People w/Dis"
+  },
+  {
+    "code": "ICDS-4650",
+    "name": "Comm Orientn-Disability Issues",
+    "faculty": "ICDS",
+    "label": "ICDS-4650 Comm Orientn-Disability Issues"
+  },
+  {
+    "code": "ICWG-1200",
+    "name": "Gal Pals: Women and Friendship",
+    "faculty": "ICWG",
+    "label": "ICWG-1200 Gal Pals: Women and Friendship"
+  },
+  {
+    "code": "ICWG-1300",
+    "name": "Imagining Women",
+    "faculty": "ICWG",
+    "label": "ICWG-1300 Imagining Women"
+  },
+  {
+    "code": "ICWG-2500",
+    "name": "Women's Bodies, Women's Health",
+    "faculty": "ICWG",
+    "label": "ICWG-2500 Women's Bodies, Women's Health"
+  },
+  {
+    "code": "ICWG-2700",
+    "name": "Gender, Power, and Language",
+    "faculty": "ICWG",
+    "label": "ICWG-2700 Gender, Power, and Language"
+  },
+  {
+    "code": "ICWG-3050",
+    "name": "Feminist Theories",
+    "faculty": "ICWG",
+    "label": "ICWG-3050 Feminist Theories"
+  },
+  {
+    "code": "ICWG-3540",
+    "name": "Home/Work/Leisure/ Digital Age",
+    "faculty": "ICWG",
+    "label": "ICWG-3540 Home/Work/Leisure/ Digital Age"
+  },
+  {
+    "code": "ICWG-3550",
+    "name": "Feminist Social Work Practice",
+    "faculty": "ICWG",
+    "label": "ICWG-3550 Feminist Social Work Practice"
+  },
+  {
+    "code": "ICWG-4000",
+    "name": "Exploring the Feminist Voice",
+    "faculty": "ICWG",
+    "label": "ICWG-4000 Exploring the Feminist Voice"
+  },
+  {
+    "code": "INCS-2370",
+    "name": "Germ, Ital, Span Lit Tradition",
+    "faculty": "INCS",
+    "label": "INCS-2370 Germ, Ital, Span Lit Tradition"
+  },
+  {
+    "code": "INCS-4370",
+    "name": "St:Ger/Ital/Span Lit&Vis Cult",
+    "faculty": "INCS",
+    "label": "INCS-4370 St:Ger/Ital/Span Lit&Vis Cult"
+  },
+  {
+    "code": "INDE-3150",
+    "name": "Product and Process Design",
+    "faculty": "INDE",
+    "label": "INDE-3150 Product and Process Design"
+  },
+  {
+    "code": "INDE-3150",
+    "name": "Laboratory",
+    "faculty": "INDE",
+    "label": "INDE-3150 Laboratory"
+  },
+  {
+    "code": "INDE-4130",
+    "name": "Production Analysis",
+    "faculty": "INDE",
+    "label": "INDE-4130 Production Analysis"
+  },
+  {
+    "code": "INDE-4130",
+    "name": "Laboratory",
+    "faculty": "INDE",
+    "label": "INDE-4130 Laboratory"
+  },
+  {
+    "code": "INDE-4220",
+    "name": "Simulation of Indl Systems",
+    "faculty": "INDE",
+    "label": "INDE-4220 Simulation of Indl Systems"
+  },
+  {
+    "code": "INDE-4220",
+    "name": "Laboratory",
+    "faculty": "INDE",
+    "label": "INDE-4220 Laboratory"
+  },
+  {
+    "code": "INDE-4280",
+    "name": "Facilities Design & Logistics",
+    "faculty": "INDE",
+    "label": "INDE-4280 Facilities Design & Logistics"
+  },
+  {
+    "code": "INDE-4280",
+    "name": "Laboratory",
+    "faculty": "INDE",
+    "label": "INDE-4280 Laboratory"
+  },
+  {
+    "code": "KINE-1200",
+    "name": "Intro to the Sport Industry",
+    "faculty": "KINE",
+    "label": "KINE-1200 Intro to the Sport Industry"
+  },
+  {
+    "code": "KINE-1330",
+    "name": "Intro to Sport Leadership",
+    "faculty": "KINE",
+    "label": "KINE-1330 Intro to Sport Leadership"
+  },
+  {
+    "code": "KINE-1660",
+    "name": "Functional Anatomy II",
+    "faculty": "KINE",
+    "label": "KINE-1660 Functional Anatomy II"
+  },
+  {
+    "code": "KINE-1660",
+    "name": "Laboratory",
+    "faculty": "KINE",
+    "label": "KINE-1660 Laboratory"
+  },
+  {
+    "code": "KINE-1800",
+    "name": "Mechanics of Human Motion",
+    "faculty": "KINE",
+    "label": "KINE-1800 Mechanics of Human Motion"
+  },
+  {
+    "code": "KINE-2040",
+    "name": "Sport Nutrition",
+    "faculty": "KINE",
+    "label": "KINE-2040 Sport Nutrition"
+  },
+  {
+    "code": "KINE-2150",
+    "name": "Fitness/ Lifestyle Assessment",
+    "faculty": "KINE",
+    "label": "KINE-2150 Fitness/ Lifestyle Assessment"
+  },
+  {
+    "code": "KINE-2150",
+    "name": "Laboratory",
+    "faculty": "KINE",
+    "label": "KINE-2150 Laboratory"
+  },
+  {
+    "code": "KINE-2300",
+    "name": "Sociology of Sport",
+    "faculty": "KINE",
+    "label": "KINE-2300 Sociology of Sport"
+  },
+  {
+    "code": "KINE-2450",
+    "name": "Sport Marketing",
+    "faculty": "KINE",
+    "label": "KINE-2450 Sport Marketing"
+  },
+  {
+    "code": "KINE-2690",
+    "name": "Measurement and Evaluation",
+    "faculty": "KINE",
+    "label": "KINE-2690 Measurement and Evaluation"
+  },
+  {
+    "code": "KINE-2850",
+    "name": "Human Growth & Development",
+    "faculty": "KINE",
+    "label": "KINE-2850 Human Growth & Development"
+  },
+  {
+    "code": "KINE-2990",
+    "name": "Co-op Work Experience I",
+    "faculty": "KINE",
+    "label": "KINE-2990 Co-op Work Experience I"
+  },
+  {
+    "code": "KINE-3020",
+    "name": "Exercise & Fitness Psychology",
+    "faculty": "KINE",
+    "label": "KINE-3020 Exercise & Fitness Psychology"
+  },
+  {
+    "code": "KINE-3400",
+    "name": "Hist of the Mod Olympic Mvt",
+    "faculty": "KINE",
+    "label": "KINE-3400 Hist of the Mod Olympic Mvt"
+  },
+  {
+    "code": "KINE-3501",
+    "name": "Prac Strategies -Social Change",
+    "faculty": "KINE",
+    "label": "KINE-3501 Prac Strategies -Social Change"
+  },
+  {
+    "code": "KINE-3510",
+    "name": "Strat Planning of Sport Events",
+    "faculty": "KINE",
+    "label": "KINE-3510 Strat Planning of Sport Events"
+  },
+  {
+    "code": "KINE-3550",
+    "name": "Socio-Econ Aspects: Sport/Leis",
+    "faculty": "KINE",
+    "label": "KINE-3550 Socio-Econ Aspects: Sport/Leis"
+  },
+  {
+    "code": "KINE-3770",
+    "name": "Sport Tactics and Strategies",
+    "faculty": "KINE",
+    "label": "KINE-3770 Sport Tactics and Strategies"
+  },
+  {
+    "code": "KINE-3990",
+    "name": "Co-op Work Experience II",
+    "faculty": "KINE",
+    "label": "KINE-3990 Co-op Work Experience II"
+  },
+  {
+    "code": "KINE-4150",
+    "name": "Fund./Appl. of Sport Science",
+    "faculty": "KINE",
+    "label": "KINE-4150 Fund./Appl. of Sport Science"
+  },
+  {
+    "code": "KINE-4150",
+    "name": "Laboratory",
+    "faculty": "KINE",
+    "label": "KINE-4150 Laboratory"
+  },
+  {
+    "code": "KINE-4400",
+    "name": "History of Sport in Canada",
+    "faculty": "KINE",
+    "label": "KINE-4400 History of Sport in Canada"
+  },
+  {
+    "code": "KINE-4500",
+    "name": "Human Resources / Sport Mgmt",
+    "faculty": "KINE",
+    "label": "KINE-4500 Human Resources / Sport Mgmt"
+  },
+  {
+    "code": "KINE-4600",
+    "name": "Cardiovascular Physiology",
+    "faculty": "KINE",
+    "label": "KINE-4600 Cardiovascular Physiology"
+  },
+  {
+    "code": "KINE-4610",
+    "name": "Clinical Exercise Rehabilitati",
+    "faculty": "KINE",
+    "label": "KINE-4610 Clinical Exercise Rehabilitati"
+  },
+  {
+    "code": "KINE-4620",
+    "name": "Exercise in Extreme Environs",
+    "faculty": "KINE",
+    "label": "KINE-4620 Exercise in Extreme Environs"
+  },
+  {
+    "code": "KINE-4640",
+    "name": "The Pathophysiology of Pain",
+    "faculty": "KINE",
+    "label": "KINE-4640 The Pathophysiology of Pain"
+  },
+  {
+    "code": "KINE-4670",
+    "name": "User Experience",
+    "faculty": "KINE",
+    "label": "KINE-4670 User Experience"
+  },
+  {
+    "code": "KINE-4750",
+    "name": "Individual Studies",
+    "faculty": "KINE",
+    "label": "KINE-4750 Individual Studies"
+  },
+  {
+    "code": "KINE-4760",
+    "name": "Principles of Coaching",
+    "faculty": "KINE",
+    "label": "KINE-4760 Principles of Coaching"
+  },
+  {
+    "code": "KINE-4930",
+    "name": "Lab Experiences/Kinesiology II",
+    "faculty": "KINE",
+    "label": "KINE-4930 Lab Experiences/Kinesiology II"
+  },
+  {
+    "code": "KINE-4980",
+    "name": "Internship",
+    "faculty": "KINE",
+    "label": "KINE-4980 Internship"
+  },
+  {
+    "code": "KINE-4990",
+    "name": "Co-op Work Experience III",
+    "faculty": "KINE",
+    "label": "KINE-4990 Co-op Work Experience III"
+  },
+  {
+    "code": "LAWS-2180",
+    "name": "Environmental Law",
+    "faculty": "LAWS",
+    "label": "LAWS-2180 Environmental Law"
+  },
+  {
+    "code": "LING-2210",
+    "name": "Language and Linguistics",
+    "faculty": "LING",
+    "label": "LING-2210 Language and Linguistics"
+  },
+  {
+    "code": "LING-4200",
+    "name": "Secnd Lang Educ Practicum",
+    "faculty": "LING",
+    "label": "LING-4200 Secnd Lang Educ Practicum"
+  },
+  {
+    "code": "MACS-2150",
+    "name": "Art and Visual Culture",
+    "faculty": "MACS",
+    "label": "MACS-2150 Art and Visual Culture"
+  },
+  {
+    "code": "MACS-2500",
+    "name": "Stories of the City",
+    "faculty": "MACS",
+    "label": "MACS-2500 Stories of the City"
+  },
+  {
+    "code": "MACS-3910",
+    "name": "Contemporary Architecture",
+    "faculty": "MACS",
+    "label": "MACS-3910 Contemporary Architecture"
+  },
+  {
+    "code": "MATH-1020",
+    "name": "Mathematical Foundations",
+    "faculty": "MATH",
+    "label": "MATH-1020 Mathematical Foundations"
+  },
+  {
+    "code": "MATH-1020",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1020 Laboratory"
+  },
+  {
+    "code": "MATH-1250",
+    "name": "Linear Algebra I",
+    "faculty": "MATH",
+    "label": "MATH-1250 Linear Algebra I"
+  },
+  {
+    "code": "MATH-1250",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1250 Laboratory"
+  },
+  {
+    "code": "MATH-1270",
+    "name": "Linear Algebra (Engineering)",
+    "faculty": "MATH",
+    "label": "MATH-1270 Linear Algebra (Engineering)"
+  },
+  {
+    "code": "MATH-1720",
+    "name": "Differential Calculus",
+    "faculty": "MATH",
+    "label": "MATH-1720 Differential Calculus"
+  },
+  {
+    "code": "MATH-1720",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1720 Laboratory"
+  },
+  {
+    "code": "MATH-1730",
+    "name": "Integral Calculus",
+    "faculty": "MATH",
+    "label": "MATH-1730 Integral Calculus"
+  },
+  {
+    "code": "MATH-1730",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1730 Laboratory"
+  },
+  {
+    "code": "MATH-1760",
+    "name": "Functions &Differentl Calculus",
+    "faculty": "MATH",
+    "label": "MATH-1760 Functions &Differentl Calculus"
+  },
+  {
+    "code": "MATH-1760",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1760 Laboratory"
+  },
+  {
+    "code": "MATH-1980",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-1980 Laboratory"
+  },
+  {
+    "code": "MATH-1980",
+    "name": "Mathematics for Business",
+    "faculty": "MATH",
+    "label": "MATH-1980 Mathematics for Business"
+  },
+  {
+    "code": "MATH-2251",
+    "name": "Linear Algebra III",
+    "faculty": "MATH",
+    "label": "MATH-2251 Linear Algebra III"
+  },
+  {
+    "code": "MATH-2251",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-2251 Laboratory"
+  },
+  {
+    "code": "MATH-2780",
+    "name": "Vector Calculus",
+    "faculty": "MATH",
+    "label": "MATH-2780 Vector Calculus"
+  },
+  {
+    "code": "MATH-2780",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-2780 Laboratory"
+  },
+  {
+    "code": "MATH-2790",
+    "name": "Differential Equations",
+    "faculty": "MATH",
+    "label": "MATH-2790 Differential Equations"
+  },
+  {
+    "code": "MATH-2790",
+    "name": "Laboratory",
+    "faculty": "MATH",
+    "label": "MATH-2790 Laboratory"
+  },
+  {
+    "code": "MATH-3270",
+    "name": "Number Theory",
+    "faculty": "MATH",
+    "label": "MATH-3270 Number Theory"
+  },
+  {
+    "code": "MATH-3550",
+    "name": "Intro-Fourier Series/Spc Fnctn",
+    "faculty": "MATH",
+    "label": "MATH-3550 Intro-Fourier Series/Spc Fnctn"
+  },
+  {
+    "code": "MATH-3581",
+    "name": "Introduction to Analysis II",
+    "faculty": "MATH",
+    "label": "MATH-3581 Introduction to Analysis II"
+  },
+  {
+    "code": "MATH-3590",
+    "name": "Complex Variables",
+    "faculty": "MATH",
+    "label": "MATH-3590 Complex Variables"
+  },
+  {
+    "code": "MATH-4000",
+    "name": "Topics in Math",
+    "faculty": "MATH",
+    "label": "MATH-4000 Topics in Math"
+  },
+  {
+    "code": "MATH-4210",
+    "name": "Ring Theory and Modules",
+    "faculty": "MATH",
+    "label": "MATH-4210 Ring Theory and Modules"
+  },
+  {
+    "code": "MATH-4570",
+    "name": "Functional Analysis",
+    "faculty": "MATH",
+    "label": "MATH-4570 Functional Analysis"
+  },
+  {
+    "code": "MECH-2210",
+    "name": "Dynamics",
+    "faculty": "MECH",
+    "label": "MECH-2210 Dynamics"
+  },
+  {
+    "code": "MECH-2210",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-2210 Laboratory"
+  },
+  {
+    "code": "MECH-2230",
+    "name": "Advanced Engineering & Design",
+    "faculty": "MECH",
+    "label": "MECH-2230 Advanced Engineering & Design"
+  },
+  {
+    "code": "MECH-3221",
+    "name": "Control Theory",
+    "faculty": "MECH",
+    "label": "MECH-3221 Control Theory"
+  },
+  {
+    "code": "MECH-3221",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-3221 Laboratory"
+  },
+  {
+    "code": "MECH-3224",
+    "name": "Engineering Measurements",
+    "faculty": "MECH",
+    "label": "MECH-3224 Engineering Measurements"
+  },
+  {
+    "code": "MECH-3224",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-3224 Laboratory"
+  },
+  {
+    "code": "MECH-3671",
+    "name": "Aerospace Materials & Mfg",
+    "faculty": "MECH",
+    "label": "MECH-3671 Aerospace Materials & Mfg"
+  },
+  {
+    "code": "MECH-3671",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-3671 Laboratory"
+  },
+  {
+    "code": "MECH-4211",
+    "name": "Design for Failure Prevention",
+    "faculty": "MECH",
+    "label": "MECH-4211 Design for Failure Prevention"
+  },
+  {
+    "code": "MECH-4211",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4211 Laboratory"
+  },
+  {
+    "code": "MECH-4218",
+    "name": "Thermofluid Systems Design",
+    "faculty": "MECH",
+    "label": "MECH-4218 Thermofluid Systems Design"
+  },
+  {
+    "code": "MECH-4218",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4218 Laboratory"
+  },
+  {
+    "code": "MECH-4221",
+    "name": "Machine Design",
+    "faculty": "MECH",
+    "label": "MECH-4221 Machine Design"
+  },
+  {
+    "code": "MECH-4221",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4221 Laboratory"
+  },
+  {
+    "code": "MECH-4240",
+    "name": "Advanced Mechatronics",
+    "faculty": "MECH",
+    "label": "MECH-4240 Advanced Mechatronics"
+  },
+  {
+    "code": "MECH-4240",
+    "name": "Biomedical Signal Processing",
+    "faculty": "MECH",
+    "label": "MECH-4240 Biomedical Signal Processing"
+  },
+  {
+    "code": "MECH-4250",
+    "name": "Gas Dynamics",
+    "faculty": "MECH",
+    "label": "MECH-4250 Gas Dynamics"
+  },
+  {
+    "code": "MECH-4250",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4250 Laboratory"
+  },
+  {
+    "code": "MECH-4253",
+    "name": "Htg, Ventiln &Air Conditioning",
+    "faculty": "MECH",
+    "label": "MECH-4253 Htg, Ventiln &Air Conditioning"
+  },
+  {
+    "code": "MECH-4253",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4253 Laboratory"
+  },
+  {
+    "code": "MECH-4463",
+    "name": "Vehicle Dynamics",
+    "faculty": "MECH",
+    "label": "MECH-4463 Vehicle Dynamics"
+  },
+  {
+    "code": "MECH-4463",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4463 Laboratory"
+  },
+  {
+    "code": "MECH-4465",
+    "name": "Internal Combustion Engines",
+    "faculty": "MECH",
+    "label": "MECH-4465 Internal Combustion Engines"
+  },
+  {
+    "code": "MECH-4465",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4465 Laboratory"
+  },
+  {
+    "code": "MECH-4471",
+    "name": "Automotive Mat/Manufctrng Meth",
+    "faculty": "MECH",
+    "label": "MECH-4471 Automotive Mat/Manufctrng Meth"
+  },
+  {
+    "code": "MECH-4471",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4471 Laboratory"
+  },
+  {
+    "code": "MECH-4670",
+    "name": "Aerospace Propulsion",
+    "faculty": "MECH",
+    "label": "MECH-4670 Aerospace Propulsion"
+  },
+  {
+    "code": "MECH-4670",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4670 Laboratory"
+  },
+  {
+    "code": "MECH-4673",
+    "name": "Aerospace Structures",
+    "faculty": "MECH",
+    "label": "MECH-4673 Aerospace Structures"
+  },
+  {
+    "code": "MECH-4673",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4673 Laboratory"
+  },
+  {
+    "code": "MECH-4871",
+    "name": "Automotive Mat/Manufctrng Meth",
+    "faculty": "MECH",
+    "label": "MECH-4871 Automotive Mat/Manufctrng Meth"
+  },
+  {
+    "code": "MECH-4871",
+    "name": "Laboratory",
+    "faculty": "MECH",
+    "label": "MECH-4871 Laboratory"
+  },
+  {
+    "code": "MGMT-1000",
+    "name": "Business Communications",
+    "faculty": "MGMT",
+    "label": "MGMT-1000 Business Communications"
+  },
+  {
+    "code": "MGMT-2400",
+    "name": "Organizational Behaviour",
+    "faculty": "MGMT",
+    "label": "MGMT-2400 Organizational Behaviour"
+  },
+  {
+    "code": "MGMT-2430",
+    "name": "Human Resources Management",
+    "faculty": "MGMT",
+    "label": "MGMT-2430 Human Resources Management"
+  },
+  {
+    "code": "MGMT-3000",
+    "name": "Bus Ethics in a Global Context",
+    "faculty": "MGMT",
+    "label": "MGMT-3000 Bus Ethics in a Global Context"
+  },
+  {
+    "code": "MGMT-3830",
+    "name": "Intl Human Resources Mgmt",
+    "faculty": "MGMT",
+    "label": "MGMT-3830 Intl Human Resources Mgmt"
+  },
+  {
+    "code": "MGMT-4490",
+    "name": "Negotiations",
+    "faculty": "MGMT",
+    "label": "MGMT-4490 Negotiations"
+  },
+  {
+    "code": "MGMT-4510",
+    "name": "Organizational Staffing",
+    "faculty": "MGMT",
+    "label": "MGMT-4510 Organizational Staffing"
+  },
+  {
+    "code": "MGMT-4520",
+    "name": "Mgt:Org Health Wellness&Safety",
+    "faculty": "MGMT",
+    "label": "MGMT-4520 Mgt:Org Health Wellness&Safety"
+  },
+  {
+    "code": "MGMT-4850",
+    "name": "Human Resources Planning",
+    "faculty": "MGMT",
+    "label": "MGMT-4850 Human Resources Planning"
+  },
+  {
+    "code": "MKTG-1310",
+    "name": "Principles of Marketing",
+    "faculty": "MKTG",
+    "label": "MKTG-1310 Principles of Marketing"
+  },
+  {
+    "code": "MKTG-2320",
+    "name": "Mktg Problems-Applns & Decisns",
+    "faculty": "MKTG",
+    "label": "MKTG-2320 Mktg Problems-Applns & Decisns"
+  },
+  {
+    "code": "MKTG-3320",
+    "name": "Research Methods in Marketing",
+    "faculty": "MKTG",
+    "label": "MKTG-3320 Research Methods in Marketing"
+  },
+  {
+    "code": "MKTG-4330",
+    "name": "Digital Marketing",
+    "faculty": "MKTG",
+    "label": "MKTG-4330 Digital Marketing"
+  },
+  {
+    "code": "MKTG-4350",
+    "name": "International Marketing",
+    "faculty": "MKTG",
+    "label": "MKTG-4350 International Marketing"
+  },
+  {
+    "code": "MKTG-4390",
+    "name": "Marketing Strategy & Planning",
+    "faculty": "MKTG",
+    "label": "MKTG-4390 Marketing Strategy & Planning"
+  },
+  {
+    "code": "MKTG-4950",
+    "name": "AI in Marketing",
+    "faculty": "MKTG",
+    "label": "MKTG-4950 AI in Marketing"
+  },
+  {
+    "code": "MSCI-1000",
+    "name": "Intro - Business Data Analysis",
+    "faculty": "MSCI",
+    "label": "MSCI-1000 Intro - Business Data Analysis"
+  },
+  {
+    "code": "MSCI-2020",
+    "name": "Business Data Analysis",
+    "faculty": "MSCI",
+    "label": "MSCI-2020 Business Data Analysis"
+  },
+  {
+    "code": "MSCI-2130",
+    "name": "Intro to Mgmt Info Systems",
+    "faculty": "MSCI",
+    "label": "MSCI-2130 Intro to Mgmt Info Systems"
+  },
+  {
+    "code": "MSCI-2200",
+    "name": "Quantitative Decision Models I",
+    "faculty": "MSCI",
+    "label": "MSCI-2200 Quantitative Decision Models I"
+  },
+  {
+    "code": "MSCI-2250",
+    "name": "Intro to Project Management",
+    "faculty": "MSCI",
+    "label": "MSCI-2250 Intro to Project Management"
+  },
+  {
+    "code": "MSCI-3110",
+    "name": "Intro to Data Base Management",
+    "faculty": "MSCI",
+    "label": "MSCI-3110 Intro to Data Base Management"
+  },
+  {
+    "code": "MSCI-3120",
+    "name": "Bus Processes & Data Analytics",
+    "faculty": "MSCI",
+    "label": "MSCI-3120 Bus Processes & Data Analytics"
+  },
+  {
+    "code": "MSCI-3310",
+    "name": "Operations Management I",
+    "faculty": "MSCI",
+    "label": "MSCI-3310 Operations Management I"
+  },
+  {
+    "code": "MSCI-3410",
+    "name": "Supply Chain Mgt I:Intro &Fund",
+    "faculty": "MSCI",
+    "label": "MSCI-3410 Supply Chain Mgt I:Intro &Fund"
+  },
+  {
+    "code": "MUSC-1130",
+    "name": "Music Theory & Musicianship II",
+    "faculty": "MUSC",
+    "label": "MUSC-1130 Music Theory & Musicianship II"
+  },
+  {
+    "code": "MUSC-1270",
+    "name": "Music History & Literature II",
+    "faculty": "MUSC",
+    "label": "MUSC-1270 Music History & Literature II"
+  },
+  {
+    "code": "MUSC-2130",
+    "name": "Music Theory/Musicianship IV",
+    "faculty": "MUSC",
+    "label": "MUSC-2130 Music Theory/Musicianship IV"
+  },
+  {
+    "code": "MUSC-4260",
+    "name": "St: Twentieth Century Music",
+    "faculty": "MUSC",
+    "label": "MUSC-4260 St: Twentieth Century Music"
+  },
+  {
+    "code": "MUSP-2100",
+    "name": "University Singers",
+    "faculty": "MUSP",
+    "label": "MUSP-2100 University Singers"
+  },
+  {
+    "code": "MUSP-2400",
+    "name": "Jazz Ensemble",
+    "faculty": "MUSP",
+    "label": "MUSP-2400 Jazz Ensemble"
+  },
+  {
+    "code": "MUSP-2470",
+    "name": "Voice: Performance Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2470 Voice: Performance Instruction"
+  },
+  {
+    "code": "MUSP-2480",
+    "name": "Piano: Performance Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2480 Piano: Performance Instruction"
+  },
+  {
+    "code": "MUSP-2490",
+    "name": "Organ: Performance Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2490 Organ: Performance Instruction"
+  },
+  {
+    "code": "MUSP-2520",
+    "name": "Flute: Performance Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2520 Flute: Performance Instruction"
+  },
+  {
+    "code": "MUSP-2530",
+    "name": "Oboe (Performance Instruction)",
+    "faculty": "MUSP",
+    "label": "MUSP-2530 Oboe (Performance Instruction)"
+  },
+  {
+    "code": "MUSP-2540",
+    "name": "Clarinet: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2540 Clarinet: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2550",
+    "name": "Saxophone: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2550 Saxophone: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2560",
+    "name": "Bassoon: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2560 Bassoon: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2570",
+    "name": "French Horn: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2570 French Horn: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2580",
+    "name": "Trumpet: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2580 Trumpet: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2590",
+    "name": "Trombone: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2590 Trombone: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2610",
+    "name": "Euphonium: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2610 Euphonium: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2620",
+    "name": "Tuba (Performance Instruction)",
+    "faculty": "MUSP",
+    "label": "MUSP-2620 Tuba (Performance Instruction)"
+  },
+  {
+    "code": "MUSP-2630",
+    "name": "Violin: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2630 Violin: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2640",
+    "name": "Viola: Performance Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2640 Viola: Performance Instruction"
+  },
+  {
+    "code": "MUSP-2650",
+    "name": "Cello: Performane Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2650 Cello: Performane Instruction"
+  },
+  {
+    "code": "MUSP-2660",
+    "name": "Double Bass: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2660 Double Bass: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2670",
+    "name": "Percussion: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2670 Percussion: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2680",
+    "name": "Harp (Performance Instruction)",
+    "faculty": "MUSP",
+    "label": "MUSP-2680 Harp (Performance Instruction)"
+  },
+  {
+    "code": "MUSP-2690",
+    "name": "Guitar: Perf Instruction",
+    "faculty": "MUSP",
+    "label": "MUSP-2690 Guitar: Perf Instruction"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Appl Jazz/Pop: Perf Instruct",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Appl Jazz/Pop: Perf Instruct"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Piano",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Piano"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Woodwinds",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Woodwinds"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Brass",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Brass"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Guitar",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Guitar"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Bass",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Bass"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Percussion",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Percussion"
+  },
+  {
+    "code": "MUSP-2710",
+    "name": "Music Production",
+    "faculty": "MUSP",
+    "label": "MUSP-2710 Music Production"
+  },
+  {
+    "code": "MUSP-3100",
+    "name": "Chamber Choir",
+    "faculty": "MUSP",
+    "label": "MUSP-3100 Chamber Choir"
+  },
+  {
+    "code": "MUSP-4000",
+    "name": "Chamber Music - String Quartet",
+    "faculty": "MUSP",
+    "label": "MUSP-4000 Chamber Music - String Quartet"
+  },
+  {
+    "code": "NURS-1120",
+    "name": "Professional Nursing II",
+    "faculty": "NURS",
+    "label": "NURS-1120 Professional Nursing II"
+  },
+  {
+    "code": "NURS-1220",
+    "name": "Human Anatomy &Physiology II",
+    "faculty": "NURS",
+    "label": "NURS-1220 Human Anatomy &Physiology II"
+  },
+  {
+    "code": "NURS-1220",
+    "name": "Laboratory",
+    "faculty": "NURS",
+    "label": "NURS-1220 Laboratory"
+  },
+  {
+    "code": "NURS-1310",
+    "name": "Pharmacology/Medication Mgmt I",
+    "faculty": "NURS",
+    "label": "NURS-1310 Pharmacology/Medication Mgmt I"
+  },
+  {
+    "code": "NURS-1410",
+    "name": "Holistic Health Assessment I",
+    "faculty": "NURS",
+    "label": "NURS-1410 Holistic Health Assessment I"
+  },
+  {
+    "code": "NURS-1512",
+    "name": "Clinical Practicum I",
+    "faculty": "NURS",
+    "label": "NURS-1512 Clinical Practicum I"
+  },
+  {
+    "code": "NURS-1521",
+    "name": "Experiential Learning Lab II",
+    "faculty": "NURS",
+    "label": "NURS-1521 Experiential Learning Lab II"
+  },
+  {
+    "code": "NURS-1612",
+    "name": "Consolidated Practicum I",
+    "faculty": "NURS",
+    "label": "NURS-1612 Consolidated Practicum I"
+  },
+  {
+    "code": "NURS-2522",
+    "name": "Clinical Practicum II",
+    "faculty": "NURS",
+    "label": "NURS-2522 Clinical Practicum II"
+  },
+  {
+    "code": "NURS-2532",
+    "name": "Clinical Practicum III",
+    "faculty": "NURS",
+    "label": "NURS-2532 Clinical Practicum III"
+  },
+  {
+    "code": "NURS-2541",
+    "name": "Experiential Learning Lab IV",
+    "faculty": "NURS",
+    "label": "NURS-2541 Experiential Learning Lab IV"
+  },
+  {
+    "code": "NURS-2622",
+    "name": "Consolidated Practicum II",
+    "faculty": "NURS",
+    "label": "NURS-2622 Consolidated Practicum II"
+  },
+  {
+    "code": "NURS-2820",
+    "name": "Adult Hlth/Hlth Alterations II",
+    "faculty": "NURS",
+    "label": "NURS-2820 Adult Hlth/Hlth Alterations II"
+  },
+  {
+    "code": "NURS-2920",
+    "name": "Maternal and Newborn Care",
+    "faculty": "NURS",
+    "label": "NURS-2920 Maternal and Newborn Care"
+  },
+  {
+    "code": "NURS-2930",
+    "name": "Mental Health Nursing",
+    "faculty": "NURS",
+    "label": "NURS-2930 Mental Health Nursing"
+  },
+  {
+    "code": "NURS-3130",
+    "name": "Prof Nursing III: Leader & Mgm",
+    "faculty": "NURS",
+    "label": "NURS-3130 Prof Nursing III: Leader & Mgm"
+  },
+  {
+    "code": "NURS-3542",
+    "name": "Clinical Practicum IV",
+    "faculty": "NURS",
+    "label": "NURS-3542 Clinical Practicum IV"
+  },
+  {
+    "code": "NURS-3552",
+    "name": "Clinical Practicum V",
+    "faculty": "NURS",
+    "label": "NURS-3552 Clinical Practicum V"
+  },
+  {
+    "code": "NURS-3561",
+    "name": "Experiential Learning Lab VI",
+    "faculty": "NURS",
+    "label": "NURS-3561 Experiential Learning Lab VI"
+  },
+  {
+    "code": "NURS-3632",
+    "name": "Consolidated Practicum III",
+    "faculty": "NURS",
+    "label": "NURS-3632 Consolidated Practicum III"
+  },
+  {
+    "code": "NURS-3840",
+    "name": "Adult Health Alterations IV",
+    "faculty": "NURS",
+    "label": "NURS-3840 Adult Health Alterations IV"
+  },
+  {
+    "code": "NURS-3970",
+    "name": "Health Issues in Gerontology",
+    "faculty": "NURS",
+    "label": "NURS-3970 Health Issues in Gerontology"
+  },
+  {
+    "code": "NURS-4140",
+    "name": "Professional Nursing IV",
+    "faculty": "NURS",
+    "label": "NURS-4140 Professional Nursing IV"
+  },
+  {
+    "code": "NURS-4562",
+    "name": "Integrtd Clin. Pract:Community",
+    "faculty": "NURS",
+    "label": "NURS-4562 Integrtd Clin. Pract:Community"
+  },
+  {
+    "code": "NURS-4571",
+    "name": "Experiential Learning Lab VII",
+    "faculty": "NURS",
+    "label": "NURS-4571 Experiential Learning Lab VII"
+  },
+  {
+    "code": "NURS-4572",
+    "name": "Integrated Clinical Prac: Hosp",
+    "faculty": "NURS",
+    "label": "NURS-4572 Integrated Clinical Prac: Hosp"
+  },
+  {
+    "code": "NURS-4951",
+    "name": "The Human Meaning of Death",
+    "faculty": "NURS",
+    "label": "NURS-4951 The Human Meaning of Death"
+  },
+  {
+    "code": "NURS-4980",
+    "name": "Palliative & End-of-Life Care",
+    "faculty": "NURS",
+    "label": "NURS-4980 Palliative & End-of-Life Care"
+  },
+  {
+    "code": "NURS-4990",
+    "name": "Issues in Global/Planetary Hth",
+    "faculty": "NURS",
+    "label": "NURS-4990 Issues in Global/Planetary Hth"
+  },
+  {
+    "code": "NURS-4999",
+    "name": "Wound Management",
+    "faculty": "NURS",
+    "label": "NURS-4999 Wound Management"
+  },
+  {
+    "code": "NURS-4999",
+    "name": "Indigenous Health",
+    "faculty": "NURS",
+    "label": "NURS-4999 Indigenous Health"
+  },
+  {
+    "code": "NURS-4999",
+    "name": "RN Prescribing",
+    "faculty": "NURS",
+    "label": "NURS-4999 RN Prescribing"
+  },
+  {
+    "code": "NURS-4999",
+    "name": "Nursing Specialty Option(T)",
+    "faculty": "NURS",
+    "label": "NURS-4999 Nursing Specialty Option(T)"
+  },
+  {
+    "code": "PHIL-1100",
+    "name": "Intro to Western Philosophy",
+    "faculty": "PHIL",
+    "label": "PHIL-1100 Intro to Western Philosophy"
+  },
+  {
+    "code": "PHIL-1120",
+    "name": "Philosophy and Human Nature",
+    "faculty": "PHIL",
+    "label": "PHIL-1120 Philosophy and Human Nature"
+  },
+  {
+    "code": "PHIL-1290",
+    "name": "Contemporary Moral Issues",
+    "faculty": "PHIL",
+    "label": "PHIL-1290 Contemporary Moral Issues"
+  },
+  {
+    "code": "PHIL-1600",
+    "name": "Reasoning Skills",
+    "faculty": "PHIL",
+    "label": "PHIL-1600 Reasoning Skills"
+  },
+  {
+    "code": "PHIL-1600",
+    "name": "Laboratory",
+    "faculty": "PHIL",
+    "label": "PHIL-1600 Laboratory"
+  },
+  {
+    "code": "PHIL-2210",
+    "name": "Introduction to Ethics",
+    "faculty": "PHIL",
+    "label": "PHIL-2210 Introduction to Ethics"
+  },
+  {
+    "code": "PHIL-2280",
+    "name": "Tech, Human Values & Environ",
+    "faculty": "PHIL",
+    "label": "PHIL-2280 Tech, Human Values & Environ"
+  },
+  {
+    "code": "PHIL-2430",
+    "name": "Philosophy of Art",
+    "faculty": "PHIL",
+    "label": "PHIL-2430 Philosophy of Art"
+  },
+  {
+    "code": "PHIL-2540",
+    "name": "Theory of Knowledge",
+    "faculty": "PHIL",
+    "label": "PHIL-2540 Theory of Knowledge"
+  },
+  {
+    "code": "PHIL-2620",
+    "name": "Symbolic Logic",
+    "faculty": "PHIL",
+    "label": "PHIL-2620 Symbolic Logic"
+  },
+  {
+    "code": "PHIL-2660",
+    "name": "Reasoning About Weird Things",
+    "faculty": "PHIL",
+    "label": "PHIL-2660 Reasoning About Weird Things"
+  },
+  {
+    "code": "PHIL-2760",
+    "name": "Early Modern Philosophy",
+    "faculty": "PHIL",
+    "label": "PHIL-2760 Early Modern Philosophy"
+  },
+  {
+    "code": "PHIL-3780",
+    "name": "19th Cent.Phil- Syst & Freedom",
+    "faculty": "PHIL",
+    "label": "PHIL-3780 19th Cent.Phil- Syst & Freedom"
+  },
+  {
+    "code": "PHIL-4000",
+    "name": "Humanisms",
+    "faculty": "PHIL",
+    "label": "PHIL-4000 Humanisms"
+  },
+  {
+    "code": "PHIL-4720",
+    "name": "Analytic/Pragmatist Philosophy",
+    "faculty": "PHIL",
+    "label": "PHIL-4720 Analytic/Pragmatist Philosophy"
+  },
+  {
+    "code": "PHYS-1010",
+    "name": "Introduction to Astronomy II",
+    "faculty": "PHYS",
+    "label": "PHYS-1010 Introduction to Astronomy II"
+  },
+  {
+    "code": "PHYS-1310",
+    "name": "Intro Physics - Life Scie II",
+    "faculty": "PHYS",
+    "label": "PHYS-1310 Intro Physics - Life Scie II"
+  },
+  {
+    "code": "PHYS-1310",
+    "name": "Laboratory",
+    "faculty": "PHYS",
+    "label": "PHYS-1310 Laboratory"
+  },
+  {
+    "code": "PHYS-1400",
+    "name": "Introductory Physics I",
+    "faculty": "PHYS",
+    "label": "PHYS-1400 Introductory Physics I"
+  },
+  {
+    "code": "PHYS-1400",
+    "name": "Laboratory",
+    "faculty": "PHYS",
+    "label": "PHYS-1400 Laboratory"
+  },
+  {
+    "code": "PHYS-1410",
+    "name": "Introductory Physics II",
+    "faculty": "PHYS",
+    "label": "PHYS-1410 Introductory Physics II"
+  },
+  {
+    "code": "PHYS-1410",
+    "name": "Laboratory",
+    "faculty": "PHYS",
+    "label": "PHYS-1410 Laboratory"
+  },
+  {
+    "code": "PHYS-1500",
+    "name": "From Symmetry to Chaos-Univers",
+    "faculty": "PHYS",
+    "label": "PHYS-1500 From Symmetry to Chaos-Univers"
+  },
+  {
+    "code": "PHYS-1500",
+    "name": "Laboratory",
+    "faculty": "PHYS",
+    "label": "PHYS-1500 Laboratory"
+  },
+  {
+    "code": "PHYS-2040",
+    "name": "History of Astronomy",
+    "faculty": "PHYS",
+    "label": "PHYS-2040 History of Astronomy"
+  },
+  {
+    "code": "PHYS-2210",
+    "name": "Modern Physics",
+    "faculty": "PHYS",
+    "label": "PHYS-2210 Modern Physics"
+  },
+  {
+    "code": "PHYS-2500",
+    "name": "Intermediate Mechanics",
+    "faculty": "PHYS",
+    "label": "PHYS-2500 Intermediate Mechanics"
+  },
+  {
+    "code": "PHYS-2500",
+    "name": "Laboratory",
+    "faculty": "PHYS",
+    "label": "PHYS-2500 Laboratory"
+  },
+  {
+    "code": "PHYS-2980",
+    "name": "Co-op Work Term I",
+    "faculty": "PHYS",
+    "label": "PHYS-2980 Co-op Work Term I"
+  },
+  {
+    "code": "PHYS-3210",
+    "name": "Electromagnetism: Dynamics",
+    "faculty": "PHYS",
+    "label": "PHYS-3210 Electromagnetism: Dynamics"
+  },
+  {
+    "code": "PHYS-3700",
+    "name": "Intro to Medical Physics",
+    "faculty": "PHYS",
+    "label": "PHYS-3700 Intro to Medical Physics"
+  },
+  {
+    "code": "PHYS-3980",
+    "name": "Co-op Work Term II",
+    "faculty": "PHYS",
+    "label": "PHYS-3980 Co-op Work Term II"
+  },
+  {
+    "code": "PHYS-4600",
+    "name": "Special Topics in Physics",
+    "faculty": "PHYS",
+    "label": "PHYS-4600 Special Topics in Physics"
+  },
+  {
+    "code": "PHYS-4980",
+    "name": "Co-op Work Term III",
+    "faculty": "PHYS",
+    "label": "PHYS-4980 Co-op Work Term III"
+  },
+  {
+    "code": "POLS-1000",
+    "name": "Intro: Cdn Govt & Politics",
+    "faculty": "POLS",
+    "label": "POLS-1000 Intro: Cdn Govt & Politics"
+  },
+  {
+    "code": "POLS-1300",
+    "name": "Comp Politics in Changing Wld",
+    "faculty": "POLS",
+    "label": "POLS-1300 Comp Politics in Changing Wld"
+  },
+  {
+    "code": "POLS-1600",
+    "name": "Intro: International Relations",
+    "faculty": "POLS",
+    "label": "POLS-1600 Intro: International Relations"
+  },
+  {
+    "code": "POLS-2015",
+    "name": "From University to Work",
+    "faculty": "POLS",
+    "label": "POLS-2015 From University to Work"
+  },
+  {
+    "code": "POLS-2140",
+    "name": "Legal Process in Canada",
+    "faculty": "POLS",
+    "label": "POLS-2140 Legal Process in Canada"
+  },
+  {
+    "code": "POLS-2210",
+    "name": "Cdn Public Admin & Policy",
+    "faculty": "POLS",
+    "label": "POLS-2210 Cdn Public Admin & Policy"
+  },
+  {
+    "code": "POLS-2330",
+    "name": "Politics: Developing World",
+    "faculty": "POLS",
+    "label": "POLS-2330 Politics: Developing World"
+  },
+  {
+    "code": "POLS-2490",
+    "name": "Pol Econ of Agriculture & Food",
+    "faculty": "POLS",
+    "label": "POLS-2490 Pol Econ of Agriculture & Food"
+  },
+  {
+    "code": "POLS-2610",
+    "name": "Politics, Hist & Wstrn Religns",
+    "faculty": "POLS",
+    "label": "POLS-2610 Politics, Hist & Wstrn Religns"
+  },
+  {
+    "code": "POLS-2750",
+    "name": "Research Mthds: Political Scie",
+    "faculty": "POLS",
+    "label": "POLS-2750 Research Mthds: Political Scie"
+  },
+  {
+    "code": "POLS-3000",
+    "name": "Indigenous Treaties/Land Claim",
+    "faculty": "POLS",
+    "label": "POLS-3000 Indigenous Treaties/Land Claim"
+  },
+  {
+    "code": "POLS-3140",
+    "name": "Constitl Law & Politics-Canada",
+    "faculty": "POLS",
+    "label": "POLS-3140 Constitl Law & Politics-Canada"
+  },
+  {
+    "code": "POLS-3350",
+    "name": "Political Geography",
+    "faculty": "POLS",
+    "label": "POLS-3350 Political Geography"
+  },
+  {
+    "code": "POLS-3460",
+    "name": "Asian Government and Politics",
+    "faculty": "POLS",
+    "label": "POLS-3460 Asian Government and Politics"
+  },
+  {
+    "code": "POLS-3519",
+    "name": "Topics in Political Thought",
+    "faculty": "POLS",
+    "label": "POLS-3519 Topics in Political Thought"
+  },
+  {
+    "code": "POLS-3550",
+    "name": "Political Economy - Intl Trade",
+    "faculty": "POLS",
+    "label": "POLS-3550 Political Economy - Intl Trade"
+  },
+  {
+    "code": "POLS-3610",
+    "name": "U.S. Foreign Policy",
+    "faculty": "POLS",
+    "label": "POLS-3610 U.S. Foreign Policy"
+  },
+  {
+    "code": "POLS-3630",
+    "name": "Principles of Intl Law",
+    "faculty": "POLS",
+    "label": "POLS-3630 Principles of Intl Law"
+  },
+  {
+    "code": "POLS-3990",
+    "name": "Pract: Government and Politics",
+    "faculty": "POLS",
+    "label": "POLS-3990 Pract: Government and Politics"
+  },
+  {
+    "code": "POLS-4110",
+    "name": "Cdn Politics:Participn&Process",
+    "faculty": "POLS",
+    "label": "POLS-4110 Cdn Politics:Participn&Process"
+  },
+  {
+    "code": "POLS-4420",
+    "name": "Pol & Sec. in Russia & Eurasia",
+    "faculty": "POLS",
+    "label": "POLS-4420 Pol & Sec. in Russia & Eurasia"
+  },
+  {
+    "code": "POLS-4450",
+    "name": "Today's Totalitarian Trends",
+    "faculty": "POLS",
+    "label": "POLS-4450 Today's Totalitarian Trends"
+  },
+  {
+    "code": "POLS-4610",
+    "name": "Theories: Intl Relations",
+    "faculty": "POLS",
+    "label": "POLS-4610 Theories: Intl Relations"
+  },
+  {
+    "code": "POLS-4980",
+    "name": "Pol.Sci Thesis2: Writ & Pres.",
+    "faculty": "POLS",
+    "label": "POLS-4980 Pol.Sci Thesis2: Writ & Pres."
+  },
+  {
+    "code": "PSYC-1150",
+    "name": "Intro: Psyc / Behavioural Scie",
+    "faculty": "PSYC",
+    "label": "PSYC-1150 Intro: Psyc / Behavioural Scie"
+  },
+  {
+    "code": "PSYC-1160",
+    "name": "Intro: Psychology /Social Scie",
+    "faculty": "PSYC",
+    "label": "PSYC-1160 Intro: Psychology /Social Scie"
+  },
+  {
+    "code": "PSYC-2230",
+    "name": "Devl Psychology: The Child",
+    "faculty": "PSYC",
+    "label": "PSYC-2230 Devl Psychology: The Child"
+  },
+  {
+    "code": "PSYC-2240",
+    "name": "Devl Psychology: Adolescence",
+    "faculty": "PSYC",
+    "label": "PSYC-2240 Devl Psychology: Adolescence"
+  },
+  {
+    "code": "PSYC-2250",
+    "name": "Dev Psy: Adulthood and Aging",
+    "faculty": "PSYC",
+    "label": "PSYC-2250 Dev Psy: Adulthood and Aging"
+  },
+  {
+    "code": "PSYC-2280",
+    "name": "Psychological Disorders",
+    "faculty": "PSYC",
+    "label": "PSYC-2280 Psychological Disorders"
+  },
+  {
+    "code": "PSYC-2300",
+    "name": "Social Scie Research Methods",
+    "faculty": "PSYC",
+    "label": "PSYC-2300 Social Scie Research Methods"
+  },
+  {
+    "code": "PSYC-2300",
+    "name": "Laboratory",
+    "faculty": "PSYC",
+    "label": "PSYC-2300 Laboratory"
+  },
+  {
+    "code": "PSYC-2360",
+    "name": "Intro to Social Psychology",
+    "faculty": "PSYC",
+    "label": "PSYC-2360 Intro to Social Psychology"
+  },
+  {
+    "code": "PSYC-2560",
+    "name": "Intro: Brain & Human Behaviour",
+    "faculty": "PSYC",
+    "label": "PSYC-2560 Intro: Brain & Human Behaviour"
+  },
+  {
+    "code": "PSYC-3200",
+    "name": "Tests & Measurement",
+    "faculty": "PSYC",
+    "label": "PSYC-3200 Tests & Measurement"
+  },
+  {
+    "code": "PSYC-3220",
+    "name": "Child Psychopathology",
+    "faculty": "PSYC",
+    "label": "PSYC-3220 Child Psychopathology"
+  },
+  {
+    "code": "PSYC-3270",
+    "name": "Psyc Perspectives: Parenting",
+    "faculty": "PSYC",
+    "label": "PSYC-3270 Psyc Perspectives: Parenting"
+  },
+  {
+    "code": "PSYC-3310",
+    "name": "Conducting Research in Psyc",
+    "faculty": "PSYC",
+    "label": "PSYC-3310 Conducting Research in Psyc"
+  },
+  {
+    "code": "PSYC-3370",
+    "name": "Human Cognitive Neuroscience",
+    "faculty": "PSYC",
+    "label": "PSYC-3370 Human Cognitive Neuroscience"
+  },
+  {
+    "code": "PSYC-3500",
+    "name": "Practical Strat: Social Change",
+    "faculty": "PSYC",
+    "label": "PSYC-3500 Practical Strat: Social Change"
+  },
+  {
+    "code": "PSYC-3580",
+    "name": "Cognitive Processes",
+    "faculty": "PSYC",
+    "label": "PSYC-3580 Cognitive Processes"
+  },
+  {
+    "code": "PSYC-3580",
+    "name": "Laboratory",
+    "faculty": "PSYC",
+    "label": "PSYC-3580 Laboratory"
+  },
+  {
+    "code": "PSYC-4150",
+    "name": "History & Systems of Psyc",
+    "faculty": "PSYC",
+    "label": "PSYC-4150 History & Systems of Psyc"
+  },
+  {
+    "code": "PSYC-4240",
+    "name": "Advanced Developmental/Social",
+    "faculty": "PSYC",
+    "label": "PSYC-4240 Advanced Developmental/Social"
+  },
+  {
+    "code": "PSYC-4270",
+    "name": "Methods of Behavioural Change",
+    "faculty": "PSYC",
+    "label": "PSYC-4270 Methods of Behavioural Change"
+  },
+  {
+    "code": "PSYC-4300",
+    "name": "Clinical and Counselling Psyc",
+    "faculty": "PSYC",
+    "label": "PSYC-4300 Clinical and Counselling Psyc"
+  },
+  {
+    "code": "PSYC-4450",
+    "name": "Stereotypg, Prejudice&Discrimn",
+    "faculty": "PSYC",
+    "label": "PSYC-4450 Stereotypg, Prejudice&Discrimn"
+  },
+  {
+    "code": "PSYC-4500",
+    "name": "Practicum in Social Change",
+    "faculty": "PSYC",
+    "label": "PSYC-4500 Practicum in Social Change"
+  },
+  {
+    "code": "PSYC-4970",
+    "name": "Thesis: Research",
+    "faculty": "PSYC",
+    "label": "PSYC-4970 Thesis: Research"
+  },
+  {
+    "code": "SACR-1100",
+    "name": "Foundations of Social Life",
+    "faculty": "SACR",
+    "label": "SACR-1100 Foundations of Social Life"
+  },
+  {
+    "code": "SACR-2050",
+    "name": "Sociology of Sexualities",
+    "faculty": "SACR",
+    "label": "SACR-2050 Sociology of Sexualities"
+  },
+  {
+    "code": "SACR-2280",
+    "name": "Class, Wealth &Power in Canada",
+    "faculty": "SACR",
+    "label": "SACR-2280 Class, Wealth &Power in Canada"
+  },
+  {
+    "code": "SACR-2600",
+    "name": "Introduction to Criminology",
+    "faculty": "SACR",
+    "label": "SACR-2600 Introduction to Criminology"
+  },
+  {
+    "code": "SACR-2910",
+    "name": "Theorizing Social Life",
+    "faculty": "SACR",
+    "label": "SACR-2910 Theorizing Social Life"
+  },
+  {
+    "code": "SACR-3080",
+    "name": "Intermediate Statistics",
+    "faculty": "SACR",
+    "label": "SACR-3080 Intermediate Statistics"
+  },
+  {
+    "code": "SACR-3080",
+    "name": "Laboratory",
+    "faculty": "SACR",
+    "label": "SACR-3080 Laboratory"
+  },
+  {
+    "code": "SACR-3400",
+    "name": "Food and Global Sustainability",
+    "faculty": "SACR",
+    "label": "SACR-3400 Food and Global Sustainability"
+  },
+  {
+    "code": "SACR-3500",
+    "name": "Practical Strat: Social Change",
+    "faculty": "SACR",
+    "label": "SACR-3500 Practical Strat: Social Change"
+  },
+  {
+    "code": "SACR-3540",
+    "name": "Home/Work/Leisure/ Digital Age",
+    "faculty": "SACR",
+    "label": "SACR-3540 Home/Work/Leisure/ Digital Age"
+  },
+  {
+    "code": "SACR-3620",
+    "name": "Victimology",
+    "faculty": "SACR",
+    "label": "SACR-3620 Victimology"
+  },
+  {
+    "code": "SACR-3630",
+    "name": "Penology",
+    "faculty": "SACR",
+    "label": "SACR-3630 Penology"
+  },
+  {
+    "code": "SACR-3650",
+    "name": "Green Criminology",
+    "faculty": "SACR",
+    "label": "SACR-3650 Green Criminology"
+  },
+  {
+    "code": "SACR-3730",
+    "name": "Contemporary Crimin. Theory",
+    "faculty": "SACR",
+    "label": "SACR-3730 Contemporary Crimin. Theory"
+  },
+  {
+    "code": "SACR-3740",
+    "name": "Crime, Media and Culture",
+    "faculty": "SACR",
+    "label": "SACR-3740 Crime, Media and Culture"
+  },
+  {
+    "code": "SACR-3820",
+    "name": "Surveillance and Society",
+    "faculty": "SACR",
+    "label": "SACR-3820 Surveillance and Society"
+  },
+  {
+    "code": "SACR-3900",
+    "name": "Qual Approach to Soc &Cult Res",
+    "faculty": "SACR",
+    "label": "SACR-3900 Qual Approach to Soc &Cult Res"
+  },
+  {
+    "code": "SACR-3910",
+    "name": "Contemporary Social Theory",
+    "faculty": "SACR",
+    "label": "SACR-3910 Contemporary Social Theory"
+  },
+  {
+    "code": "SACR-4210",
+    "name": "Spec Tpcs: Soci & Criminology",
+    "faculty": "SACR",
+    "label": "SACR-4210 Spec Tpcs: Soci & Criminology"
+  },
+  {
+    "code": "SACR-4220",
+    "name": "Adv Sem: Race and Ethnicity",
+    "faculty": "SACR",
+    "label": "SACR-4220 Adv Sem: Race and Ethnicity"
+  },
+  {
+    "code": "SACR-4500",
+    "name": "Practicum in Social Change",
+    "faculty": "SACR",
+    "label": "SACR-4500 Practicum in Social Change"
+  },
+  {
+    "code": "SACR-4510",
+    "name": "Adv Sem: Sexualities & Idents",
+    "faculty": "SACR",
+    "label": "SACR-4510 Adv Sem: Sexualities & Idents"
+  },
+  {
+    "code": "SACR-4600",
+    "name": "Adv Sem:in Deviance /Soc Issue",
+    "faculty": "SACR",
+    "label": "SACR-4600 Adv Sem:in Deviance /Soc Issue"
+  },
+  {
+    "code": "SACR-4640",
+    "name": "Adv Sem: Sociology of Law",
+    "faculty": "SACR",
+    "label": "SACR-4640 Adv Sem: Sociology of Law"
+  },
+  {
+    "code": "SCIE-1000",
+    "name": "Comm. Sci. in the Wider World",
+    "faculty": "SCIE",
+    "label": "SCIE-1000 Comm. Sci. in the Wider World"
+  },
+  {
+    "code": "SCIE-3800",
+    "name": "Service Learning",
+    "faculty": "SCIE",
+    "label": "SCIE-3800 Service Learning"
+  },
+  {
+    "code": "SCIE-3990",
+    "name": "Internship",
+    "faculty": "SCIE",
+    "label": "SCIE-3990 Internship"
+  },
+  {
+    "code": "SOSC-1210",
+    "name": "An Intro to Indigenous Topics",
+    "faculty": "SOSC",
+    "label": "SOSC-1210 An Intro to Indigenous Topics"
+  },
+  {
+    "code": "SOSC-2500",
+    "name": "Basic Quantitative Methods",
+    "faculty": "SOSC",
+    "label": "SOSC-2500 Basic Quantitative Methods"
+  },
+  {
+    "code": "SOSC-2500",
+    "name": "Laboratory",
+    "faculty": "SOSC",
+    "label": "SOSC-2500 Laboratory"
+  },
+  {
+    "code": "SOSC-3500",
+    "name": "Prac Strategies -Social Change",
+    "faculty": "SOSC",
+    "label": "SOSC-3500 Prac Strategies -Social Change"
+  },
+  {
+    "code": "SOSC-4500",
+    "name": "Practicum in Social Change",
+    "faculty": "SOSC",
+    "label": "SOSC-4500 Practicum in Social Change"
+  },
+  {
+    "code": "SPAN-1020",
+    "name": "Intensive Spanish: Beginners",
+    "faculty": "SPAN",
+    "label": "SPAN-1020 Intensive Spanish: Beginners"
+  },
+  {
+    "code": "SPAN-2020",
+    "name": "Intensive Intermediate Spanish",
+    "faculty": "SPAN",
+    "label": "SPAN-2020 Intensive Intermediate Spanish"
+  },
+  {
+    "code": "STAT-2910",
+    "name": "Statistics for the Sciences",
+    "faculty": "STAT",
+    "label": "STAT-2910 Statistics for the Sciences"
+  },
+  {
+    "code": "STAT-2910",
+    "name": "Laboratory",
+    "faculty": "STAT",
+    "label": "STAT-2910 Laboratory"
+  },
+  {
+    "code": "STAT-2950",
+    "name": "Introduction to Statistics",
+    "faculty": "STAT",
+    "label": "STAT-2950 Introduction to Statistics"
+  },
+  {
+    "code": "STAT-3950",
+    "name": "Statistics",
+    "faculty": "STAT",
+    "label": "STAT-3950 Statistics"
+  },
+  {
+    "code": "STAT-3960",
+    "name": "Stochastic Operations Research",
+    "faculty": "STAT",
+    "label": "STAT-3960 Stochastic Operations Research"
+  },
+  {
+    "code": "STAT-4200",
+    "name": "Actuarial Regression and Time",
+    "faculty": "STAT",
+    "label": "STAT-4200 Actuarial Regression and Time"
+  },
+  {
+    "code": "STAT-4410",
+    "name": "Stochastic Processes",
+    "faculty": "STAT",
+    "label": "STAT-4410 Stochastic Processes"
+  },
+  {
+    "code": "STAT-4981",
+    "name": "Sampling Theory",
+    "faculty": "STAT",
+    "label": "STAT-4981 Sampling Theory"
+  },
+  {
+    "code": "STEN-1000",
+    "name": "Introduction to Business",
+    "faculty": "STEN",
+    "label": "STEN-1000 Introduction to Business"
+  },
+  {
+    "code": "STEN-2050",
+    "name": "B. Comm. Co-op Work Term I",
+    "faculty": "STEN",
+    "label": "STEN-2050 B. Comm. Co-op Work Term I"
+  },
+  {
+    "code": "STEN-2900",
+    "name": "Fundamentals of Entrepreneur",
+    "faculty": "STEN",
+    "label": "STEN-2900 Fundamentals of Entrepreneur"
+  },
+  {
+    "code": "STEN-3050",
+    "name": "B. Comm. Co-op Work Term II",
+    "faculty": "STEN",
+    "label": "STEN-3050 B. Comm. Co-op Work Term II"
+  },
+  {
+    "code": "STEN-3930",
+    "name": "International Business",
+    "faculty": "STEN",
+    "label": "STEN-3930 International Business"
+  },
+  {
+    "code": "STEN-3970",
+    "name": "Law & Business Administration",
+    "faculty": "STEN",
+    "label": "STEN-3970 Law & Business Administration"
+  },
+  {
+    "code": "STEN-4050",
+    "name": "B. Comm. Co-op Work Term III",
+    "faculty": "STEN",
+    "label": "STEN-4050 B. Comm. Co-op Work Term III"
+  },
+  {
+    "code": "STEN-4930",
+    "name": "Field St: Strategic Mgmt/Entr",
+    "faculty": "STEN",
+    "label": "STEN-4930 Field St: Strategic Mgmt/Entr"
+  },
+  {
+    "code": "STEN-4950",
+    "name": "Sfty Migrt Labr/Cdn Agri Bus",
+    "faculty": "STEN",
+    "label": "STEN-4950 Sfty Migrt Labr/Cdn Agri Bus"
+  },
+  {
+    "code": "STEN-4950",
+    "name": "Unemployment in Windsor",
+    "faculty": "STEN",
+    "label": "STEN-4950 Unemployment in Windsor"
+  },
+  {
+    "code": "STEN-4980",
+    "name": "Strategic Management",
+    "faculty": "STEN",
+    "label": "STEN-4980 Strategic Management"
+  },
+  {
+    "code": "SWRK-1180",
+    "name": "Meeting Human Needs /Soc Work",
+    "faculty": "SWRK",
+    "label": "SWRK-1180 Meeting Human Needs /Soc Work"
+  },
+  {
+    "code": "SWRK-2040",
+    "name": "Issues&Perspect-Social Welfare",
+    "faculty": "SWRK",
+    "label": "SWRK-2040 Issues&Perspect-Social Welfare"
+  },
+  {
+    "code": "SWRK-2100",
+    "name": "Social Work and Diversity",
+    "faculty": "SWRK",
+    "label": "SWRK-2100 Social Work and Diversity"
+  },
+  {
+    "code": "SWRK-3380",
+    "name": "Theory, Pract SW With Families",
+    "faculty": "SWRK",
+    "label": "SWRK-3380 Theory, Pract SW With Families"
+  },
+  {
+    "code": "SWRK-3390",
+    "name": "Theory, Pract-SW-Communs/Orgn",
+    "faculty": "SWRK",
+    "label": "SWRK-3390 Theory, Pract-SW-Communs/Orgn"
+  },
+  {
+    "code": "SWRK-3500",
+    "name": "Practical Strat: Social Change",
+    "faculty": "SWRK",
+    "label": "SWRK-3500 Practical Strat: Social Change"
+  },
+  {
+    "code": "SWRK-3550",
+    "name": "Feminist Social Work Practice",
+    "faculty": "SWRK",
+    "label": "SWRK-3550 Feminist Social Work Practice"
+  },
+  {
+    "code": "SWRK-3710",
+    "name": "Field Education Preparation",
+    "faculty": "SWRK",
+    "label": "SWRK-3710 Field Education Preparation"
+  },
+  {
+    "code": "SWRK-4310",
+    "name": "Integration Seminar II",
+    "faculty": "SWRK",
+    "label": "SWRK-4310 Integration Seminar II"
+  },
+  {
+    "code": "SWRK-4500",
+    "name": "Practicum in Social Change",
+    "faculty": "SWRK",
+    "label": "SWRK-4500 Practicum in Social Change"
+  },
+  {
+    "code": "SWRK-4750",
+    "name": "Field Education II",
+    "faculty": "SWRK",
+    "label": "SWRK-4750 Field Education II"
+  },
+  {
+    "code": "TRON-2201",
+    "name": "Kinematics/Dynamics of Machine",
+    "faculty": "TRON",
+    "label": "TRON-2201 Kinematics/Dynamics of Machine"
+  },
+  {
+    "code": "TRON-2201",
+    "name": "Laboratory",
+    "faculty": "TRON",
+    "label": "TRON-2201 Laboratory"
+  },
+  {
+    "code": "VABE-1200",
+    "name": "Architectural Design II",
+    "faculty": "VABE",
+    "label": "VABE-1200 Architectural Design II"
+  },
+  {
+    "code": "VABE-1200",
+    "name": "Laboratory",
+    "faculty": "VABE",
+    "label": "VABE-1200 Laboratory"
+  },
+  {
+    "code": "VABE-1290",
+    "name": "Intro to Architecture II",
+    "faculty": "VABE",
+    "label": "VABE-1290 Intro to Architecture II"
+  },
+  {
+    "code": "VABE-2110",
+    "name": "Visual Communications II",
+    "faculty": "VABE",
+    "label": "VABE-2110 Visual Communications II"
+  },
+  {
+    "code": "VABE-2130",
+    "name": "Princ: Structural Behaviour",
+    "faculty": "VABE",
+    "label": "VABE-2130 Princ: Structural Behaviour"
+  },
+  {
+    "code": "VABE-2400",
+    "name": "Architectural Design IV",
+    "faculty": "VABE",
+    "label": "VABE-2400 Architectural Design IV"
+  },
+  {
+    "code": "VABE-2840",
+    "name": "Building Structures II",
+    "faculty": "VABE",
+    "label": "VABE-2840 Building Structures II"
+  },
+  {
+    "code": "VABE-2860",
+    "name": "Building Environment II",
+    "faculty": "VABE",
+    "label": "VABE-2860 Building Environment II"
+  },
+  {
+    "code": "VABE-2880",
+    "name": "Building Construction II",
+    "faculty": "VABE",
+    "label": "VABE-2880 Building Construction II"
+  },
+  {
+    "code": "VABE-3200",
+    "name": "Architectural Design VI",
+    "faculty": "VABE",
+    "label": "VABE-3200 Architectural Design VI"
+  },
+  {
+    "code": "VSAR-1060",
+    "name": "Studio Practice & Ideas /Image",
+    "faculty": "VSAR",
+    "label": "VSAR-1060 Studio Practice & Ideas /Image"
+  },
+  {
+    "code": "VSAR-1070",
+    "name": "Studio Practice &Ideas/Drawing",
+    "faculty": "VSAR",
+    "label": "VSAR-1070 Studio Practice &Ideas/Drawing"
+  },
+  {
+    "code": "VSAR-2030",
+    "name": "Introductory Drawing",
+    "faculty": "VSAR",
+    "label": "VSAR-2030 Introductory Drawing"
+  },
+  {
+    "code": "VSAR-2130",
+    "name": "Introductory Painting",
+    "faculty": "VSAR",
+    "label": "VSAR-2130 Introductory Painting"
+  },
+  {
+    "code": "VSAR-2330",
+    "name": "Introductory Sculpture",
+    "faculty": "VSAR",
+    "label": "VSAR-2330 Introductory Sculpture"
+  },
+  {
+    "code": "VSAR-2900",
+    "name": "Intro Photography: Digital",
+    "faculty": "VSAR",
+    "label": "VSAR-2900 Intro Photography: Digital"
+  },
+  {
+    "code": "VSAR-3830",
+    "name": "Intermedia Practices-Processes",
+    "faculty": "VSAR",
+    "label": "VSAR-3830 Intermedia Practices-Processes"
+  },
+  {
+    "code": "VSAR-3860",
+    "name": "Bioart: Contemp Art & Life Sci",
+    "faculty": "VSAR",
+    "label": "VSAR-3860 Bioart: Contemp Art & Life Sci"
+  },
+  {
+    "code": "VSAR-3900",
+    "name": "Collage and Intermedia",
+    "faculty": "VSAR",
+    "label": "VSAR-3900 Collage and Intermedia"
+  },
+  {
+    "code": "VSAR-3900",
+    "name": "Curation",
+    "faculty": "VSAR",
+    "label": "VSAR-3900 Curation"
+  },
+  {
+    "code": "VSAR-4810",
+    "name": "Studio Practice II",
+    "faculty": "VSAR",
+    "label": "VSAR-4810 Studio Practice II"
+  }
+]

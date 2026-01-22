@@ -13,6 +13,17 @@ datasource db {
   provider = "postgresql"
 }
 
+// Enum to hold the days for availability
+enum DayOfWeek {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
+}
+
 // A user model
 model User {
   id                     String                   @id @default(uuid())
@@ -25,6 +36,7 @@ model User {
   EmailVerificationToken EmailVerificationToken[]
   resetTokens            PasswordResetToken[]
   passwordHistory        PasswordHistory[]
+  profile                Profile?
 }
 
 // A refresh token model
@@ -84,4 +96,82 @@ model PasswordHistory {
 
   @@index([userId])
   @@index([oldHash])
+}
+
+// Model to store the basic information for a user profile
+model Profile {
+  id             String  @id @default(uuid())
+  userId         String  @unique
+  name           String
+  bio            String?
+  major          String
+  yearOfStudy    Int
+  isTutor        Boolean @default(false)
+  isTutee        Boolean @default(false)
+  profilePicture String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorCourses ProfileTutorCourse[]
+  tuteeCourses ProfileTuteeCourse[]
+  availability AvailabilitySlot[]
+
+  @@index([major])
+  @@index([yearOfStudy])
+  @@index([isTutor])
+  @@index([isTutee])
+}
+
+// Model to store Course objects, which will be preseeded
+model Course {
+  id                 Int                  @id @default(autoincrement())
+  code               String               @unique
+  name               String
+  ProfileTutorCourse ProfileTutorCourse[]
+  ProfileTuteeCourse ProfileTuteeCourse[]
+
+  @@index([code])
+}
+
+// Model to hold courses someone wants to tutor in
+model ProfileTutorCourse {
+  id        String @id @default(uuid())
+  profileId String
+  courseId  Int
+
+  profile Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  @@unique([profileId, courseId])
+  @@index([courseId])
+}
+
+// Model to hold courses someone wants to be tutored in
+model ProfileTuteeCourse {
+  id        String @id @default(uuid())
+  profileId String
+  courseId  Int
+
+  profile Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  @@unique([profileId, courseId])
+  @@index([courseId])
+}
+
+// Model to hold a users various availability slots
+model AvailabilitySlot {
+  id        Int       @id @default(autoincrement())
+  profileId String
+  day       DayOfWeek
+  startMin  Int
+  endMin    Int
+
+  createdAt DateTime @default(now())
+  profile   Profile  @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([day])
 }
