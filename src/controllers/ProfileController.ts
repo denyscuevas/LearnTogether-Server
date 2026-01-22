@@ -113,8 +113,103 @@ export const createProfile = async (req: express.Request, res: express.Response)
         });
 
         // Returning a success message, and including the profile data
-        return res.status(201).json({ message: "Profile created", profile });
+        return res.status(201).json({
+            message: "Profile created", profile
+        });
     } catch (error) {
-        return res.status(500).json({ message: "Server error", error });
+        return res.status(500).json({
+            message: "Server error", error
+        });
+    }
+};
+
+// Logic to get the user information for the logged-in user (ME)
+export const getMyProfile = async (req: express.Request, res: express.Response) => {
+    try {
+
+        // Get the user object in the request
+        const userId = (req as any).user?.id;
+
+        if (!userId) {
+            return res.status(401).json({
+                message: "Unauthorized"
+            });
+        }
+
+        // Retrieve the profile-related information for the user
+        const profile = await prisma.profile.findUnique({
+            where: { userId },
+            include: {
+                user: { select: { id: true } },
+                tutorCourses: { include: { course: true } },
+                tuteeCourses: { include: { course: true } },
+                availability: true,
+            },
+        });
+
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Return the profile information
+        return res.status(200).json({
+            profile,
+            isOwnProfile: true,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error", error
+        });
+    }
+};
+
+// Logic to get the user information for another profile
+export const getOtherProfile = async (req: express.Request, res: express.Response) => {
+    try {
+
+        // Get the id of the user that's making the request, and the id of the user being viewed
+        const viewerId = (req as any).user?.id;
+        const { userId } = req.params;
+
+        if (!viewerId) {
+            return res.status(401).json({
+                message: "Unauthorized"
+            });
+        }
+
+        if (!userId) {
+            return res.status(400).json({
+                message: "Missing userId"
+            });
+        }
+
+        // Retrieve the profile-related information for the user
+        const profile = await prisma.profile.findUnique({
+            where: { userId },
+            include: {
+                user: { select: { id: true, email: true } },
+                tutorCourses: { include: { course: true } },
+                tuteeCourses: { include: { course: true } },
+                availability: true,
+            },
+        });
+
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Return the profile information
+        return res.status(200).json({
+            profile,
+            isOwnProfile: viewerId === userId,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error", error
+        });
     }
 };

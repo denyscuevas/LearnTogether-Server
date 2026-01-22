@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser1@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -83,4 +83,8 @@ Content-Type: application/json
     { "day": "THU", "startMin": 840, "endMin": 960 }
   ]
 }
+
+### Get a users information (ME)
+GET {{ BASE_URL }}/api/profiles/me
+Authorization: Bearer Bearer TOKEN_HERE
 
