@@ -61,6 +61,9 @@ Content-Type: application/json
   "password_confirmation": "neewPassword#1244444"
 }
 
+
+
+
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTI5OTIzLCJleHAiOjE3NjkxMzE3MjN9.XjX7x2-RtXzuZzYRBHXp0SrhQLTtt-3j1MsQgj3qkpw
@@ -90,7 +93,7 @@ Authorization: Bearer Bearer TOKEN_HERE
 
 ### PUT update a users profile
 PUT {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer Bearer TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
 Content-Type: application/json
 
 {
@@ -110,4 +113,39 @@ Content-Type: application/json
     { "day": "FRI", "startMin": 900, "endMin": 1020 }
   ]
 }
+
+
+
+
+### POST create a thread
+POST {{ BASE_URL }}/api/threads
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Content-Type: application/json
+
+{
+  "participant1": "2c9694bd-7b02-4b8d-b97a-5d66c603bcc6",
+  "participant2": "59fe1392-775a-4976-bb26-f8487f182ddf"
+}
+
+### GET a user's threads
+GET {{ BASE_URL }}/api/threads/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Content-Type: application/json
+
+
+### POST Create a message
+POST {{ BASE_URL }}/api/messages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Content-Type: application/json
+
+{
+  "threadId": "d63d1932-5d00-4030-9ea4-04ce093a1d1d",
+  "senderId": "b2556edd-4767-471e-a5e4-46156d636ecc",
+  "content": "Hi"
+}
+
+### GET Get messaegs from thread
+GET {{ BASE_URL }}/api/messages/d63d1932-5d00-4030-9ea4-04ce093a1d1d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Content-Type: application/json
 
