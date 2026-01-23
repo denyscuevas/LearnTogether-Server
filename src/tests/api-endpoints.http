@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser5@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser5@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -30,8 +30,8 @@ GET {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "d4b17dde-19dd-4d0e-81e9-ed352834dfd1",
-  "otpCode": "321295"
+  "id": "59fe1392-775a-4976-bb26-f8487f182ddf",
+  "otpCode": "748404"
 }
 
 ### POST Send a password reset email
@@ -63,14 +63,14 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTI5OTIzLCJleHAiOjE3NjkxMzE3MjN9.XjX7x2-RtXzuZzYRBHXp0SrhQLTtt-3j1MsQgj3qkpw
 Content-Type: application/json
 
 {
-  "name": "Linus Torvald",
+  "name": "User 5",
   "bio": "Second year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
-  "yearOfStudy": 4,
+  "yearOfStudy": 2,
 
   "isTutor": true,
   "isTutee": true,
