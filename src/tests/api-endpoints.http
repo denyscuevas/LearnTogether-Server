@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser5@uwindsor.ca",
+  "email": "testuser61@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -22,7 +22,7 @@ POST {{ BASE_URL }}/api/auth/resend-verification
 Content-Type: application/json
 
 {
-  "email": "testuser1@uwindsor.ca"
+  "email": "email8@uwindsor.ca"
 }
 
 ### GET Verify a user token for email verification

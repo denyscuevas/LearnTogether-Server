@@ -169,7 +169,7 @@ export const login = async (req: express.Request, res: express.Response) => {
             httpOnly: true,
             secure: false,
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         // Returning the success response
