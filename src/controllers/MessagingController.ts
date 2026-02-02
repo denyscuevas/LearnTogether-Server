@@ -15,7 +15,10 @@ export const createThread = async (req: Request, res: Response) => {
 
         // Ensure a thread cannot be created between two users other than themselves
         if (userId !== participant1 && userId !== participant2) {
-            return res.status(401).json({message: "You can only create a thread between yourself and another user", userId: userId});
+            return res.status(401).json({
+                message: "You can only create a thread between yourself and another user",
+                userId: userId
+            });
         }
 
         if (!participant1 || !participant2) {
@@ -60,8 +63,8 @@ export const createThread = async (req: Request, res: Response) => {
                     }
                 }
             });
-        //     If a thread exists between the two participants, return a conflict error
-        }else {
+            //     If a thread exists between the two participants, return a conflict error
+        } else {
             return res.status(409).json({
                 message: "Thread already exists between these participants"
             });
@@ -92,7 +95,7 @@ export const getThreads = async (req: Request, res: Response) => {
                     }
                 }
                 // Include participant profiles in the thread object
-            }, include: {ThreadParticipant: {include: {user: {include: {profile: true}}}}}
+            }, include: {ThreadParticipant: {include: {user: {select: {profile: true}}}}}
         })
 
         // Return the threads

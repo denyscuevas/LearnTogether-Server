@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser61@uwindsor.ca",
+  "email": "testuser1@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser5@uwindsor.ca",
+  "email": "testuser1@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -22,16 +22,16 @@ POST {{ BASE_URL }}/api/auth/resend-verification
 Content-Type: application/json
 
 {
-  "email": "email8@uwindsor.ca"
+  "email": "newmail@uwindsor.ca"
 }
 
 ### GET Verify a user token for email verification
-GET {{ BASE_URL }}/api/auth/verify-email
+POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "59fe1392-775a-4976-bb26-f8487f182ddf",
-  "otpCode": "748404"
+  "id": "438ed80f-ab46-4bb4-9a1a-0663dec6967a",
+  "otpCode": "893401"
 }
 
 ### POST Send a password reset email
@@ -66,20 +66,20 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTI5OTIzLCJleHAiOjE3NjkxMzE3MjN9.XjX7x2-RtXzuZzYRBHXp0SrhQLTtt-3j1MsQgj3qkpw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3YjI0YjRiLTRjMjAtNDIzZS05NWM0LTk3ZTE1ZTNmYmIxOSIsImVtYWlsIjoidGVzdHVzZXIzNUB1d2luZHNvci5jYSIsImlhdCI6MTc2OTg3NzMxMCwiZXhwIjoxNzY5ODc5MTEwfQ.gstcLlOOSAP8GLM4z7dsqycLZNBjmmDTS5jB0MdpGZA
 Content-Type: application/json
 
 {
-  "name": "User 5",
+  "name": "User 1",
   "bio": "Second year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
   "yearOfStudy": 2,
 
-  "isTutor": true,
+  "isTutor": false,
   "isTutee": true,
 
-  "tutorCourseIds": [1, 3, 5],
-  "tuteeCourseIds": [91, 124],
+  "tutorCourseIds": [],
+  "tuteeCourseIds": [760, 805],
 
   "availability": [
     { "day": "TUE", "startMin": 540, "endMin": 660 },
@@ -93,20 +93,20 @@ Authorization: Bearer Bearer TOKEN_HERE
 
 ### PUT update a users profile
 PUT {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRjZGY5M2ZhLTlmYmUtNDFmYy1iNTg4LTU5YWNjMmVhMWVmNSIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODc3NTczLCJleHAiOjE3Njk4NzkzNzN9.OBuk8xNXoNmpO-np1JaaAxeg7ezthte271Rk_IoM81s
 Content-Type: application/json
 
 {
-  "name": "Linus Torvald",
+  "name": "User 2",
   "bio": "Third year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
   "yearOfStudy": 3,
 
   "isTutor": true,
-  "isTutee": true,
+  "isTutee": false,
 
-  "tutorCourseIds": [6, 7, 8],
-  "tuteeCourseIds": [23, 26],
+  "tutorCourseIds": [760, 801, 805],
+  "tuteeCourseIds": [],
 
   "availability": [
     { "day": "WED", "startMin": 600, "endMin": 710 },
@@ -119,33 +119,33 @@ Content-Type: application/json
 
 ### POST create a thread
 POST {{ BASE_URL }}/api/threads
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzOGVkODBmLWFiNDYtNGJiNC05YTFhLTA2NjNkZWM2OTY3YSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODc3NzQzLCJleHAiOjE3Njk4Nzk1NDN9.XRyrhE6AlY8mq3KVn0P5Ezfmu_JUjmxGQD1_CNf2YIs
 Content-Type: application/json
 
 {
-  "participant1": "2c9694bd-7b02-4b8d-b97a-5d66c603bcc6",
-  "participant2": "59fe1392-775a-4976-bb26-f8487f182ddf"
+  "participant1": "47b24b4b-4c20-423e-95c4-97e15e3fbb19",
+  "participant2": "438ed80f-ab46-4bb4-9a1a-0663dec6967a"
 }
 
 ### GET a user's threads
 GET {{ BASE_URL }}/api/threads/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzOGVkODBmLWFiNDYtNGJiNC05YTFhLTA2NjNkZWM2OTY3YSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODgxNzU1LCJleHAiOjE3Njk4ODM1NTV9.1U5yURU2MfcSdah3o4xwakr03rcOySblMPQqo46cFoA
 Content-Type: application/json
 
 
 ### POST Create a message
 POST {{ BASE_URL }}/api/messages
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzOGVkODBmLWFiNDYtNGJiNC05YTFhLTA2NjNkZWM2OTY3YSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODg1NjkyLCJleHAiOjE3Njk4ODc0OTJ9.WUKSltMYnrLoy3CLPHzKfHL4580W_QiCPaT6xbbjdVI
 Content-Type: application/json
 
 {
-  "threadId": "d63d1932-5d00-4030-9ea4-04ce093a1d1d",
-  "senderId": "b2556edd-4767-471e-a5e4-46156d636ecc",
+  "threadId": "1b9a518f-cf69-4568-86fb-5d7b5efb7144",
+  "senderId": "438ed80f-ab46-4bb4-9a1a-0663dec6967a",
   "content": "Hi"
 }
 
 ### GET Get messaegs from thread
-GET {{ BASE_URL }}/api/messages/d63d1932-5d00-4030-9ea4-04ce093a1d1d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZmUxMzkyLTc3NWEtNDk3Ni1iYjI2LWY4NDg3ZjE4MmRkZiIsImVtYWlsIjoidGVzdHVzZXI1QHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5MTg3MjM4LCJleHAiOjE3NjkxODkwMzh9.zWtevYglZlw8R8kIVFxqW0BuLiNytpCoUh18oabCrfU
+GET {{ BASE_URL }}/api/messages/1b9a518f-cf69-4568-86fb-5d7b5efb7144
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzOGVkODBmLWFiNDYtNGJiNC05YTFhLTA2NjNkZWM2OTY3YSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODg1NjkyLCJleHAiOjE3Njk4ODc0OTJ9.WUKSltMYnrLoy3CLPHzKfHL4580W_QiCPaT6xbbjdVI
 Content-Type: application/json
 

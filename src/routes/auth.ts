@@ -72,7 +72,7 @@ router.post("/reset-password",
     resetPassword);
 
 // Verify email and resend email routes
-router.get("/verify-email",
+router.post("/verify-email",
     [
         body("otpCode").isLength({min: 6, max: 6}).withMessage("Invalid OTP code")
     ], checkRequestErrors,
