@@ -3,6 +3,8 @@ import type {Request, Response} from "express";
 import prisma from "../config/prismaClient.ts";
 import profile from "../routes/profile.ts";
 import type {Message} from "../generated/prisma/client.ts";
+import message from "../routes/message.ts";
+import {decrypt} from "../services/message.ts";
 
 // Create a new thread between two users //
 
@@ -108,39 +110,10 @@ export const getThreads = async (req: Request, res: Response) => {
     }
 }
 
-// Create a new message //
-
-export const createMessage = async (req: Request, res: Response) => {
-    try {
-        const {threadId, senderId, content} = req.body;
-
-        // Check if all required fields are provided
-        if (!threadId || !senderId || !content) {
-            return res.status(400).json({message: "Thread ID, sender ID, and content are required to create a message"});
-        }
-
-        // Create the new message
-        const newMessage = await prisma.message.create({
-            data: {
-                threadId,
-                senderId,
-                content
-            }
-        })
-
-        // Return the new message
-        return res.status(201).json({
-            message: "Message created successfully",
-            data: newMessage
-        });
-    } catch (error) {
-        return res.status(500).json({message: "Server error", error});
-    }
-}
-
+// Store the message encryption key
+const key = process.env.MESSAGE_ENCRYPT_SECRET!
 
 // Get all messages in a thread //
-
 export const getMessages = async (req: Request, res: Response) => {
     try {
         const threadId = req.params.threadId;
@@ -156,12 +129,51 @@ export const getMessages = async (req: Request, res: Response) => {
             include: {sender: {select: {profile: true}}}
         })
 
+        // Decrypt each message's content using the key and iv stored in the message object
+        const decryptedMessages = messages.map(msg => ({
+            ...msg,
+            content: decrypt(msg.content, key, msg.iv, msg.authTag)}
+        ))
+
+        console.log(decryptedMessages)
+
         // Return the messages
         return res.status(200).json({
             message: "Messages fetched successfully",
-            data: messages
+            data: decryptedMessages
         });
     } catch (error) {
         return res.status(500).json({message: "Server error", error});
     }
 }
+
+//// MESSAGE CREATION IS HANDLED IN THE message.ts SERVICE ////
+
+// // Create a new message //
+// export const createMessage = async (req: Request, res: Response) => {
+//     try {
+//         const {threadId, senderId, content} = req.body;
+//
+//         // Check if all required fields are provided
+//         if (!threadId || !senderId || !content) {
+//             return res.status(400).json({message: "Thread ID, sender ID, and content are required to create a message"});
+//         }
+//
+//         // Create the new message
+//         const newMessage = await prisma.message.create({
+//             data: {
+//                 threadId,
+//                 senderId,
+//                 content
+//             }
+//         })
+//
+//         // Return the new message
+//         return res.status(201).json({
+//             message: "Message created successfully",
+//             data: newMessage
+//         });
+//     } catch (error) {
+//         return res.status(500).json({message: "Server error", error});
+//     }
+// }
