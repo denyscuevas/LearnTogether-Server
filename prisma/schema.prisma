@@ -24,6 +24,10 @@ enum DayOfWeek {
   SUN
 }
 
+// ---------------------------------------------
+// AUTH MODELS
+// ---------------------------------------------
+
 // A user model
 model User {
   id                     String                   @id @default(uuid())
@@ -36,7 +40,10 @@ model User {
   EmailVerificationToken EmailVerificationToken[]
   resetTokens            PasswordResetToken[]
   passwordHistory        PasswordHistory[]
-  profile                Profile?
+
+  profile           Profile?
+  Message           Message[]
+  ThreadParticipant ThreadParticipant[]
 }
 
 // A refresh token model
@@ -97,6 +104,10 @@ model PasswordHistory {
   @@index([userId])
   @@index([oldHash])
 }
+
+// ---------------------------------------------
+// PROFILE MODELS
+// ---------------------------------------------
 
 // Model to store the basic information for a user profile
 model Profile {
@@ -174,4 +185,58 @@ model AvailabilitySlot {
 
   @@index([profileId])
   @@index([day])
+}
+
+// ---------------------------------------------
+// Messaging Models
+// ---------------------------------------------
+
+// Model to store messages and members of the thread
+model Thread {
+  id                 String    @id @default(uuid())
+  lastMessageId      String?
+  lastMessageAt      DateTime?
+  lastMessagePreview String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages          Message[]
+  ThreadParticipant ThreadParticipant[]
+
+  @@index([updatedAt])
+}
+
+// Model to store the users that belong to a thread
+model ThreadParticipant {
+  id                 String  @id @default(uuid())
+  threadId           String
+  profileId          String
+  lastReadMessageId  String?
+  lastMessagePreview String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [profileId], references: [id])
+  thread Thread @relation(fields: [threadId], references: [id])
+
+  @@unique([threadId, profileId])
+}
+
+// Model to store messages
+model Message {
+  id        String   @id @default(uuid())
+  threadId  String
+  senderId  String
+  content   String
+  iv        String
+  authTag   String
+  createdAt DateTime @default(now())
+
+  sender User   @relation(fields: [senderId], references: [id])
+  thread Thread @relation(fields: [threadId], references: [id])
+
+  @@index([threadId])
+  @@index([createdAt])
 }

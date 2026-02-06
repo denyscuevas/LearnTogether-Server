@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser8@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser8@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -26,12 +26,12 @@ Content-Type: application/json
 }
 
 ### GET Verify a user token for email verification
-GET {{ BASE_URL }}/api/auth/verify-email
+POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "d4b17dde-19dd-4d0e-81e9-ed352834dfd1",
-  "otpCode": "321295"
+  "id": "7ad7b114-d901-4c86-acbf-f43db7cc38ac",
+  "otpCode": "767140"
 }
 
 ### POST Send a password reset email
@@ -61,22 +61,25 @@ Content-Type: application/json
   "password_confirmation": "neewPassword#1244444"
 }
 
+
+
+
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZDdiMTE0LWQ5MDEtNGM4Ni1hY2JmLWY0M2RiN2NjMzhhYyIsImVtYWlsIjoidGVzdHVzZXI4QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg4NDU1LCJleHAiOjE3NzAzOTAyNTV9._tDKAPTILHWRcUcWQ8hVu6KW3U8zNwSPdQrbHNtuE-U
 Content-Type: application/json
 
 {
-  "name": "Linus Torvald",
+  "name": "User 8",
   "bio": "Second year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
-  "yearOfStudy": 4,
+  "yearOfStudy": 2,
 
-  "isTutor": true,
+  "isTutor": false,
   "isTutee": true,
 
-  "tutorCourseIds": [1, 3, 5],
-  "tuteeCourseIds": [91, 124],
+  "tutorCourseIds": [1,2,3,4],
+  "tuteeCourseIds": [5,6],
 
   "availability": [
     { "day": "TUE", "startMin": 540, "endMin": 660 },
@@ -90,24 +93,56 @@ Authorization: Bearer Bearer TOKEN_HERE
 
 ### PUT update a users profile
 PUT {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer Bearer TOKEN_HERE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRjZGY5M2ZhLTlmYmUtNDFmYy1iNTg4LTU5YWNjMmVhMWVmNSIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODc3NTczLCJleHAiOjE3Njk4NzkzNzN9.OBuk8xNXoNmpO-np1JaaAxeg7ezthte271Rk_IoM81s
 Content-Type: application/json
 
 {
-  "name": "Linus Torvald",
+  "name": "User 2",
   "bio": "Third year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
   "yearOfStudy": 3,
 
   "isTutor": true,
-  "isTutee": true,
+  "isTutee": false,
 
-  "tutorCourseIds": [6, 7, 8],
-  "tuteeCourseIds": [23, 26],
+  "tutorCourseIds": [760, 801, 805],
+  "tuteeCourseIds": [],
 
   "availability": [
     { "day": "WED", "startMin": 600, "endMin": 710 },
     { "day": "FRI", "startMin": 900, "endMin": 1020 }
   ]
 }
+
+### POST create a thread
+POST {{ BASE_URL }}/api/threads
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzOGIyYmFiLWI0N2MtNDI2Yy1iN2Q2LTFmODllMTA4OWZkMyIsImVtYWlsIjoidGVzdHVzZXI3QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg4NDAyLCJleHAiOjE3NzAzOTAyMDJ9.zYP09WcrBH7bZESMXU5AlVgVi51xvQrzFFyx7H3seag
+Content-Type: application/json
+
+{
+  "participant1": "7ad7b114-d901-4c86-acbf-f43db7cc38ac",
+  "participant2": "238b2bab-b47c-426c-b7d6-1f89e1089fd3"
+}
+
+### GET a user's threads
+GET {{ BASE_URL }}/api/threads/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzQ2MTA3LCJleHAiOjE3NzAzNDc5MDd9.lNMQLskxeCvWugha1FKlaEm2G2gtqU4LdTEwOrVC-mo
+Content-Type: application/json
+
+
+### POST Create a message
+POST {{ BASE_URL }}/api/messages
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZDdiMTE0LWQ5MDEtNGM4Ni1hY2JmLWY0M2RiN2NjMzhhYyIsImVtYWlsIjoidGVzdHVzZXI4QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg5NDc1LCJleHAiOjE3NzAzOTEyNzV9.ByYTiYjZJh4rbMrv02CYc2FZj1JgRbHV8KynLzwtw9g
+Content-Type: application/json
+
+{
+  "threadId": "ab129a3b-cfe9-4cb6-822c-c017f2f80753",
+  "senderId": "7ad7b114-d901-4c86-acbf-f43db7cc38ac",
+  "content": "Hi"
+}
+
+### GET Get messaegs from thread
+GET {{ BASE_URL }}/api/messages/ae8d8c70-0b61-4c24-9a74-1dce75c09e6e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzUzMDI1LCJleHAiOjE3NzAzNTQ4MjV9.zio04ot11cDnHCS_lx2iq-AvRESkPa3cLRiUJM6DfOg
+Content-Type: application/json
 

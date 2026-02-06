@@ -34,7 +34,7 @@ export const register = async (req: express.Request, res: express.Response) => {
         // Attempt to find an existing user with this email
         const existingUser = await prisma.user.findUnique({
             where: {
-                email: email
+                email: email.toLowerCase()
             }
         });
 
@@ -83,7 +83,8 @@ export const register = async (req: express.Request, res: express.Response) => {
         // Return the success response
         return res.status(201).json({
             message: "User created successfully! Please check your inbox for a verification email.",
-            user: newUser.id
+            user: newUser.id,
+            otp: rawOTP // TODO REMOVE THIS LATER! ITS FOR TESTING
         });
     } catch (error) {
         return res.status(500).json({
@@ -109,7 +110,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         // Attempt to find an existing user with this email
         const existingUser = await prisma.user.findUnique({
             where: {
-                email: email
+                email: email.toLowerCase()
             }
         });
 
@@ -169,7 +170,7 @@ export const login = async (req: express.Request, res: express.Response) => {
             httpOnly: true,
             secure: false,
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         // Returning the success response
@@ -203,14 +204,14 @@ export const resendVerification = async (req: express.Request, res: express.Resp
         // Look for a user with this email
         const existingUser = await prisma.user.findUnique({
             where: {
-                email
+                email: email.toLowerCase()
             }
         });
 
         // If the user doesn't exist, this information is not explicitly leaked for security purposes
         if (!existingUser) {
             return res.status(400).json({
-                message: "If an account exists, a verification code has been sent"
+                message: "TEST If an account exists, a verification code has been sent", existingUser
             });
         }
 
@@ -248,7 +249,8 @@ export const resendVerification = async (req: express.Request, res: express.Resp
         // Return the success response
         return res.status(201).json({
             message: "If an account exists, a verification code has been sent",
-            user: existingUser.id
+            user: existingUser.id,
+            otp: rawOtp // TODO REMOVE THIS LATER! ITS FOR TESTING
         });
     } catch (error) {
         return res.status(500).json({
@@ -344,7 +346,7 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
         // Find user with matching email
         const user = await prisma.user.findUnique({
             where: {
-                email
+                email: email.toLowerCase()
             }
         })
 
@@ -381,7 +383,8 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
 
         return res.status(201).json({
             message: "If an account exists, a reset code has been sent",
-            email: email
+            email: email,
+            otp: rawOtp // TODO REMOVE THIS LATER! ITS FOR TESTING
         })
     } catch (error) {
         return res.status(500).json({
