@@ -1,5 +1,4 @@
 import express from 'express';
-import {body, param} from 'express-validator';
 import {requireAuth} from "../middleware/verifyUserMiddleware.ts";
 import {getMessages} from "../controllers/MessagingController.ts";
 

@@ -111,7 +111,7 @@ export const getThreads = async (req: Request, res: Response) => {
 }
 
 // Store the message encryption key
-const key = process.env.MESSAGE_ENCRYPT_SECRET!
+const key = process.env.MESSAGE_ENCRYPT_SECRET
 
 // Get all messages in a thread //
 export const getMessages = async (req: Request, res: Response) => {
@@ -129,13 +129,15 @@ export const getMessages = async (req: Request, res: Response) => {
             include: {sender: {select: {profile: true}}}
         })
 
+        if (!key){
+            return res.status(400).json({message: "Encryption error"});
+        }
+
         // Decrypt each message's content using the key and iv stored in the message object
         const decryptedMessages = messages.map(msg => ({
             ...msg,
             content: decrypt(msg.content, key, msg.iv, msg.authTag)}
         ))
-
-        console.log(decryptedMessages)
 
         // Return the messages
         return res.status(200).json({

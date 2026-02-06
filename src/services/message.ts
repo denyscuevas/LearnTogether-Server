@@ -20,22 +20,21 @@ export const createMessage = async (data: Message) => {
     const {cipherText, iv, authTag} = encrypt(content, key)
 
     // Create a new message and return
-    const message = prisma.message.create({
+    const message = await prisma.message.create({
         data: {
-            threadId,
-            senderId,
+            threadId: threadId,
+            senderId: senderId,
             content: cipherText,
-            iv,
-            authTag
+            iv: iv,
+            authTag: authTag
         }, include: {sender: {select: {profile: true}}}
     });
 
-    // Decrypt message content
-    const decryptedContent = decrypt(cipherText, key, iv, authTag)
-
     // Return message object with its content decrypted
-    return message.then(message => ({...message, content: decryptedContent}));
-}
+    return {
+        ...message,
+        content: decrypt(message.content, key, message.iv, message.authTag)
+    };}
 
 
 // Set encryption algorithm
@@ -53,23 +52,23 @@ const encrypt = (text: string, key: string) => {
     const iv = crypto.randomBytes(12)
 
     // Create a cipher from the algo, key, and iv we created above
-    const cipher = crypto.createCipheriv(algorithm, key, iv)
+    const cipher = crypto.createCipheriv(algorithm, keyBuffer, iv)
 
     // Use a buffer to convert the text to bytes.
     const encryptedText = Buffer.concat([
         // Encrypt the passed text with the cipher
-        cipher.update(Buffer.from(text, 'base64')),
+        cipher.update(Buffer.from(text, 'utf-8')),
         cipher.final()
     ])
 
     // Generate an authentication tag to ensure the authenticity of the cipher
-    const authTag = cipher.getAuthTag().toString('base64')
+    const authTag = cipher.getAuthTag()
 
     // Return the encrypted text, iv, and authTag as strings
     return {
         cipherText: encryptedText.toString('base64'),
         iv: iv.toString('base64'),
-        authTag: authTag
+        authTag: authTag.toString('base64')
     }
 }
 
@@ -86,7 +85,7 @@ export const decrypt = (cipherText: string, key: string, iv: string, authTag: st
         const keyBuffer = Buffer.from(key!, 'hex')
 
         // Create a decipher from the algo, key, and iv we created above
-        const decipher = crypto.createDecipheriv(algorithm, key, ivBuffer)
+        const decipher = crypto.createDecipheriv(algorithm, keyBuffer, ivBuffer)
 
         // Check authenticity
         decipher.setAuthTag(authTagBuffer)
@@ -97,7 +96,9 @@ export const decrypt = (cipherText: string, key: string, iv: string, authTag: st
             decipher.update(Buffer.from(cipherText, 'base64')),
             decipher.final()
         ])
-        return decryptedText
+
+        // Return the decrypted text as a readable string
+        return decryptedText.toString('utf-8')
     } catch (error) {
         console.log("Message authentication failed ", error)
     }

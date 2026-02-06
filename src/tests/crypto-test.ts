@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import crypto from 'crypto'
+import {createMessage} from "../services/message.ts";
 
 // Set encryption algorithm
 const algorithm = 'aes-256-gcm'
@@ -52,6 +53,7 @@ const testCrypt = async (text: string) => {
     const encrypted = encrypt(text, key)
     console.log(encrypted)
     const {cipherText, iv, authTag} = encrypted
+    createMessage({threadId: "ae8d8c70-0b61-4c24-9a74-1dce75c09e6e", senderId: "bfb43944-f864-4eaa-91a6-c6b4121033ef", content: text})
     const decrypted = decrypt(cipherText, key, iv, authTag)
     console.log(decrypted.toString())
 }

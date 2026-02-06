@@ -1,5 +1,4 @@
 import express from 'express';
-import prisma from "./config/prismaClient.ts";
 import {Server} from "socket.io"
 import jwt from "jsonwebtoken";
 import {createMessage} from "./services/message.ts";
@@ -64,8 +63,11 @@ ioServer.on('connection', socket => {
     // Sends a message to clients in the room
     socket.on('send_message', async data => {
         try{
+            console.log("DATA", data.threadId,  socket.data.userId, data.content)
             // Create a new message in the db with the data provided by the client
             const message = await createMessage({threadId: data.threadId, senderId: socket.data.userId, content: data.content})
+
+            console.log('Message created:', message)
             // Send the message to the room
             ioServer.to(data.threadId).emit('incoming_message', message)
         }catch (e) {
