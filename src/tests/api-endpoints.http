@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser15@uwindsor.ca",
+  "email": "testuser16@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -39,7 +39,7 @@ POST {{ BASE_URL }}/api/auth/request-password-reset
 Content-Type: application/json
 
 {
-  "email": "testuser12@uwindsor.ca"
+  "email": "testuser14@uwindsor.ca"
 }
 
 ### POST Verify password reset OTP
