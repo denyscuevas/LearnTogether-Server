@@ -459,7 +459,7 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
             httpOnly: true,
             secure: false,
             sameSite: 'strict',
-            maxAge: 60 * 1000,
+            maxAge: 15* 60 * 1000,
             path: "/api/auth/reset-password",
         });
 
