@@ -582,6 +582,7 @@ export const resetPassword = async (req: express.Request, res: express.Response)
 // Logic for getting a new access token using a valid refresh token
 export const refreshToken = async (req: express.Request, res: express.Response) => {
 
+    // Get the existing raw refresh token from the cookie in the header
     const existingToken = req.cookies.refreshToken;
     if (!existingToken) {
         return res.status(401).json({
@@ -591,6 +592,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
 
     try {
 
+        // Get all the refresh tokens that are not expired
         const validTokens = await prisma.refreshToken.findMany({
             where: {
                 expiresAt: {gt: new Date()},
@@ -598,6 +600,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
             }
         });
 
+        // Look for the token that matches the hash of the raw token that came in the header
         let usersToken = null;
         for (const token of validTokens) {
             const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
@@ -608,17 +611,72 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
             }
         }
 
+        // If there was no result then a valid refresh doesn't exist
         if (!usersToken) {
             return res.status(401).json({
                 message: "Invalid refresh token"
             })
         }
 
+        // Delete all the refresh tokens for this user
         await prisma.refreshToken.deleteMany({
             where: {
                 userId: usersToken.userId,
             }
         });
+
+        // Get the user this refresh token is associated with
+        const user = await prisma.user.findUnique({
+            where: {id: usersToken.userId}
+        })
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        // Ensuring a JWT_SECRET is available
+        if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+            throw Error('JWT_SECRET is not defined');
+        }
+
+        // Generate a new JWT access token and sign it to the user
+        const newAccessToken = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.JWT_SECRET,
+            {expiresIn: "30m"}
+        );
+
+        // Generate a refresh token using secure, random utility functions
+        const newRefreshToken = generateRawToken();
+        const newSalt = await bcrypt.genSalt(10);
+        const newHashedRefreshToken = await bcrypt.hash(newRefreshToken, newSalt);
+
+        // Store the new hashed refresh token in the database
+        await prisma.refreshToken.create({
+            data: {
+                userId: user.id,
+                tokenHash: newHashedRefreshToken,
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            }
+        });
+
+        // Send the raw refresh token in a cookie again, which is valid for 7 days
+        res.cookie('refreshToken', newRefreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            path: "/",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
+        // Send the access token back in the response
+        return res.status(200).json(
+            { token: newAccessToken }
+        );
     } catch (error) {
         return res.status(403).json({
             message: "Refresh error",
