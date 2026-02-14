@@ -174,6 +174,7 @@ export const login = async (req: express.Request, res: express.Response) => {
             secure: false,
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000,
+            path: "/"
         });
 
         // Returning the success response
@@ -335,6 +336,7 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
     }
 }
 
+// Logic for requesting a password reset session
 export const requestPasswordReset = async (req: express.Request, res: express.Response) => {
     try {
 
@@ -397,6 +399,7 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
     }
 }
 
+// Logic for verifying the OTP entry for  password reset
 export const verifyResetOTP = async (req: express.Request, res: express.Response) => {
     try {
         const {email, otp} = req.body;
@@ -474,6 +477,7 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
     }
 }
 
+// Logic for actually resetting a users password
 export const resetPassword = async (req: express.Request, res: express.Response) => {
 
     // Try to get the reset token from the cookie
@@ -570,6 +574,54 @@ export const resetPassword = async (req: express.Request, res: express.Response)
     } catch (error) {
         return res.status(500).json({
             message: "Server error",
+            error: error
+        })
+    }
+}
+
+// Logic for getting a new access token using a valid refresh token
+export const refreshToken = async (req: express.Request, res: express.Response) => {
+
+    const existingToken = req.cookies.refreshToken;
+    if (!existingToken) {
+        return res.status(401).json({
+            message: "No refresh token found"
+        })
+    }
+
+    try {
+
+        const validTokens = await prisma.refreshToken.findMany({
+            where: {
+                expiresAt: {gt: new Date()},
+                revokedAt: null
+            }
+        });
+
+        let usersToken = null;
+        for (const token of validTokens) {
+            const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
+
+            if (isUsersToken) {
+                usersToken = token;
+                break;
+            }
+        }
+
+        if (!usersToken) {
+            return res.status(401).json({
+                message: "Invalid refresh token"
+            })
+        }
+
+        await prisma.refreshToken.deleteMany({
+            where: {
+                userId: usersToken.userId,
+            }
+        });
+    } catch (error) {
+        return res.status(403).json({
+            message: "Refresh error",
             error: error
         })
     }
