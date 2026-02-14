@@ -117,6 +117,7 @@ const key = process.env.MESSAGE_ENCRYPT_SECRET
 export const getMessages = async (req: Request, res: Response) => {
     try {
         const threadId = req.params.threadId;
+        const userId = (req as any).user?.id;
 
         // Check if thread ID is provided
         if (!threadId) {
