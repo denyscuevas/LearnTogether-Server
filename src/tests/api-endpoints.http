@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser8@uwindsor.ca",
+  "email": "testuser17@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "7ad7b114-d901-4c86-acbf-f43db7cc38ac",
-  "otpCode": "767140"
+  "id": "7c2f3bec-8fa4-4153-a395-260c10864210",
+  "otpCode": "699426"
 }
 
 ### POST Send a password reset email
@@ -39,7 +39,7 @@ POST {{ BASE_URL }}/api/auth/request-password-reset
 Content-Type: application/json
 
 {
-  "email": "user4@uwindsor.ca"
+  "email": "testuser14@uwindsor.ca"
 }
 
 ### POST Verify password reset OTP
@@ -47,18 +47,19 @@ POST {{ BASE_URL }}/api/auth/verify-reset-otp
 Content-Type: application/json
 
 {
-  "email": "user4@uwindsor.ca",
-  "otp": "427907"
+  "email": "testuser12@uwindsor.ca",
+  "otp": "649060"
 }
 
 ### POST Reset password
 POST {{ BASE_URL }}/api/auth/reset-password
 Content-Type: application/json
+Cookie: password_reset_token=1cf86b893e0cc4d88c6cf9025ea33e3adba4efa06e70187f1bf57aa30e289b3c
 
 {
-  "userId": "0cbff286-c6d7-47ae-93cf-e070138a9a65",
-  "password": "neewPassword#1244444",
-  "password_confirmation": "neewPassword#1244444"
+  "userId": "7c2f3bec-8fa4-4153-a395-260c10864210",
+  "password": "newPassword@124",
+  "password_confirmation": "newPassword@124"
 }
 
 

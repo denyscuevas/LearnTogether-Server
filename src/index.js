@@ -5,12 +5,15 @@ import authRoutes from './routes/auth.ts'
 import profileRoutes from './routes/profile.ts'
 import messageRoutes from './routes/message.ts'
 import threadRoutes from './routes/thread.ts'
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
+app.use(cookieParser())
 app.use(cors());
 app.use(express.json());
+app.set('trust proxy', 1)
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profiles", profileRoutes);

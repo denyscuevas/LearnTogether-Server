@@ -1,5 +1,6 @@
 import prisma from "../config/prismaClient.ts";
 import bcrypt from 'bcrypt'
+import crypto from "crypto"
 import jwt from "jsonwebtoken";
 import {validationResult, type ValidationError} from 'express-validator'
 import express from "express";
@@ -8,6 +9,8 @@ import {addEmailJobToQueue} from "../services/emailQueue.ts";
 import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
 import {sendVerificationEmail} from "../services/mailer.ts";
 import { isExpired } from "../utils/isExpired.ts"
+import {createResetSession, getUserIdByResetToken, invalidateResetSession} from "../services/redisAuthService.ts";
+import redis from "../services/redis.ts";
 
 
 // Register logic to create a new User
@@ -447,8 +450,21 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
             where: {userId}
         })
 
+        // Generate a reset token, add it to the user via Redis, which is valid for 15 minutes
+        const passwordResetToken = crypto.randomBytes(32).toString('hex');
+        await createResetSession(userId, passwordResetToken);
+
+        // Send the reset token in a cookie, which is attached in the /reset-password endpoint
+        res.cookie('password_reset_token', passwordResetToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 15* 60 * 1000,
+            path: "/api/auth/reset-password",
+        });
+
         // Return success message
-        return res.json({message: "OTP verified", userId: userId})
+        return res.json({message: "OTP verified"})
 
     } catch (error) {
         return res.status(500).json({
@@ -459,11 +475,27 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
 }
 
 export const resetPassword = async (req: express.Request, res: express.Response) => {
+
+    // Try to get the reset token from the cookie
+    const resetToken = req.cookies.password_reset_token;
+    if (!resetToken) {
+        return res.status(401).json({
+            message: "No active reset session. Please request another OTP.",
+        })
+    }
     try {
         // Destructure the request and print error messages if any values are missing
-        const {userId, password, password_confirmation} = req.body;
-        if (!userId || !password || !password_confirmation) {
-            return res.status(400).json({message: "Missing userId, password, or passwordConfirmation!"})
+        const {password, password_confirmation} = req.body;
+        if (!password || !password_confirmation) {
+            return res.status(400).json({message: "Missing password or password confirmation!"})
+        }
+
+        // Getting the userId from the Redis key
+        const userId = await getUserIdByResetToken(resetToken);
+        if (!userId) {
+            return res.status(401).json({
+                message: "Reset session expired. Please request another OTP.",
+            })
         }
 
         // Get user from the user id and sort their passwords by createdAt
@@ -524,6 +556,13 @@ export const resetPassword = async (req: express.Request, res: express.Response)
                     where: {id: {in: oldestPassword.map((old) => old.id)}}
                 })
             }
+
+            // Clearing the Redis key for this reset session, and clearing the cookie
+            await invalidateResetSession(resetToken);
+            res.clearCookie('password_reset_token',
+                {
+                    path: "/api/auth/reset-password",
+                });
 
             // Return success message
             return res.status(200).json({message: "Password reset successfully!"})

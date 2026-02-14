@@ -2,24 +2,12 @@ import { Queue, Worker } from 'bullmq'
 import IORedis from 'ioredis'
 import {sendPasswordResetEmail, sendVerificationEmail} from "./mailer.ts";
 import dotenv from 'dotenv'
+import redis from "./redis.ts";
 
 dotenv.config()
 
-if(!process.env.REDIS_PUBLIC_URL) {
-    throw new Error('Redis URL is missing')
-}
-
-// Create a connection to the redis service
-const connection = new IORedis(
-    process.env.REDIS_PUBLIC_URL,
-    {
-        maxRetriesPerRequest: null,
-        enableReadyCheck: true
-    }
-)
-
 // Generate an email queue
-export const emailQueue = new Queue("emails", { connection })
+export const emailQueue = new Queue("emails", { connection: redis })
 
 // Add an email job to the queue
 export function addEmailJobToQueue(email: any, code: any, userId: any, emailType: string) {
@@ -43,5 +31,5 @@ export const emailWorker = new Worker(
             console.log(`Email sent for userId=${userId}, email=${email}`);
         }
     },
-    { connection, concurrency: 10 }
+    { connection: redis, concurrency: 10 }
 );
