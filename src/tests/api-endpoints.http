@@ -3,8 +3,8 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser8@uwindor.ca",
-  "password": "newPassword@123",
+  "email": "testuser8@uwnor.ca",
+  "password": "newPasswo3",
   "password_confirmation": "newPassword@123"
 }
 
