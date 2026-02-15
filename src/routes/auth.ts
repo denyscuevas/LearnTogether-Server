@@ -6,12 +6,16 @@ import {
     resendVerification,
     verifyEmail,
     requestPasswordReset,
-    verifyResetOTP, resetPassword
+    verifyResetOTP, resetPassword, refreshToken, logout
 } from "../controllers/AuthController.ts";
 import {checkRequestErrors} from "../middleware/validationMiddleware.ts";
+import { limiter } from "../middleware/endpointRateLimiter.ts";
 
 // Express router paths for auth routes
 const router = express.Router();
+
+const rateLimiterLax = limiter(15 * 60 * 1000, 5, "Too many attempts. Please try again later.")
+const rateLimiterStrict = limiter(60 * 60 * 1000, 5, "You've reached the limit for this action. Please try again in an hour.")
 
 router.post("/register",
     [
@@ -25,7 +29,7 @@ router.post("/register",
             .matches(/[\W_]/)
             .withMessage('Password must contain a special character'),
         body("password_confirmation").isLength({min: 8}).withMessage("Password must be at least 8 characters")
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterStrict,
     register);
 
 // Login auth route with validation
@@ -34,7 +38,7 @@ router.post(
     [
         body("email").isEmail().trim().toLowerCase().withMessage("Please enter a valid email").matches(/@uwindsor\.ca$/).withMessage("Please enter a valid @uwindsor email"),
         body("password").notEmpty().withMessage("Valid password required"),
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterLax,
     login);
 
 router.post("/resend-verification",
@@ -46,14 +50,14 @@ router.post("/resend-verification",
 router.post("/request-password-reset",
     [
         body("email").isEmail().matches(/@uwindsor\.ca$/).withMessage("Please enter a valid @uwindsor email")
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterLax,
     requestPasswordReset);
 
 router.post("/verify-reset-otp",
     [
     body("email").isEmail().matches(/@uwindsor\.ca$/).withMessage("Please enter a valid @uwindsor email"),
     body("otp").isLength({min: 6, max: 6}).withMessage("Invalid OTP code")
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterLax,
     verifyResetOTP)
 
 router.post("/reset-password",
@@ -68,15 +72,19 @@ router.post("/reset-password",
             .matches(/[\W_]/)
             .withMessage('Password must contain a special character'),
         body("password_confirmation").isLength({min: 8}).withMessage("Password must be at least 8 characters")
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterStrict,
     resetPassword);
 
 // Verify email and resend email routes
 router.post("/verify-email",
     [
         body("otpCode").isLength({min: 6, max: 6}).withMessage("Invalid OTP code")
-    ], checkRequestErrors,
+    ], checkRequestErrors, rateLimiterLax,
     verifyEmail);
+
+// Endpoints for refresh and logout
+router.post("/refresh", rateLimiterLax, refreshToken);
+router.post("/logout", rateLimiterLax, logout);
 
 
 export default router;
