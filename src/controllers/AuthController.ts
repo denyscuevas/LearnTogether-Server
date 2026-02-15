@@ -174,6 +174,7 @@ export const login = async (req: express.Request, res: express.Response) => {
             secure: false,
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000,
+            path: "/"
         });
 
         // Returning the success response
@@ -335,6 +336,7 @@ export const verifyEmail = async (req: express.Request, res: express.Response) =
     }
 }
 
+// Logic for requesting a password reset session
 export const requestPasswordReset = async (req: express.Request, res: express.Response) => {
     try {
 
@@ -397,6 +399,7 @@ export const requestPasswordReset = async (req: express.Request, res: express.Re
     }
 }
 
+// Logic for verifying the OTP entry for  password reset
 export const verifyResetOTP = async (req: express.Request, res: express.Response) => {
     try {
         const {email, otp} = req.body;
@@ -474,6 +477,7 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
     }
 }
 
+// Logic for actually resetting a users password
 export const resetPassword = async (req: express.Request, res: express.Response) => {
 
     // Try to get the reset token from the cookie
@@ -572,5 +576,168 @@ export const resetPassword = async (req: express.Request, res: express.Response)
             message: "Server error",
             error: error
         })
+    }
+}
+
+// Logic for getting a new access token using a valid refresh token
+export const refreshToken = async (req: express.Request, res: express.Response) => {
+
+    // Get the existing raw refresh token from the cookie in the header
+    const existingToken = req.cookies.refreshToken;
+    if (!existingToken) {
+        return res.status(401).json({
+            message: "No refresh token found"
+        })
+    }
+
+    try {
+
+        // Get all the refresh tokens that are not expired
+        const validTokens = await prisma.refreshToken.findMany({
+            where: {
+                expiresAt: {gt: new Date()},
+                revokedAt: null
+            }
+        });
+
+        // Look for the token that matches the hash of the raw token that came in the header
+        let usersToken = null;
+        for (const token of validTokens) {
+            const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
+
+            if (isUsersToken) {
+                usersToken = token;
+                break;
+            }
+        }
+
+        // If there was no result then a valid refresh doesn't exist
+        if (!usersToken) {
+            return res.status(401).json({
+                message: "Invalid refresh token"
+            })
+        }
+
+        // Delete all the refresh tokens for this user
+        await prisma.refreshToken.deleteMany({
+            where: {
+                userId: usersToken.userId,
+            }
+        });
+
+        // Get the user this refresh token is associated with
+        const user = await prisma.user.findUnique({
+            where: {id: usersToken.userId}
+        })
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        // Ensuring a JWT_SECRET is available
+        if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
+            throw Error('JWT_SECRET is not defined');
+        }
+
+        // Generate a new JWT access token and sign it to the user
+        const newAccessToken = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.JWT_SECRET,
+            {expiresIn: "30m"}
+        );
+
+        // Generate a refresh token using secure, random utility functions
+        const newRefreshToken = generateRawToken();
+        const newSalt = await bcrypt.genSalt(10);
+        const newHashedRefreshToken = await bcrypt.hash(newRefreshToken, newSalt);
+
+        // Store the new hashed refresh token in the database
+        await prisma.refreshToken.create({
+            data: {
+                userId: user.id,
+                tokenHash: newHashedRefreshToken,
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            }
+        });
+
+        // Send the raw refresh token in a cookie again, which is valid for 7 days
+        res.cookie('refreshToken', newRefreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            path: "/",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
+        // Send the access token back in the response
+        return res.status(200).json(
+            { token: newAccessToken }
+        );
+    } catch (error) {
+        return res.status(403).json({
+            message: "Refresh error",
+            error: error
+        })
+    }
+}
+
+// Logic to logout a user
+export const logout = async (req: express.Request, res: express.Response) => {
+
+    // Get the refresh token from the cookie in the header
+    const existingToken = req.cookies.refreshToken;
+
+    try {
+
+        if (existingToken) {
+
+            // Look for all valid tokens
+            const userTokens = await prisma.refreshToken.findMany({
+                where: {
+                    expiresAt: {gt: new Date()},
+                    revokedAt: null
+                }
+            });
+
+            // Find the token that matches the hash of the raw token in the header
+            let tokenToRemove = null;
+            for (const token of userTokens) {
+                const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
+
+                if (isUsersToken) {
+                    tokenToRemove = token;
+                }
+            }
+
+            // Delete all refresh tokens for this user
+            if (tokenToRemove) {
+                await prisma.refreshToken.deleteMany({
+                    where: {
+                        userId: tokenToRemove.userId,
+                    }
+                });
+            }
+        }
+
+        // Clear the cookie as well
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            path: "/",
+        });
+
+        return res.status(200).json({
+            message: 'Logged out successfully'
+        });
+    } catch (error) {
+        console.error("Logout Error:", error);
+        return res.status(500).json({
+            error: 'Error during logout'
+        });
     }
 }

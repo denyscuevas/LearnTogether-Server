@@ -6,7 +6,7 @@ import {
     resendVerification,
     verifyEmail,
     requestPasswordReset,
-    verifyResetOTP, resetPassword
+    verifyResetOTP, resetPassword, refreshToken, logout
 } from "../controllers/AuthController.ts";
 import {checkRequestErrors} from "../middleware/validationMiddleware.ts";
 import { limiter } from "../middleware/endpointRateLimiter.ts";
@@ -81,6 +81,10 @@ router.post("/verify-email",
         body("otpCode").isLength({min: 6, max: 6}).withMessage("Invalid OTP code")
     ], checkRequestErrors, rateLimiterLax,
     verifyEmail);
+
+// Endpoints for refresh and logout
+router.post("/refresh", rateLimiterLax, refreshToken);
+router.post("/logout", rateLimiterLax, logout);
 
 
 export default router;

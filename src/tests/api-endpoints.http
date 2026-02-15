@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser17@uwindsor.ca",
+  "email": "testuser1@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser8@uwindsor.ca",
+  "email": "testuser1@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "7c2f3bec-8fa4-4153-a395-260c10864210",
-  "otpCode": "699426"
+  "id": "a46c5d80-c31e-4f00-9e6c-f4d10b750eac",
+  "otpCode": "120833"
 }
 
 ### POST Send a password reset email
@@ -61,6 +61,14 @@ Cookie: password_reset_token=1cf86b893e0cc4d88c6cf9025ea33e3adba4efa06e70187f1bf
   "password": "newPassword@124",
   "password_confirmation": "newPassword@124"
 }
+
+### POST Refresh endpoint
+POST {{ BASE_URL }}/api/auth/refresh
+Content-Type: application/json
+
+### POST Logout endpoint
+POST {{ BASE_URL }}/api/auth/logout
+Content-Type: application/json
 
 
 
