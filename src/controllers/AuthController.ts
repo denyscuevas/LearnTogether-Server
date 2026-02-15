@@ -684,3 +684,60 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
         })
     }
 }
+
+// Logic to logout a user
+export const logout = async (req: express.Request, res: express.Response) => {
+
+    // Get the refresh token from the cookie in the header
+    const existingToken = req.cookies.refreshToken;
+
+    try {
+
+        if (existingToken) {
+
+            // Look for all valid tokens
+            const userTokens = await prisma.refreshToken.findMany({
+                where: {
+                    expiresAt: {gt: new Date()},
+                    revokedAt: null
+                }
+            });
+
+            // Find the token that matches the hash of the raw token in the header
+            let tokenToRemove = null;
+            for (const token of userTokens) {
+                const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
+
+                if (isUsersToken) {
+                    tokenToRemove = token;
+                }
+            }
+
+            // Delete all refresh tokens for this user
+            if (tokenToRemove) {
+                await prisma.refreshToken.deleteMany({
+                    where: {
+                        userId: tokenToRemove.userId,
+                    }
+                });
+            }
+        }
+
+        // Clear the cookie as well
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: false,
+            sameSite: "strict",
+            path: "/",
+        });
+
+        return res.status(200).json({
+            message: 'Logged out successfully'
+        });
+    } catch (error) {
+        console.error("Logout Error:", error);
+        return res.status(500).json({
+            error: 'Error during logout'
+        });
+    }
+}
