@@ -151,6 +151,7 @@ export const getProfile = async (req: express.Request, res: express.Response) =>
 
         // If the profile is already cached, get it from there and send back the results instantly
         if(cachedData) {
+            console.log("Profile info retrieved from cache")
             return res.status(200).json({
                 profile: JSON.parse(cachedData), isSelf: isSelf
             });
@@ -177,6 +178,7 @@ export const getProfile = async (req: express.Request, res: express.Response) =>
         await redis.set(profileCacheKey, JSON.stringify(profile), 'EX', 3600);
 
         // Return the profile information
+        console.log("Profile info retrieved from DB");
         return res.status(200).json({
             profile,
             isSelf: isSelf
@@ -314,11 +316,14 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             },
         });
 
+        // Clear all redis keys for this profile to invalidate the cache and force a DB read on the next GET endpoint to get the updated info for subsequent caching
+        await redis.del(`profile:private:${userId}`);
+        await redis.del(`profile:public:${userId}`);
+
         // Returning a success message, and including the profile data
         return res.status(200).json({
             message: "Profile updated",
-            profile,
-            isOwnProfile: true,
+            profile
         });
     } catch (error) {
         return res.status(500).json({

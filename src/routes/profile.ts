@@ -2,8 +2,6 @@ import express from "express";
 import { requireAuth } from "../middleware/verifyUserMiddleware.ts";
 import {
     createProfile,
-    getMyProfile,
-    getOtherProfile,
     getProfile,
     updateMyProfile
 } from "../controllers/ProfileController.ts";
