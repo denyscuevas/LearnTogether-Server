@@ -1,5 +1,6 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
+import redis from "../services/redis.ts";
 
 // Logic to create a new user profile
 export const createProfile = async (req: express.Request, res: express.Response) => {
@@ -127,22 +128,37 @@ export const createProfile = async (req: express.Request, res: express.Response)
     }
 };
 
-// Logic to get the user information for the logged-in user (ME)
-export const getMyProfile = async (req: express.Request, res: express.Response) => {
+// Logic to get information about a profile
+export const getProfile = async (req: express.Request, res: express.Response) => {
     try {
 
-        // Get the user object in the request
-        const userId = (req as any).user?.id;
+        // Get the userId in the request, and the ID of the profile to be reviewed from the query params
+        const viewerId = (req as any).user?.id;
+        const intendedId = req.params.userId || viewerId;
 
-        if (!userId) {
-            return res.status(401).json({
-                message: "Unauthorized"
+        if (!intendedId) {
+            return res.status(400).json({
+                message: "Missing ID"
+            });
+        }
+
+        // Checking if the user is viewing their own profile
+        const isSelf = viewerId === intendedId;
+
+        // Creating the Redis cache key depending on if the user is viewing their own profile or someone elses
+        const profileCacheKey = isSelf ? `profile:private:${intendedId}` : `profile:public:${intendedId}`;
+        const cachedData = await redis.get(profileCacheKey);
+
+        // If the profile is already cached, get it from there and send back the results instantly
+        if(cachedData) {
+            return res.status(200).json({
+                profile: JSON.parse(cachedData), isSelf: isSelf
             });
         }
 
         // Retrieve the profile-related information for the user
         const profile = await prisma.profile.findUnique({
-            where: { userId },
+            where: { userId: intendedId },
             include: {
                 user: { select: { id: true } },
                 tutorCourses: { include: { course: true } },
@@ -157,59 +173,13 @@ export const getMyProfile = async (req: express.Request, res: express.Response) 
             });
         }
 
-        // Return the profile information
-        return res.status(200).json({
-            profile,
-            isOwnProfile: true,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Server error", error
-        });
-    }
-};
-
-// Logic to get the user information for another profile
-export const getOtherProfile = async (req: express.Request, res: express.Response) => {
-    try {
-
-        // Get the id of the user that's making the request, and the id of the user being viewed
-        const viewerId = (req as any).user?.id;
-        const { userId } = req.params;
-
-        if (!viewerId) {
-            return res.status(401).json({
-                message: "Unauthorized"
-            });
-        }
-
-        if (!userId) {
-            return res.status(400).json({
-                message: "Missing userId"
-            });
-        }
-
-        // Retrieve the profile-related information for the user
-        const profile = await prisma.profile.findUnique({
-            where: { userId },
-            include: {
-                user: { select: { id: true, email: true } },
-                tutorCourses: { include: { course: true } },
-                tuteeCourses: { include: { course: true } },
-                availability: true,
-            },
-        });
-
-        if (!profile) {
-            return res.status(404).json({
-                message: "Profile not found"
-            });
-        }
+        // Setting the profile data to the cache key, expiring after 60 minutes if no cache invalidation occurs
+        await redis.set(profileCacheKey, JSON.stringify(profile), 'EX', 3600);
 
         // Return the profile information
         return res.status(200).json({
             profile,
-            isOwnProfile: viewerId === userId,
+            isSelf: isSelf
         });
     } catch (error) {
         return res.status(500).json({
