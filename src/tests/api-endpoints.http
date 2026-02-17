@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser11@uwindsor.ca",
+  "email": "testuser3@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser11@uwindsor.ca",
+  "email": "testuser3@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "ed79a365-e090-4178-a86d-a020f8a80a18",
-  "otpCode": "175697"
+  "id": "7988589f-9d15-4bd7-aae6-a8e4a18c779b",
+  "otpCode": "705380"
 }
 
 ### POST Send a password reset email
@@ -75,7 +75,7 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
 Content-Type: application/json
 
 {
@@ -84,7 +84,7 @@ Content-Type: application/json
   "major": "Computer Science",
   "yearOfStudy": 3,
 
-  "isTutor": false,
+  "isTutor": true,
   "isTutee": true,
 
   "tutorCourseIds": [4,8,12,16],
@@ -98,7 +98,7 @@ Content-Type: application/json
 
 ### GET a users information (ME)
 GET {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
 
 ### GET a users information (OTHER)
 GET {{ BASE_URL }}/api/profiles/ee48e1f6-5c3a-40af-bdd0-3466eae490db

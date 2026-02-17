@@ -1,6 +1,7 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
 import redis from "../services/redis.ts";
+import {uploadToCloudinary} from "../utils/cloudinary.ts";
 
 // Logic to create a new user profile
 export const createProfile = async (req: express.Request, res: express.Response) => {
@@ -19,11 +20,13 @@ export const createProfile = async (req: express.Request, res: express.Response)
             major,
             yearOfStudy,
             isTutor,
-            isTutee,
-            photoUrl,
-            tutorCourseIds = [],
-            tuteeCourseIds = [],
-            availability = [],
+            isTutee
+        } = req.body;
+
+        let {
+            tutorCourseIds,
+            tuteeCourseIds,
+            availability,
         } = req.body;
 
         // Check if the user has the required fields
@@ -59,6 +62,23 @@ export const createProfile = async (req: express.Request, res: express.Response)
             });
         }
 
+        // Parse the arrays from the formdata strings into actual arrays
+        try {
+            tutorCourseIds = tutorCourseIds ? (typeof tutorCourseIds === 'string' ? JSON.parse(tutorCourseIds) : tutorCourseIds) : [];
+            tuteeCourseIds = tuteeCourseIds ? (typeof tuteeCourseIds === 'string' ? JSON.parse(tuteeCourseIds) : tuteeCourseIds) : [];
+            availability = availability ? (typeof availability === 'string' ? JSON.parse(availability) : availability) : [];
+        } catch (e) {
+            return res.status(400).json({ message: "Invalid format for courses or availability" });
+        }
+
+        // Get the profilePicture from the request, and call the uploadToCloudinary method to get the URL
+        let imageURL = req.body.profilePicture;
+
+        if (req.file) {
+            const uploadResult = await uploadToCloudinary(req.file.buffer);
+            imageURL = (uploadResult as any).secure_url;
+        }
+
         // Create the profile table with the non-join values first
         await prisma.$transaction(async (tx) => {
             await tx.profile.create({
@@ -68,9 +88,9 @@ export const createProfile = async (req: express.Request, res: express.Response)
                     bio: bio ? String(bio).trim() : null,
                     major: String(major).trim(),
                     yearOfStudy: year,
-                    isTutor: Boolean(isTutor),
-                    isTutee: Boolean(isTutee),
-                    profilePicture: photoUrl ? String(photoUrl) : null,
+                    isTutor: isTutor === "true",
+                    isTutee: isTutee === "true",
+                    profilePicture: imageURL ? String(imageURL) : null,
                 },
             });
 
@@ -208,10 +228,12 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             yearOfStudy,
             isTutor,
             isTutee,
-            profilePicture,
-            tutorCourseIds = [],
-            tuteeCourseIds = [],
-            availability = [],
+        } = req.body;
+
+        let {
+            tutorCourseIds,
+            tuteeCourseIds,
+            availability,
         } = req.body;
 
         // Check if the user has the required fields
@@ -247,6 +269,23 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             });
         }
 
+        // Parse the arrays from the formdata strings into actual arrays
+        try {
+            tutorCourseIds = tutorCourseIds ? (typeof tutorCourseIds === 'string' ? JSON.parse(tutorCourseIds) : tutorCourseIds) : [];
+            tuteeCourseIds = tuteeCourseIds ? (typeof tuteeCourseIds === 'string' ? JSON.parse(tuteeCourseIds) : tuteeCourseIds) : [];
+            availability = availability ? (typeof availability === 'string' ? JSON.parse(availability) : availability) : [];
+        } catch (e) {
+            return res.status(400).json({ message: "Invalid format for courses or availability" });
+        }
+
+        // Get the profilePicture from the request, and call the uploadToCloudinary method to get the URL
+        let imageURL = req.body.profilePicture;
+
+        if (req.file) {
+            const uploadResult = await uploadToCloudinary(req.file.buffer);
+            imageURL = (uploadResult as any).secure_url;
+        }
+
         // Update the profile table with the non-join values first
         await prisma.$transaction(async (tx) => {
             await tx.profile.update({
@@ -256,9 +295,9 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
                     bio: bio ? String(bio).trim() : null,
                     major: String(major).trim(),
                     yearOfStudy: year,
-                    isTutor: Boolean(isTutor),
-                    isTutee: Boolean(isTutee),
-                    profilePicture: profilePicture ? String(profilePicture) : null,
+                    isTutor: isTutor === "true",
+                    isTutee: isTutee === "true",
+                    profilePicture: imageURL ? String(imageURL) : null,
                 },
             });
 
