@@ -21,8 +21,11 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express-validator": "^2.20.33",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/streamifier": "^0.1.2",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.64.1",
+    "cloudinary": "^2.9.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
@@ -30,10 +33,12 @@
     "express-validator": "^7.3.1",
     "ioredis": "^5.8.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "nodemailer": "^7.0.10",
     "pg": "^8.16.3",
     "rate-limit-redis": "^4.3.1",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

@@ -1,5 +1,7 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
+import redis from "../services/redis.ts";
+import {deleteFromCloudinary, uploadToCloudinary} from "../utils/cloudinary.ts";
 
 // Logic to create a new user profile
 export const createProfile = async (req: express.Request, res: express.Response) => {
@@ -18,11 +20,13 @@ export const createProfile = async (req: express.Request, res: express.Response)
             major,
             yearOfStudy,
             isTutor,
-            isTutee,
-            photoUrl,
-            tutorCourseIds = [],
-            tuteeCourseIds = [],
-            availability = [],
+            isTutee
+        } = req.body;
+
+        let {
+            tutorCourseIds,
+            tuteeCourseIds,
+            availability,
         } = req.body;
 
         // Check if the user has the required fields
@@ -58,6 +62,23 @@ export const createProfile = async (req: express.Request, res: express.Response)
             });
         }
 
+        // Parse the arrays from the formdata strings into actual arrays
+        try {
+            tutorCourseIds = tutorCourseIds ? (typeof tutorCourseIds === 'string' ? JSON.parse(tutorCourseIds) : tutorCourseIds) : [];
+            tuteeCourseIds = tuteeCourseIds ? (typeof tuteeCourseIds === 'string' ? JSON.parse(tuteeCourseIds) : tuteeCourseIds) : [];
+            availability = availability ? (typeof availability === 'string' ? JSON.parse(availability) : availability) : [];
+        } catch (e) {
+            return res.status(400).json({ message: "Invalid format for courses or availability" });
+        }
+
+        // Get the profilePicture from the request, and call the uploadToCloudinary method to get the URL
+        let imageURL = req.body.profilePicture;
+
+        if (req.file) {
+            const uploadResult = await uploadToCloudinary(req.file.buffer);
+            imageURL = (uploadResult as any).secure_url;
+        }
+
         // Create the profile table with the non-join values first
         await prisma.$transaction(async (tx) => {
             await tx.profile.create({
@@ -67,9 +88,9 @@ export const createProfile = async (req: express.Request, res: express.Response)
                     bio: bio ? String(bio).trim() : null,
                     major: String(major).trim(),
                     yearOfStudy: year,
-                    isTutor: Boolean(isTutor),
-                    isTutee: Boolean(isTutee),
-                    profilePicture: photoUrl ? String(photoUrl) : null,
+                    isTutor: isTutor === "true",
+                    isTutee: isTutee === "true",
+                    profilePicture: imageURL ? String(imageURL) : null,
                 },
             });
 
@@ -127,22 +148,38 @@ export const createProfile = async (req: express.Request, res: express.Response)
     }
 };
 
-// Logic to get the user information for the logged-in user (ME)
-export const getMyProfile = async (req: express.Request, res: express.Response) => {
+// Logic to get information about a profile
+export const getProfile = async (req: express.Request, res: express.Response) => {
     try {
 
-        // Get the user object in the request
-        const userId = (req as any).user?.id;
+        // Get the userId in the request, and the ID of the profile to be reviewed from the query params
+        const viewerId = (req as any).user?.id;
+        const intendedId = req.params.userId || viewerId;
 
-        if (!userId) {
-            return res.status(401).json({
-                message: "Unauthorized"
+        if (!intendedId) {
+            return res.status(400).json({
+                message: "Missing ID"
+            });
+        }
+
+        // Checking if the user is viewing their own profile
+        const isSelf = viewerId === intendedId;
+
+        // Creating the Redis cache key depending on if the user is viewing their own profile or someone elses
+        const profileCacheKey = isSelf ? `profile:private:${intendedId}` : `profile:public:${intendedId}`;
+        const cachedData = await redis.get(profileCacheKey);
+
+        // If the profile is already cached, get it from there and send back the results instantly
+        if(cachedData) {
+            console.log("Profile info retrieved from cache")
+            return res.status(200).json({
+                profile: JSON.parse(cachedData), isSelf: isSelf
             });
         }
 
         // Retrieve the profile-related information for the user
         const profile = await prisma.profile.findUnique({
-            where: { userId },
+            where: { userId: intendedId },
             include: {
                 user: { select: { id: true } },
                 tutorCourses: { include: { course: true } },
@@ -157,59 +194,14 @@ export const getMyProfile = async (req: express.Request, res: express.Response) 
             });
         }
 
-        // Return the profile information
-        return res.status(200).json({
-            profile,
-            isOwnProfile: true,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Server error", error
-        });
-    }
-};
-
-// Logic to get the user information for another profile
-export const getOtherProfile = async (req: express.Request, res: express.Response) => {
-    try {
-
-        // Get the id of the user that's making the request, and the id of the user being viewed
-        const viewerId = (req as any).user?.id;
-        const { userId } = req.params;
-
-        if (!viewerId) {
-            return res.status(401).json({
-                message: "Unauthorized"
-            });
-        }
-
-        if (!userId) {
-            return res.status(400).json({
-                message: "Missing userId"
-            });
-        }
-
-        // Retrieve the profile-related information for the user
-        const profile = await prisma.profile.findUnique({
-            where: { userId },
-            include: {
-                user: { select: { id: true, email: true } },
-                tutorCourses: { include: { course: true } },
-                tuteeCourses: { include: { course: true } },
-                availability: true,
-            },
-        });
-
-        if (!profile) {
-            return res.status(404).json({
-                message: "Profile not found"
-            });
-        }
+        // Setting the profile data to the cache key, expiring after 60 minutes if no cache invalidation occurs
+        await redis.set(profileCacheKey, JSON.stringify(profile), 'EX', 3600);
 
         // Return the profile information
+        console.log("Profile info retrieved from DB");
         return res.status(200).json({
             profile,
-            isOwnProfile: viewerId === userId,
+            isSelf: isSelf
         });
     } catch (error) {
         return res.status(500).json({
@@ -236,10 +228,12 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             yearOfStudy,
             isTutor,
             isTutee,
-            profilePicture,
-            tutorCourseIds = [],
-            tuteeCourseIds = [],
-            availability = [],
+        } = req.body;
+
+        let {
+            tutorCourseIds,
+            tuteeCourseIds,
+            availability,
         } = req.body;
 
         // Check if the user has the required fields
@@ -275,6 +269,28 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             });
         }
 
+        // Parse the arrays from the formdata strings into actual arrays
+        try {
+            tutorCourseIds = tutorCourseIds ? (typeof tutorCourseIds === 'string' ? JSON.parse(tutorCourseIds) : tutorCourseIds) : [];
+            tuteeCourseIds = tuteeCourseIds ? (typeof tuteeCourseIds === 'string' ? JSON.parse(tuteeCourseIds) : tuteeCourseIds) : [];
+            availability = availability ? (typeof availability === 'string' ? JSON.parse(availability) : availability) : [];
+        } catch (e) {
+            return res.status(400).json({ message: "Invalid format for courses or availability" });
+        }
+
+        // Get the profilePicture from the request, and call the uploadToCloudinary method to get the URL
+        let imageURL = req.body.profilePicture;
+
+        if (req.file) {
+            const uploadResult = await uploadToCloudinary(req.file.buffer);
+            imageURL = (uploadResult as any).secure_url;
+
+            // Deleting the old image from Cloudinary
+            if (existing?.profilePicture && existing.profilePicture.includes('cloudinary')) {
+                await deleteFromCloudinary(existing.profilePicture)
+            }
+        }
+
         // Update the profile table with the non-join values first
         await prisma.$transaction(async (tx) => {
             await tx.profile.update({
@@ -284,9 +300,9 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
                     bio: bio ? String(bio).trim() : null,
                     major: String(major).trim(),
                     yearOfStudy: year,
-                    isTutor: Boolean(isTutor),
-                    isTutee: Boolean(isTutee),
-                    profilePicture: profilePicture ? String(profilePicture) : null,
+                    isTutor: isTutor === "true",
+                    isTutee: isTutee === "true",
+                    profilePicture: imageURL ? String(imageURL) : null,
                 },
             });
 
@@ -344,11 +360,14 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
             },
         });
 
+        // Clear all redis keys for this profile to invalidate the cache and force a DB read on the next GET endpoint to get the updated info for subsequent caching
+        await redis.del(`profile:private:${userId}`);
+        await redis.del(`profile:public:${userId}`);
+
         // Returning a success message, and including the profile data
         return res.status(200).json({
             message: "Profile updated",
-            profile,
-            isOwnProfile: true,
+            profile
         });
     } catch (error) {
         return res.status(500).json({

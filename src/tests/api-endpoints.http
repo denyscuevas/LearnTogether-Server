@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "a46c5d80-c31e-4f00-9e6c-f4d10b750eac",
-  "otpCode": "120833"
+  "id": "3f0d1462-8666-4fe5-bc50-33e6068ffc98",
+  "otpCode": "110973"
 }
 
 ### POST Send a password reset email
@@ -75,46 +75,50 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZDdiMTE0LWQ5MDEtNGM4Ni1hY2JmLWY0M2RiN2NjMzhhYyIsImVtYWlsIjoidGVzdHVzZXI4QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg4NDU1LCJleHAiOjE3NzAzOTAyNTV9._tDKAPTILHWRcUcWQ8hVu6KW3U8zNwSPdQrbHNtuE-U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
 Content-Type: application/json
 
 {
-  "name": "User 8",
-  "bio": "Second year CS student interested in tutoring COMP classes.",
-  "major": "Computer Science",
-  "yearOfStudy": 2,
-
-  "isTutor": false,
-  "isTutee": true,
-
-  "tutorCourseIds": [1,2,3,4],
-  "tuteeCourseIds": [5,6],
-
-  "availability": [
-    { "day": "TUE", "startMin": 540, "endMin": 660 },
-    { "day": "THU", "startMin": 840, "endMin": 960 }
-  ]
-}
-
-### GET a users information (ME)
-GET {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer Bearer TOKEN_HERE
-
-### PUT update a users profile
-PUT {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRjZGY5M2ZhLTlmYmUtNDFmYy1iNTg4LTU5YWNjMmVhMWVmNSIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzY5ODc3NTczLCJleHAiOjE3Njk4NzkzNzN9.OBuk8xNXoNmpO-np1JaaAxeg7ezthte271Rk_IoM81s
-Content-Type: application/json
-
-{
-  "name": "User 2",
+  "name": "User 11",
   "bio": "Third year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
   "yearOfStudy": 3,
 
   "isTutor": true,
+  "isTutee": true,
+
+  "tutorCourseIds": [4,8,12,16],
+  "tuteeCourseIds": [3,9],
+
+  "availability": [
+    { "day": "MON", "startMin": 540, "endMin": 660 },
+    { "day": "WED", "startMin": 840, "endMin": 960 }
+  ]
+}
+
+### GET a users information (ME)
+GET {{ BASE_URL }}/api/profiles/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
+
+### GET a users information (OTHER)
+GET {{ BASE_URL }}/api/profiles/ee48e1f6-5c3a-40af-bdd0-3466eae490db
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+
+### PUT update a users profile
+PUT {{ BASE_URL }}/api/profiles/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+Content-Type: application/json
+
+{
+  "name": "User 11",
+  "bio": "Fourth year CS student interested in tutoring COMP classes.",
+  "major": "Computer Science",
+  "yearOfStudy": 4,
+
+  "isTutor": true,
   "isTutee": false,
 
-  "tutorCourseIds": [760, 801, 805],
+  "tutorCourseIds": [4, 8, 12, 16],
   "tuteeCourseIds": [],
 
   "availability": [
