@@ -1,7 +1,7 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
 import redis from "../services/redis.ts";
-import {uploadToCloudinary} from "../utils/cloudinary.ts";
+import {deleteFromCloudinary, uploadToCloudinary} from "../utils/cloudinary.ts";
 
 // Logic to create a new user profile
 export const createProfile = async (req: express.Request, res: express.Response) => {
@@ -284,6 +284,11 @@ export const updateMyProfile = async (req: express.Request, res: express.Respons
         if (req.file) {
             const uploadResult = await uploadToCloudinary(req.file.buffer);
             imageURL = (uploadResult as any).secure_url;
+
+            // Deleting the old image from Cloudinary
+            if (existing?.profilePicture && existing.profilePicture.includes('cloudinary')) {
+                await deleteFromCloudinary(existing.profilePicture)
+            }
         }
 
         // Update the profile table with the non-join values first
