@@ -174,3 +174,56 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
         });
     }
 };
+
+// Method that handles the rejecting of connect requests between users
+export const rejectConnectionRequest = async (req: Request, res: Response) => {
+    try {
+
+        // Getting the ID of the user that the request was rejected by, and the requestID itself
+        const userId = (req as any).user?.id;
+        const { requestId } = req.params;
+
+        // Making sure the request exists
+        const connectionRequest = await prisma.connectionRequest.findUnique({
+            where: {
+                id: requestId!
+            },
+        });
+
+        // If there is no connection request record indicate to the user of this
+        if (!connectionRequest) {
+            return res.status(404).json({
+                message: "Request not found"
+            });
+        }
+
+        // Ensuring the logged-in user is the intended recipient of this request
+        if (connectionRequest.receiverId !== userId) {
+            return res.status(403).json({
+                message: "You are not authorized to accept this request"
+            });
+        }
+
+        // Deleting the Thread and ConnectionRequest records to reflect the rejection
+        await prisma.$transaction([
+            prisma.thread.delete({
+                where: {
+                    id: connectionRequest.threadId!
+                }
+            }),
+            prisma.connectionRequest.delete({
+                where: {
+                    id: requestId!
+                }
+            })
+        ]);
+
+        return res.status(200).json({
+            message: "Request rejected"
+        });
+
+    } catch (error) {
+        console.error("Reject Error:", error);
+        return res.status(500).json({ message: "Failed to reject request" });
+    }
+};
