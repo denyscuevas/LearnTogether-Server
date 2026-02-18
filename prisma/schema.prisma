@@ -256,13 +256,13 @@ model ConnectionRequest {
   message    String?
   status     RequestStatus @default(PENDING)
 
-  threadId   String? @unique
+  threadId String? @unique
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  sender     Profile @relation("SentRequests", fields: [senderId], references: [userId], onDelete: Cascade)
-  receiver   Profile @relation("ReceivedRequests", fields: [receiverId], references: [userId], onDelete: Cascade)
+  sender   Profile @relation("SentRequests", fields: [senderId], references: [userId], onDelete: Cascade)
+  receiver Profile @relation("ReceivedRequests", fields: [receiverId], references: [userId], onDelete: Cascade)
 
   @@unique([senderId, receiverId])
   @@index([receiverId, status])

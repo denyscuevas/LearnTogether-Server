@@ -3,7 +3,7 @@ POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser1@uwindsor.ca",
+  "email": "testuser2@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "3f0d1462-8666-4fe5-bc50-33e6068ffc98",
-  "otpCode": "110973"
+  "id": "b4a59aa7-81fc-4c98-80a0-cefeba1bafdf",
+  "otpCode": "797890"
 }
 
 ### POST Send a password reset email
@@ -75,14 +75,14 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0YTU5YWE3LTgxZmMtNGM5OC04MGEwLWNlZmViYTFiYWZkZiIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg2NjA1LCJleHAiOjE3NzEzODg0MDV9.ZHdP-_WISgQbN28mBTmBwLX6jjFPyNYjj81rJIJIqbc
 Content-Type: application/json
 
 {
-  "name": "User 11",
-  "bio": "Third year CS student interested in tutoring COMP classes.",
+  "name": "James",
+  "bio": "Second year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
-  "yearOfStudy": 3,
+  "yearOfStudy": 2,
 
   "isTutor": true,
   "isTutee": true,
@@ -98,7 +98,7 @@ Content-Type: application/json
 
 ### GET a users information (ME)
 GET {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ODg1ODlmLTlkMTUtNGJkNy1hYWU2LWE4ZTRhMThjNzc5YiIsImVtYWlsIjoidGVzdHVzZXIzQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMjkwNDAyLCJleHAiOjE3NzEyOTIyMDJ9.5XNjkN8LrUx8Rz9egWLv2A0Fs_-t3i2XgEjj-Havzeg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkNDlhMGRhLWZkMmMtNDBlMS1iNThmLTk1MjM3N2UyOGJhMSIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzgzMTczLCJleHAiOjE3NzEzODQ5NzN9.-2BNviJNQjew5LoOxOsVe0paLs6JNVL82AdN2Y1toAQ
 
 ### GET a users information (OTHER)
 GET {{ BASE_URL }}/api/profiles/ee48e1f6-5c3a-40af-bdd0-3466eae490db
@@ -158,4 +158,14 @@ Content-Type: application/json
 GET {{ BASE_URL }}/api/messages/ae8d8c70-0b61-4c24-9a74-1dce75c09e6e
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzUzMDI1LCJleHAiOjE3NzAzNTQ4MjV9.zio04ot11cDnHCS_lx2iq-AvRESkPa3cLRiUJM6DfOg
 Content-Type: application/json
+
+### POST Send a ConnectionRequest
+POST {{ BASE_URL }}/api/requests/send
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQyNDQ3MTcxLWVjNmItNDZiYS1hOGMzLWRiMWZhZjI5MzBhZSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg2NjQwLCJleHAiOjE3NzEzODg0NDB9.i61NFj2ahjELGdC-ENdAiG9GDCWgyNjqgnQB9-q-zis
+Content-Type: application/json
+
+{
+  "receiverId": "b4a59aa7-81fc-4c98-80a0-cefeba1bafdf",
+  "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
+}
 
