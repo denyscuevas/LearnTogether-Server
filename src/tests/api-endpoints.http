@@ -30,8 +30,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "b4a59aa7-81fc-4c98-80a0-cefeba1bafdf",
-  "otpCode": "797890"
+  "id": "1a93efc8-01b6-4e41-bf8f-4a54c1b4f478",
+  "otpCode": "219211"
 }
 
 ### POST Send a password reset email
@@ -75,14 +75,14 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0YTU5YWE3LTgxZmMtNGM5OC04MGEwLWNlZmViYTFiYWZkZiIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg2NjA1LCJleHAiOjE3NzEzODg0MDV9.ZHdP-_WISgQbN28mBTmBwLX6jjFPyNYjj81rJIJIqbc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhOTNlZmM4LTAxYjYtNGU0MS1iZjhmLTRhNTRjMWI0ZjQ3OCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg4NzA4LCJleHAiOjE3NzEzOTA1MDh9.6Gqlnvqr5lnvHDvSsi6AzB6xusuNqioNA7DbtCX0gQI
 Content-Type: application/json
 
 {
-  "name": "James",
-  "bio": "Second year CS student interested in tutoring COMP classes.",
+  "name": "Alex",
+  "bio": "Third year CS student interested in tutoring COMP classes.",
   "major": "Computer Science",
-  "yearOfStudy": 2,
+  "yearOfStudy": 3,
 
   "isTutor": true,
   "isTutee": true,
@@ -161,11 +161,11 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQyNDQ3MTcxLWVjNmItNDZiYS1hOGMzLWRiMWZhZjI5MzBhZSIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg2NjQwLCJleHAiOjE3NzEzODg0NDB9.i61NFj2ahjELGdC-ENdAiG9GDCWgyNjqgnQB9-q-zis
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2Zjk4MjZhLThjZDAtNGU1ZC1iZDMxLWVjZjUxYTczNmU0YiIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzg5MjUzLCJleHAiOjE3NzEzOTEwNTN9.FcQNDS9a_7jxbfDGBZFmw7ugNooXwlYgrsl3UF57U3o
 Content-Type: application/json
 
 {
-  "receiverId": "b4a59aa7-81fc-4c98-80a0-cefeba1bafdf",
+  "receiverId": "1a93efc8-01b6-4e41-bf8f-4a54c1b4f478",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
 

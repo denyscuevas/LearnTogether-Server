@@ -2,15 +2,16 @@
 import prisma from "../config/prismaClient.ts";
 import crypto from 'node:crypto';
 
-interface Message {
+export interface Message {
     threadId: string;
     senderId: string;
     content: string;
 }
 
 // Create a new message in the database
-export const createMessage = async (data: Message) => {
+export const createMessage = async (data: Message, tx?:  any) => {
     const {threadId, senderId, content} = data
+    const prismaClient = tx || prisma;
 
     // Check if all required fields are provided
     if (!threadId || !senderId || !content) {
@@ -20,7 +21,7 @@ export const createMessage = async (data: Message) => {
     const {cipherText, iv, authTag} = encrypt(content, key)
 
     // Create a new message and return
-    const message = await prisma.message.create({
+    const message = await prismaClient.message.create({
         data: {
             threadId: threadId,
             senderId: senderId,

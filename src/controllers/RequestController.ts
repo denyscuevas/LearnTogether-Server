@@ -1,5 +1,7 @@
 import type {Request, Response} from 'express';
 import prisma from "../config/prismaClient.ts";
+import {createMessage} from "../services/message.ts";
+import type { Message } from "../services/message.ts";
 
 // Method which handles the creation of requests for connecting between users
 export const sendConnectionRequest = async (req: Request, res: Response) => {
@@ -79,15 +81,12 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
 
             // Creating the initial message, if it exists
             if (messageContent) {
-                await tx.message.create({
-                    data: {
-                        threadId: thread.id,
-                        senderId: senderId,
-                        content: messageContent,
-                        iv: "TODO",
-                        authTag: "TODO"
-                    }
-                });
+                const firstMessage: Message = {
+                    threadId: thread.id,
+                    senderId: senderId,
+                    content: messageContent
+                }
+                await createMessage(firstMessage, tx);
             }
 
             return { connectionRequest, thread };
