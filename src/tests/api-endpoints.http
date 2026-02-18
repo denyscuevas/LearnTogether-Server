@@ -13,7 +13,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser1@uwindsor.ca",
+  "email": "testuser2@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -168,4 +168,9 @@ Content-Type: application/json
   "receiverId": "1a93efc8-01b6-4e41-bf8f-4a54c1b4f478",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
+
+### PATCH Accept a ConnectionRequest
+PATCH {{ BASE_URL }}/api/requests/accept/38f3cc06-7191-4c1f-b675-c787d8e1a1de
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhOTNlZmM4LTAxYjYtNGU0MS1iZjhmLTRhNTRjMWI0ZjQ3OCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzkxMjA0LCJleHAiOjE3NzEzOTMwMDR9.g-ebLHnvVlDG8AubtRt0DiGqxsUc0oljEWC3J6qJHAI
+Content-Type: application/json
 
