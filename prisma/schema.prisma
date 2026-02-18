@@ -124,10 +124,12 @@ model Profile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tutorCourses ProfileTutorCourse[]
-  tuteeCourses ProfileTuteeCourse[]
-  availability AvailabilitySlot[]
+  user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorCourses     ProfileTutorCourse[]
+  tuteeCourses     ProfileTuteeCourse[]
+  availability     AvailabilitySlot[]
+  sentRequests     ConnectionRequest[]  @relation("SentRequests")
+  receivedRequests ConnectionRequest[]  @relation("ReceivedRequests")
 
   @@index([major])
   @@index([yearOfStudy])
@@ -197,6 +199,7 @@ model Thread {
   lastMessageId      String?
   lastMessageAt      DateTime?
   lastMessagePreview String?
+  isAccepted         Boolean   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -239,4 +242,35 @@ model Message {
 
   @@index([threadId])
   @@index([createdAt])
+}
+
+// ---------------------------------------------
+// Request Models
+// ---------------------------------------------
+
+// Model to hold the connection requests
+model ConnectionRequest {
+  id         String        @id @default(uuid())
+  senderId   String
+  receiverId String
+  message    String?
+  status     RequestStatus @default(PENDING)
+
+  threadId   String? @unique
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sender     Profile @relation("SentRequests", fields: [senderId], references: [userId], onDelete: Cascade)
+  receiver   Profile @relation("ReceivedRequests", fields: [receiverId], references: [userId], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@index([receiverId, status])
+}
+
+// Enum which holds the possible statuses for a connection request
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
