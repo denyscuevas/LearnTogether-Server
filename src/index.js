@@ -7,10 +7,14 @@ import messageRoutes from './routes/message.ts'
 import threadRoutes from './routes/thread.ts'
 import requestRoutes from './routes/requests.ts'
 import cookieParser from "cookie-parser";
+import {cleanupPendingRequests} from "./services/cleanup.ts";
 
 dotenv.config();
 
 const app = express();
+
+cleanupPendingRequests()
+
 app.use(cookieParser())
 app.use(cors());
 app.use(express.json());
