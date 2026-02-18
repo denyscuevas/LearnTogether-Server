@@ -99,6 +99,78 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error("Request Error:", error);
-        return res.status(500).json({ message: "Failed to send request", error });
+        return res.status(500).json({
+            message: "Failed to send request", error
+        });
+    }
+};
+
+// Method which handles accepting connect requests between users
+export const acceptConnectionRequest = async (req: Request, res: Response) => {
+    try {
+
+        // Getting the ID of the user that the request was accepted by, and the requestID itself
+        const userId = (req as any).user?.id;
+        const { requestId } = req.params;
+
+        // Making sure the request exists
+        const connectionRequest = await prisma.connectionRequest.findUnique({
+            where : {
+                id: requestId!
+            }
+        });
+
+        // If there is no connection request record indicate to the user of this
+        if (!connectionRequest) {
+            return res.status(404).json({
+                message: "Request not found"
+            });
+        }
+
+        // Ensuring the logged in user is the intended recipient of this request
+        if (connectionRequest.receiverId !== userId) {
+            return res.status(403).json({
+                message: "You are not authorized to accept this request"
+            });
+        }
+
+        // PENDING is the only status that a live request can have
+        if (connectionRequest.status !== 'PENDING') {
+            return res.status(400).json({
+                message: "This request has already been processed"
+            });
+        }
+
+       // Modify the Thread and ConnectionRequest records to reflect the acceptance
+        await prisma.$transaction([
+            prisma.connectionRequest.update({
+                where: {
+                    id: requestId!
+                },
+                data: {
+                    status: 'ACCEPTED'
+                }
+            }),
+
+            // Change the Thread status to accepted, which will allow messages to begin
+            prisma.thread.update({
+                where: {
+                    id: connectionRequest.threadId!
+                },
+                data: {
+                    isAccepted: true
+                }
+            })
+        ]);
+
+        return res.status(200).json({
+            message: "Request accepted"
+        });
+
+    } catch (error) {
+        console.error("Accept Error:", error);
+        return res.status(500).json({
+            message: "Failed to accept request"
+        });
     }
 };
