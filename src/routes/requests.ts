@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.post('/send', requireAuth, sendConnectionRequest);
 router.patch('/accept/:requestId', requireAuth, acceptConnectionRequest);
-router.delete('/reject/:requestId', requireAuth, rejectConnectionRequest);
+router.delete('/decline/:requestId', requireAuth, rejectConnectionRequest);
 
 export default router;

@@ -175,7 +175,7 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
     }
 };
 
-// Method that handles the rejecting of connect requests between users
+// Method that handles the declining of connect requests between users
 export const rejectConnectionRequest = async (req: Request, res: Response) => {
     try {
 
@@ -200,30 +200,33 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
         // Ensuring the logged-in user is the intended recipient of this request
         if (connectionRequest.receiverId !== userId) {
             return res.status(403).json({
-                message: "You are not authorized to accept this request"
+                message: "You are not authorized to decline this request"
             });
         }
 
         // Deleting the Thread and ConnectionRequest records to reflect the rejection
         await prisma.$transaction([
+            prisma.connectionRequest.delete({
+                where: {
+                    id: requestId!
+                }
+            }),
+
             prisma.thread.delete({
                 where: {
                     id: connectionRequest.threadId!
                 }
             }),
-            prisma.connectionRequest.delete({
-                where: {
-                    id: requestId!
-                }
-            })
         ]);
 
         return res.status(200).json({
-            message: "Request rejected"
+            message: "Request declined"
         });
 
     } catch (error) {
         console.error("Reject Error:", error);
-        return res.status(500).json({ message: "Failed to reject request" });
+        return res.status(500).json({
+            message: "Failed to reject request"
+        });
     }
 };
