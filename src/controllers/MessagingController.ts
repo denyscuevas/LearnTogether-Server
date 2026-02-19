@@ -5,6 +5,7 @@ import profile from "../routes/profile.ts";
 import type {Message} from "../generated/prisma/client.ts";
 import message from "../routes/message.ts";
 import {decrypt} from "../services/message.ts";
+import redis from "../services/redis.ts";
 
 // Create a new thread between two users //
 
@@ -100,10 +101,40 @@ export const getThreads = async (req: Request, res: Response) => {
             }, include: {ThreadParticipant: {include: {user: {select: {profile: true}}}}}
         })
 
-        // Return the threads
+        // Map the participant IDs to an array to prevent duplicates
+        const participantIds = threads.flatMap(u => {
+            return u.ThreadParticipant.map(p => p.profileId)
+        })
+
+        // Create a pipeline to get the online status of each participant
+        // The redis pipeline is used runs multiple commands in parallel
+        const pipeline = redis.pipeline();
+        participantIds.forEach(id => pipeline.get(`user:${id}:online`))
+        const onlineUsers = await pipeline.exec();
+
+        // Create a map with participant IDs as keys and online status as values
+        const statusMap = new Map(
+            participantIds.map((id, i) => {
+                // Set online to true if the list exists and the user is online.
+                // onlineUsers[i][1] is the timestamp of the last online status
+                const isOnline = onlineUsers && onlineUsers[i] && onlineUsers[i][1] !== null
+                return [id, isOnline]
+            })
+        )
+
+        // Update the threads and add the online status to each participant
+        const threadsWithStatus = threads.map(thread => ({
+            ...thread,
+            ThreadParticipant: thread.ThreadParticipant.map(participant => ({
+                ...participant,
+                isOnline: statusMap.get(participant.profileId)
+            }))
+        }))
+
+        // Return the threads with online status
         return res.status(200).json({
             message: "Threads fetched successfully",
-            data: threads
+            threads: threadsWithStatus
         });
     } catch (error) {
         return res.status(500).json({message: "Server error", error});
@@ -117,6 +148,7 @@ const key = process.env.MESSAGE_ENCRYPT_SECRET
 export const getMessages = async (req: Request, res: Response) => {
     try {
         const threadId = req.params.threadId;
+        const userId = (req as any).user?.id;
 
         // Check if thread ID is provided
         if (!threadId) {
@@ -129,14 +161,15 @@ export const getMessages = async (req: Request, res: Response) => {
             include: {sender: {select: {profile: true}}}
         })
 
-        if (!key){
+        if (!key) {
             return res.status(400).json({message: "Encryption error"});
         }
 
         // Decrypt each message's content using the key and iv stored in the message object
         const decryptedMessages = messages.map(msg => ({
-            ...msg,
-            content: decrypt(msg.content, key, msg.iv, msg.authTag)}
+                ...msg,
+                content: decrypt(msg.content, key, msg.iv, msg.authTag)
+            }
         ))
 
         // Return the messages

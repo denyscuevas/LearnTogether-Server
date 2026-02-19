@@ -15,3 +15,18 @@ export const getUserIdByResetToken = async (token: any) => {
 export const invalidateResetSession = async (token: any) => {
     return redis.del(`password_reset_session:${token}`);
 };
+
+// Method to set a user's online status to true for 5 minutes
+export const setOnlineStatus = async (userId: string | number) => {
+    return redis.set(`user:${userId}:online`, Date.now(), 'EX', 300);
+};
+
+// Method to get a user's online status
+export const getOnlineStatus = async (userId: string | number) => {
+    return redis.get(`user:${userId}:online`);
+};
+
+// Method to delete a user's online status
+export const deleteOnlineStatus = async (userId: string | number) => {
+    return redis.del(`user:${userId}:online`);
+}
