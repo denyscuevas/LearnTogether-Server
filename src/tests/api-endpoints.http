@@ -139,7 +139,7 @@ Content-Type: application/json
 
 ### GET a user's threads
 GET {{ BASE_URL }}/api/threads/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzQ2MTA3LCJleHAiOjE3NzAzNDc5MDd9.lNMQLskxeCvWugha1FKlaEm2G2gtqU4LdTEwOrVC-mo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5NDMwLCJleHAiOjE3NzE1NDEyMzB9.BlT75us7FKYRWvDfnsgClHmZ4axoqhBhNxivuZ0_uC8
 Content-Type: application/json
 
 
@@ -161,7 +161,7 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNDQwMzAwLCJleHAiOjE3NzE0NDIxMDB9._gOku1dtLoFrgHAVULssLHMsqm3yQCCPS8iHEyuxKuo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5MjM3LCJleHAiOjE3NzE1NDEwMzd9.XPkeFVDM2wk7ng4OluAvnxmQfqR2zM4K9vmsv_DK0kw
 Content-Type: application/json
 
 {
@@ -170,12 +170,17 @@ Content-Type: application/json
 }
 
 ### PATCH Accept a ConnectionRequest
-PATCH {{ BASE_URL }}/api/requests/accept/9a5710f8-9d6f-4f78-847a-b9a70228d315
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNDQwMzAwLCJleHAiOjE3NzE0NDIxMDB9._gOku1dtLoFrgHAVULssLHMsqm3yQCCPS8iHEyuxKuo
+PATCH {{ BASE_URL }}/api/requests/accept/ed59065b-94a1-432f-b415-e1f23963facc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5NDMwLCJleHAiOjE3NzE1NDEyMzB9.BlT75us7FKYRWvDfnsgClHmZ4axoqhBhNxivuZ0_uC8
 Content-Type: application/json
 
 ### DELETE Decline a ConnectionRequest
 DELETE {{ BASE_URL }}/api/requests/decline/9a5710f8-9d6f-4f78-847a-b9a70228d315
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNDQwNDAxLCJleHAiOjE3NzE0NDIyMDF9.5CQF2EBIM9u05_KHuypF3jTqVBxFeEZdx27_BPEvnrg
+Content-Type: application/json
+
+### GET Show a user's pending requests
+GET {{ BASE_URL }}/api/requests/received
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5NDMwLCJleHAiOjE3NzE1NDEyMzB9.BlT75us7FKYRWvDfnsgClHmZ4axoqhBhNxivuZ0_uC8
 Content-Type: application/json
 
