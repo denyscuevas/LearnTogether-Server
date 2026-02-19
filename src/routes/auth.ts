@@ -10,6 +10,7 @@ import {
 } from "../controllers/AuthController.ts";
 import {checkRequestErrors} from "../middleware/validationMiddleware.ts";
 import { limiter } from "../middleware/endpointRateLimiter.ts";
+import {requireAuth} from "../middleware/verifyUserMiddleware.ts";
 
 // Express router paths for auth routes
 const router = express.Router();
@@ -62,7 +63,6 @@ router.post("/verify-reset-otp",
 
 router.post("/reset-password",
     [
-        body("userId").notEmpty(),
         body("password").isLength({min: 8}).withMessage("Password must be at least 8 characters").matches(/[a-z]/)
             .withMessage('Password must contain a lowercase letter')
             .matches(/[A-Z]/)

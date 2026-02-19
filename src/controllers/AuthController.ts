@@ -8,7 +8,7 @@ import {generateRawToken, hashToken, verifyToken} from "../utils/token.ts";
 import {addEmailJobToQueue} from "../services/emailQueue.ts";
 import {generateOTP, hashOTP, verifyOTP} from "../utils/otp.ts";
 import {sendVerificationEmail} from "../services/mailer.ts";
-import { isExpired } from "../utils/isExpired.ts"
+import {isExpired} from "../utils/isExpired.ts"
 import {createResetSession, getUserIdByResetToken, invalidateResetSession} from "../services/redisAuthService.ts";
 import redis from "../services/redis.ts";
 
@@ -172,7 +172,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: false,
-            sameSite: "strict",
+            sameSite: "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
         });
@@ -461,8 +461,8 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
         res.cookie('password_reset_token', passwordResetToken, {
             httpOnly: true,
             secure: false,
-            sameSite: 'strict',
-            maxAge: 15* 60 * 1000,
+            sameSite: 'lax',
+            maxAge: 15 * 60 * 1000,
             path: "/api/auth/reset-password",
         });
 
@@ -647,7 +647,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
                 email: user.email
             },
             process.env.JWT_SECRET,
-            {expiresIn: "30m"}
+            {expiresIn: "5m"}
         );
 
         // Generate a refresh token using secure, random utility functions
@@ -668,14 +668,14 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
         res.cookie('refreshToken', newRefreshToken, {
             httpOnly: true,
             secure: false,
-            sameSite: "strict",
+            sameSite: "lax",
             path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         // Send the access token back in the response
         return res.status(200).json(
-            { token: newAccessToken }
+            {token: newAccessToken}
         );
     } catch (error) {
         return res.status(403).json({
@@ -727,7 +727,7 @@ export const logout = async (req: express.Request, res: express.Response) => {
         res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: false,
-            sameSite: "strict",
+            sameSite: "lax",
             path: "/",
         });
 
