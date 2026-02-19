@@ -2,6 +2,10 @@ import type {Request, Response} from 'express';
 import prisma from "../config/prismaClient.ts";
 import {createMessage} from "../services/message.ts";
 import type { Message } from "../services/message.ts";
+import { decrypt } from "../services/message.ts";
+
+//Message secret
+const key = process.env.MESSAGE_ENCRYPT_SECRET
 
 // Method which handles the creation of requests for connecting between users
 export const sendConnectionRequest = async (req: Request, res: Response) => {
@@ -258,10 +262,29 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
             }
         });
 
+        // Decrypting the initial message with each pending request, so that it's visible in plaintext
+        const pendingRequestsInitialMessage = pendingRequests.map(req => {
+            const firstMessage = req.thread?.messages[0];
+            let decrypted = req.message;
+
+            if (firstMessage && key) {
+                try {
+                    decrypted = decrypt(firstMessage.content, key, firstMessage.iv, firstMessage.authTag) || "Hi, I want to connect!";
+                } catch (e) {
+                    console.error("Decryption failed");
+                }
+            }
+
+            return {
+                ...req,
+                introMessage: decrypted
+            };
+        });
+
         // Send back the data
         return res.status(200).json({
             message: "Requests fetched successfully",
-            pendingRequests
+            requests: pendingRequestsInitialMessage
         });
     } catch (error) {
         return res.status(500).json({ message: "Server error", error });
