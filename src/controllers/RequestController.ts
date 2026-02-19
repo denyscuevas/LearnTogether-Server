@@ -3,6 +3,7 @@ import prisma from "../config/prismaClient.ts";
 import {createMessage} from "../services/message.ts";
 import type { Message } from "../services/message.ts";
 import { decrypt } from "../services/message.ts";
+import redis from "../services/redis.ts";
 
 //Message secret
 const key = process.env.MESSAGE_ENCRYPT_SECRET
@@ -96,6 +97,9 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
             return { connectionRequest, thread };
         });
 
+        // Invalidate the recipients request cache after they receive a new connection request
+        await redis.del(`user:${receiverId}:requests`);
+
         return res.status(201).json({
             message: "Request sent successfully",
             data: result
@@ -167,6 +171,9 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
             })
         ]);
 
+        // Invalidate the recipients requests cache after they accept a connection request
+        await redis.del(`user:${userId}:requests`);
+
         return res.status(200).json({
             message: "Request accepted"
         });
@@ -223,6 +230,9 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
             }),
         ]);
 
+        // Invalidate the recipents request cache after they reject a connection request
+        await redis.del(`user:${userId}:requests`);
+
         return res.status(200).json({
             message: "Request declined"
         });
@@ -240,8 +250,20 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
 
     try {
 
-        //Get the user's id
+        //Get the user's id and their cache key
         const userId = (req as any).user?.id;
+        const cacheKey = `user:${userId}:requests`;
+
+        // Get the data in redis with their cache key
+        const cachedData = await redis.get(cacheKey);
+
+        // If the cache contains the requests, early return with the data
+        if (cachedData) {
+            return res.status(200).json({
+                message: "Requests fetched successfully",
+                requests: JSON.parse(cachedData)
+            });
+        }
 
         // Get all the connection requests that are pending to the logged-in user, and include the threads and initial message
         const pendingRequests = await prisma.connectionRequest.findMany({
@@ -280,6 +302,9 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
                 introMessage: decrypted
             };
         });
+
+        // Setting the cache key to the queried requests if the Redis cache was empty, and set an expiration of one hour
+        await redis.set(cacheKey, JSON.stringify(pendingRequestsInitialMessage), 'EX', 3600);
 
         // Send back the data
         return res.status(200).json({
