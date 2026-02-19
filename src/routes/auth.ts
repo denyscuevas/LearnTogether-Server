@@ -15,8 +15,8 @@ import {requireAuth} from "../middleware/verifyUserMiddleware.ts";
 // Express router paths for auth routes
 const router = express.Router();
 
-const rateLimiterLax = limiter(15 * 60 * 1000, 5, "Too many attempts. Please try again later.")
-const rateLimiterStrict = limiter(60 * 60 * 1000, 5, "You've reached the limit for this action. Please try again in an hour.")
+const rateLimiterLax = limiter(15 * 60 * 1000, 10, "Too many attempts. Please try again later.")
+const rateLimiterStrict = limiter(60 * 60 * 1000, 10, "You've reached the limit for this action. Please try again in an hour.")
 
 router.post("/register",
     [
