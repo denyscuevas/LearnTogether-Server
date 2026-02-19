@@ -206,6 +206,7 @@ model Thread {
 
   messages          Message[]
   ThreadParticipant ThreadParticipant[]
+  ConnectionRequest ConnectionRequest?
 
   @@index([updatedAt])
 }
@@ -263,6 +264,7 @@ model ConnectionRequest {
 
   sender   Profile @relation("SentRequests", fields: [senderId], references: [userId], onDelete: Cascade)
   receiver Profile @relation("ReceivedRequests", fields: [receiverId], references: [userId], onDelete: Cascade)
+  thread   Thread? @relation(fields: [threadId], references: [id])
 
   @@unique([senderId, receiverId])
   @@index([receiverId, status])

@@ -230,3 +230,40 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
         });
     }
 };
+
+// Method that gets the pending requests for the logged-in user, including the thread and intro message
+export const getConnectionRequests = async (req: Request, res: Response) => {
+
+    try {
+
+        //Get the user's id
+        const userId = (req as any).user?.id;
+
+        // Get all the connection requests that are pending to the logged-in user, and include the threads and initial message
+        const pendingRequests = await prisma.connectionRequest.findMany({
+            where: {
+                receiverId: userId,
+                status: 'PENDING'
+            },
+            include: {
+                sender: true,
+                thread: {
+                    include: {
+                        messages: {
+                            take: 1,
+                            orderBy: { createdAt: 'asc' }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Send back the data
+        return res.status(200).json({
+            message: "Requests fetched successfully",
+            pendingRequests
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error });
+    }
+}
