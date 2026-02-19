@@ -92,6 +92,7 @@ export const getThreads = async (req: Request, res: Response) => {
         // Find all threads where the user is a participant
         const threads = await prisma.thread.findMany({
             where: {
+                isAccepted: true,
                 ThreadParticipant: {
                     some: {
                         profileId: {in: [userId]}
