@@ -32,7 +32,7 @@ enum DayOfWeek {
 model User {
   id                     String                   @id @default(uuid())
   email                  String                   @unique
-  passwordHash           String                   @unique
+  passwordHash           String
   isVerified             Boolean                  @default(false)
   refreshTokens          RefreshToken[]
   createdAt              DateTime                 @default(now())
