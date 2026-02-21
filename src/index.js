@@ -6,6 +6,7 @@ import profileRoutes from './routes/profile.ts'
 import messageRoutes from './routes/message.ts'
 import threadRoutes from './routes/thread.ts'
 import requestRoutes from './routes/requests.ts'
+import matchRoutes from './routes/matches.ts'
 import cookieParser from "cookie-parser";
 import {cleanupPendingRequests} from "./services/cleanup.ts";
 
@@ -25,6 +26,7 @@ app.use("/api/profiles", profileRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/threads", threadRoutes);
 app.use("/api/requests", requestRoutes);
+app.use("/api/matches", matchRoutes)
 
 app.get("/", (_, res) => {
     res.send("API running");
