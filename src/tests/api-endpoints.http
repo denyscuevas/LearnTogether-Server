@@ -1,3 +1,5 @@
+// AUTHENTICATION TEST ENDPOINTS
+
 ### POST Register a User Test Route
 POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
@@ -13,7 +15,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser1@uwindsor.ca",
+  "email": "edwin.deckow@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -71,7 +73,7 @@ POST {{ BASE_URL }}/api/auth/logout
 Content-Type: application/json
 
 
-
+// PROFILE TEST ENDPOINTS
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
@@ -159,6 +161,9 @@ GET {{ BASE_URL }}/api/messages/ae8d8c70-0b61-4c24-9a74-1dce75c09e6e
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzUzMDI1LCJleHAiOjE3NzAzNTQ4MjV9.zio04ot11cDnHCS_lx2iq-AvRESkPa3cLRiUJM6DfOg
 Content-Type: application/json
 
+
+// CONNECTION REQUEST TEST ENDPOINTS
+
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTQwNzYxLCJleHAiOjE3NzE1NDI1NjF9.QZN0NfZePsHNNODynXilKwm2j0A1rb2yNk1rZpB08pM
@@ -182,5 +187,12 @@ Content-Type: application/json
 ### GET Show a user's pending requests
 GET {{ BASE_URL }}/api/requests/received
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTQwODE1LCJleHAiOjE3NzE1NDI2MTV9.lfDXDkpo6BwotryASD6KixCwmN4YexqX0uF-kA84bSo
+Content-Type: application/json
+
+// MATCHING/FEED TEST ENDPOINTS
+
+### GET Show a user's best matches
+GET {{ BASE_URL }}/api/matches/recommendations
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI3MjU1MWY4LTdkZmUtNDRmNi1iYjExLTFlMTAyMmNhOGNhZSIsImVtYWlsIjoiZWR3aW4uZGVja293QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNjQ1NTMxLCJleHAiOjE3NzE2NDczMzF9.dtiP1RmnIt4vp9yC72nma48-1YAcYDr4jXLyQzKoDgQ
 Content-Type: application/json
 
