@@ -1,14 +1,23 @@
 import prisma from "../config/prismaClient.ts";
 import type {Request, Response} from "express";
 import {formatTime} from "../utils/formatDateTime.ts";
+import redis from "../services/redis.ts";
 
-
+// Get today's day
 const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 
 // Method which gets recommended matches for a user based on their profile data
 export const getRecommendedMatches = async (req: Request, res: Response) => {
     try {
         const userId = (req as any).user?.id;
+        const cacheKey = `recommendation:${userId}`;
+
+        // Lookup the user's cache for any existing recommendations to read from
+        const cachedData = await redis.get(cacheKey);
+        if (cachedData) {
+            console.log("Returning cached recommendations");
+            return res.status(200).json(JSON.parse(cachedData));
+        }
 
         // Get the data of the logged-in user to compare other users to
         const myProfile = await prisma.profile.findUnique({
@@ -142,6 +151,9 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             .filter(m => m.matchScore > 0)
             .sort((a, b) => b.matchScore - a.matchScore)
             .slice(0, 10);
+
+        // Cache the match data for 30 minutes to reduce lookup times
+        await redis.set(cacheKey, JSON.stringify(topMatches),'EX', 1800);
 
         return res.status(200).json({
             message: "Match results retrieved",
