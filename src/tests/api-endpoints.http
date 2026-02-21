@@ -15,7 +15,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "edwin.deckow@uwindsor.ca",
+  "email": "roberto.abbott@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -193,6 +193,6 @@ Content-Type: application/json
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI3MjU1MWY4LTdkZmUtNDRmNi1iYjExLTFlMTAyMmNhOGNhZSIsImVtYWlsIjoiZWR3aW4uZGVja293QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNjQ1NTMxLCJleHAiOjE3NzE2NDczMzF9.dtiP1RmnIt4vp9yC72nma48-1YAcYDr4jXLyQzKoDgQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzE2NDc2MDMsImV4cCI6MTc3MTY0OTQwM30._0qr3-DwdJ8G3KX2suWnhNzQzlGU912vbiV1UR_h-cs
 Content-Type: application/json
 

@@ -5,6 +5,7 @@ import redis from "../services/redis.ts";
 
 // Get today's day
 const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+const currentMin = (new Date().getHours() * 60) + new Date().getMinutes();
 
 // Method which gets recommended matches for a user based on their profile data
 export const getRecommendedMatches = async (req: Request, res: Response) => {
@@ -104,7 +105,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             // If there is any match, award 80 points for each course match
             const tutorThemMatch = candidate.tuteeCourses.filter(tc => isTutorCourses.includes(tc.courseId));
             if (tutorThemMatch.length > 0) {
-                score += tutorThemMatch.length * 100;
+                score += tutorThemMatch.length * 80;
                 structuredReasons.youCanHelpThem = tutorThemMatch.map(tc => `${tc.course.code} (${tc.course.name})`);
             }
 
@@ -118,18 +119,39 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
 
                 // If there is an overlap, award the points, and if they have availability today, then award bonus points for instant connection opportunity
                 if (overlap) {
-                    let overlapPoints = 40;
+                    // let overlapPoints = 40;
+                    //
+                    // if (theirTime.day === today) {
+                    //     overlapPoints += 20;
+                    //     structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(Math.max(theirTime.startMin, overlap.startMin))} - ${formatTime(Math.min(theirTime.endMin, overlap.endMin))}`);
+                    // } else {
+                    //     const start = formatTime(Math.max(theirTime.startMin, overlap.startMin));
+                    //     const end = formatTime(Math.min(theirTime.endMin, overlap.endMin));
+                    //     structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${start} - ${end}`);
+                    // }
+                    //
+                    // score += overlapPoints;
 
+                    const windowStart = Math.max(theirTime.startMin, overlap.startMin);
+                    const windowEnd = Math.min(theirTime.endMin, overlap.endMin);
+
+                    // Giving more points is someone is available now or later today
                     if (theirTime.day === today) {
-                        overlapPoints += 20;
-                        structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(Math.max(theirTime.startMin, overlap.startMin))} - ${formatTime(Math.min(theirTime.endMin, overlap.endMin))}`);
-                    } else {
-                        const start = formatTime(Math.max(theirTime.startMin, overlap.startMin));
-                        const end = formatTime(Math.min(theirTime.endMin, overlap.endMin));
-                        structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${start} - ${end}`);
-                    }
+                        if (windowEnd > currentMin) {
+                            const isCurrentlyHappening = currentMin >= windowStart;
 
-                    score += overlapPoints;
+                            if (isCurrentlyHappening) {
+                                score += 60;
+                                structuredReasons.availabilityOverlap.push(`Available RIGHT NOW (until ${formatTime(windowEnd)})`);
+                            } else {
+                                score += 50;
+                                structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
+                            }
+                        }
+                    } else {
+                        score += 40;
+                        structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
+                    }
                 }
             });
 
