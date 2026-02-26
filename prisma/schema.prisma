@@ -124,12 +124,14 @@ model Profile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tutorCourses     ProfileTutorCourse[]
-  tuteeCourses     ProfileTuteeCourse[]
-  availability     AvailabilitySlot[]
-  sentRequests     ConnectionRequest[]  @relation("SentRequests")
-  receivedRequests ConnectionRequest[]  @relation("ReceivedRequests")
+  user                  User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tutorCourses          ProfileTutorCourse[]
+  tuteeCourses          ProfileTuteeCourse[]
+  availability          AvailabilitySlot[]
+  sentRequests          ConnectionRequest[]  @relation("SentRequests")
+  receivedRequests      ConnectionRequest[]  @relation("ReceivedRequests")
+  notificationsReceived Notification[]       @relation("RecipientProfile")
+  notificationsSent     Notification[]       @relation("SenderProfile")
 
   @@index([major])
   @@index([yearOfStudy])
@@ -275,4 +277,31 @@ enum RequestStatus {
   PENDING
   ACCEPTED
   REJECTED
+}
+
+// ---------------------------------------------
+// Notification Models
+// ---------------------------------------------
+
+// Model which represents a notification object
+model Notification {
+  id          String           @id @default(uuid())
+  recipientId String
+  senderId    String
+  type        NotificationType
+  content     String
+  entityId    String?
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+
+  recipient Profile @relation("RecipientProfile", fields: [recipientId], references: [id], onDelete: Cascade)
+  sender    Profile @relation("SenderProfile", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId])
+}
+
+// Enum that holds the type of notification possible
+enum NotificationType {
+  CONNECTION_REQUEST
+  REQUEST_ACCEPTED
 }
