@@ -4,6 +4,8 @@ import {createMessage} from "../services/message.ts";
 import type { Message } from "../services/message.ts";
 import { decrypt } from "../services/message.ts";
 import redis from "../services/redis.ts";
+import notifications from "../routes/notifications.ts";
+import {type Notification, sendNotification} from "../server.ts";
 
 //Message secret
 const key = process.env.MESSAGE_ENCRYPT_SECRET
@@ -92,7 +94,7 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
             });
 
             // Create the notification object
-            await tx.notification.create({
+            const notification = await tx.notification.create({
                 data: {
                     recipientId: receiverProfile!.id,
                     senderId: senderProfile!.id,
@@ -112,8 +114,27 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
                 await createMessage(firstMessage, tx);
             }
 
-            return { connectionRequest, thread };
-        });
+            return { connectionRequest, thread, notification };
+        })
+
+        if (result.notification){
+            const notification = result.notification
+            if (!receiverProfile) return
+
+            const notificationToSend: Notification = {
+                receiverId: receiverProfile.userId,
+                name: receiverProfile.name,
+                profilePicture: receiverProfile.profilePicture || "",
+                content: notification.content,
+                createdAt: notification.createdAt,
+                notificationType: notification.type
+            }
+
+            console.log("Sending notification", notificationToSend);
+            sendNotification(notificationToSend)
+        }
+
+
 
         // Invalidate the recipients request cache after they receive a new connection request
         await redis.del(`user:${receiverId}:requests`);

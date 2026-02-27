@@ -3,10 +3,13 @@ import {Server} from "socket.io"
 import jwt from "jsonwebtoken";
 import {createMessage} from "./services/message.ts";
 import {deleteOnlineStatus, setOnlineStatus} from "./services/redisAuthService.ts";
+import notifications from "./routes/notifications.ts";
 
 const app = express()
 
 const expressServer = app.listen(4000)
+
+const userList = new Map<string, string>();
 
 // Create socketio server
 const ioServer = new Server(expressServer, {
@@ -43,6 +46,10 @@ ioServer.use((socket, next) => {
 ioServer.on('connection', socket => {
     // Get the user's id from the socket's data object
     const userId = socket.data.userId;
+
+    // Map the user's socket id to their id
+    userList.set(userId.toString(), socket.id.toString())
+    console.log("User added to list", userList)
 
     console.log('Socket connected:', userId)
     // Sets the user's online status to true in Redis
@@ -92,4 +99,25 @@ ioServer.on('connection', socket => {
         deleteOnlineStatus(userId).then(() => console.log('User online status set to false'))
     })
 })
+
+
+
+export interface Notification  {
+    receiverId: string,
+    name?: string,
+    profilePicture?: string,
+    content: string,
+    notificationType: "CONNECTION_REQUEST" | "REQUEST_ACCEPTED",
+    createdAt: Date,
+}
+
+export const sendNotification = (notification: Notification) => {
+    console.log("userList contents:", [...userList.entries()])
+    console.log("Looking for receiverId:", notification.receiverId)
+    const connectedUser = userList.get(notification.receiverId)
+    if (connectedUser){
+        console.log("noti sent to user")
+        ioServer.to(connectedUser).emit("notification", notification)
+    }
+}
 

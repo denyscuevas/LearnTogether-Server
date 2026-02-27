@@ -166,11 +166,11 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTQwNzYxLCJleHAiOjE3NzE1NDI1NjF9.QZN0NfZePsHNNODynXilKwm2j0A1rb2yNk1rZpB08pM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIyMTU3MjQsImV4cCI6MTc3MjIxNzUyNH0.-6E5JobxxHij2TWgl4LjjJOTiYJeoCAdMZ8L7V2A3-M
 Content-Type: application/json
 
 {
-  "receiverId": "ad3e6f4d-7a12-4d6e-8507-38e9fbe676ec",
+  "receiverId": "01ddd04e-069e-4326-8e2e-5864c9a5f05",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
 
@@ -193,7 +193,7 @@ Content-Type: application/json
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzE2NDc2MDMsImV4cCI6MTc3MTY0OTQwM30._0qr3-DwdJ8G3KX2suWnhNzQzlGU912vbiV1UR_h-cs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIyMTI2ODUsImV4cCI6MTc3MjIxNDQ4NX0.wSLnSeXUsSpND7jHYnyJmOT8oN4a_Cf5rpqx3xeqeIY
 Content-Type: application/json
 
 // NOTIFICATION TEST ENDPOINTS
