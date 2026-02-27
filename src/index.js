@@ -9,13 +9,14 @@ import requestRoutes from './routes/requests.ts'
 import matchRoutes from './routes/matches.ts'
 import notificationRoutes from './routes/notifications.ts'
 import cookieParser from "cookie-parser";
-import {cleanupPendingRequests} from "./services/cleanup.ts";
+import {cleanupNotifications, cleanupPendingRequests} from "./services/cleanup.ts";
 
 dotenv.config();
 
 const app = express();
 
-cleanupPendingRequests()
+cleanupPendingRequests().catch(err => console.error("ConnectionRequest Cron failed:", err));
+cleanupNotifications().catch(err => console.error("Notification Cron failed:", err));
 
 app.use(cookieParser())
 app.use(cors({origin: process.env.CLIENT_URL, credentials: true}));
