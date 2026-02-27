@@ -177,11 +177,17 @@ export const login = async (req: express.Request, res: express.Response) => {
             path: "/"
         });
 
+        // Find the user's profile if it exists and add it to the response
+        const profile = await prisma.profile.findFirst({
+            where: {userId: existingUser.id}
+        })
+
         // Returning the success response
         return res.status(200).json({
             message: 'User successfully logged in',
             token,
-            user: {id: existingUser.id, email: existingUser.email}
+            user: {id: existingUser.id, email: existingUser.email},
+            profile: profile
         });
     } catch (error) {
         return res.status(500).json({

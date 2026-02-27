@@ -99,7 +99,13 @@ export const getThreads = async (req: Request, res: Response) => {
                     }
                 }
                 // Include participant profiles in the thread object
-            }, include: {ThreadParticipant: {include: {user: {select: {profile: true}}}}}
+                // Exclude the user's own profile from the participant list
+            }, include: {
+                ThreadParticipant: {
+                    where: {profileId: {not: userId,},},
+                    include: {user: {select: {profile: true,},},},
+                },
+            }
         })
 
         // Map the participant IDs to an array to prevent duplicates

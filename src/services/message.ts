@@ -9,8 +9,10 @@ export interface Message {
 }
 
 // Create a new message in the database
-export const createMessage = async (data: Message, tx?:  any) => {
+export const createMessage = async (data: Message, tx?: any) => {
     const {threadId, senderId, content} = data
+    // A transaction is passed from the RequestController in if the message is being created as part of a connection request
+    // If not, use the default prismaClient
     const prismaClient = tx || prisma;
 
     // Check if all required fields are provided
@@ -20,7 +22,8 @@ export const createMessage = async (data: Message, tx?:  any) => {
 
     const {cipherText, iv, authTag} = encrypt(content, key)
 
-    // Create a new message and return
+
+    // Create a new message
     const message = await prismaClient.message.create({
         data: {
             threadId: threadId,
@@ -31,11 +34,26 @@ export const createMessage = async (data: Message, tx?:  any) => {
         }, include: {sender: {select: {profile: true}}}
     });
 
+    // If the transaction was not passed, update the thread record with the new message and timestamp
+    if (!tx) {
+       await prismaClient.thread.update({
+            where: {
+                id: threadId
+            },
+            data: {
+                lastMessagePreview: content,
+                lastMessageAt: new Date()
+            }
+        })
+    }
+
+
     // Return message object with its content decrypted
     return {
         ...message,
         content: decrypt(message.content, key, message.iv, message.authTag)
-    };}
+    };
+}
 
 
 // Set encryption algorithm
