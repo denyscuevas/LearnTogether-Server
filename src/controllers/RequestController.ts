@@ -55,6 +55,13 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
             }
         })
 
+        // Getting the request receiver's profile
+        const receiverProfile = await prisma.profile.findUnique({
+            where: {
+                userId: receiverId
+            }
+        })
+
         // The multiple-table queries for creating the records
         const result = await prisma.$transaction(async (tx) => {
 
@@ -81,6 +88,17 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
                     message: messageContent || `New connection request from ${senderProfile!.name}`,
                     threadId: thread.id,
                     status: 'PENDING'
+                }
+            });
+
+            // Create the notification object
+            await tx.notification.create({
+                data: {
+                    recipientId: receiverProfile!.id,
+                    senderId: senderProfile!.id,
+                    type: 'CONNECTION_REQUEST',
+                    content: `${senderProfile!.name} sent you a connection request`,
+                    entityId: connectionRequest.id
                 }
             });
 
@@ -149,6 +167,27 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
             });
         }
 
+        // Get the request sender's profile
+        const senderProfile = await prisma.profile.findUnique({
+            where: {
+                userId: connectionRequest!.senderId
+            }
+        })
+
+        // Get the request acceptee profile
+        const receiverProfile = await prisma.profile.findUnique({
+            where: {
+                userId: userId
+            }
+        })
+
+        // Check for a missing profile
+        if (!senderProfile || !receiverProfile) {
+            return res.status(404).json({
+                message: "Profile data missing"
+            });
+        }
+
        // Modify the Thread and ConnectionRequest records to reflect the acceptance
         await prisma.$transaction([
             prisma.connectionRequest.update({
@@ -167,6 +206,17 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
                 },
                 data: {
                     isAccepted: true
+                }
+            }),
+
+            // Create the notification object
+            prisma.notification.create({
+                data: {
+                    recipientId: senderProfile.id,
+                    senderId: receiverProfile.id,
+                    type: 'REQUEST_ACCEPTED',
+                    content: `${receiverProfile.name} accepted your connection request`,
+                    entityId: connectionRequest.threadId
                 }
             })
         ]);
