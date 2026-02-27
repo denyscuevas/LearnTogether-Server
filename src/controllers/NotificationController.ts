@@ -60,3 +60,49 @@ export const getNotifications = async (req: Request, res: Response) => {
         );
     }
 }
+
+// Logic for marking all of a user's notifications as READ when they click the bell icon
+export const markAllAsRead = async (req: Request, res: Response) => {
+    try {
+
+        // Get the userId
+        const userId = (req as any).user?.id;
+
+        // Get the user's profile, and select their id in order to query their notifications
+        const profile = await prisma.profile.findUnique({
+            where: {
+                userId: userId
+            },
+            select: {
+                id: true
+            }
+        });
+
+        // If the user's profile is not found
+        if (!profile) {
+            return res.status(404).json({
+                message: "Profile not found"
+            });
+        }
+
+        // Updating all notifications for this user where isRead was false to true to make them READ
+        await prisma.notification.updateMany({
+            where: {
+                recipientId: profile.id,
+                isRead: false
+            },
+            data: {
+                isRead: true
+            }
+        });
+
+        // Sending back the response message
+        return res.status(200).json({
+            message: "Notifications marked as read"
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to mark as read"
+        });
+    }
+}
