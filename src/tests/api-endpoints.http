@@ -202,3 +202,8 @@ Content-Type: application/json
 GET {{ BASE_URL }}/api/notifications
 Authorization: Bearer
 Content-Type: application/json
+
+### PATCH Mark a user's notifications as READ
+PATCH {{ BASE_URL }}/api/notifications/read
+Authorization: Bearer
+Content-Type: application/json
