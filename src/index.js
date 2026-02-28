@@ -10,10 +10,18 @@ import matchRoutes from './routes/matches.ts'
 import notificationRoutes from './routes/notifications.ts'
 import cookieParser from "cookie-parser";
 import {cleanupNotifications, cleanupPendingRequests} from "./services/cleanup.ts";
+import {createSocketServer} from "./socket-server/socket.ts";
+import {createServer} from "node:http";
 
 dotenv.config();
 
 const app = express();
+
+// Explicitly create a new HTTP server so we can attach Socket.IO
+const expressServer = createServer(app)
+
+// Initialize a new Socket.IO server
+createSocketServer(expressServer)
 
 cleanupPendingRequests().catch(err => console.error("ConnectionRequest Cron failed:", err));
 cleanupNotifications().catch(err => console.error("Notification Cron failed:", err));
@@ -37,4 +45,4 @@ app.get("/", (_, res) => {
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+expressServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
