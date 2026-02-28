@@ -15,7 +15,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "roberto.abbott@uwindsor.ca",
+  "email": "shaun.lind@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -166,11 +166,11 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIyMTU3MjQsImV4cCI6MTc3MjIxNzUyNH0.-6E5JobxxHij2TWgl4LjjJOTiYJeoCAdMZ8L7V2A3-M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI4ZmE0NzVmLTExMmItNDEzOC04MTUzLWRiN2ViMzU4MTBkOCIsImVtYWlsIjoic2hhdW4ubGluZEB1d2luZHNvci5jYSIsImlhdCI6MTc3MjI5ODAxMSwiZXhwIjoxNzcyMjk5ODExfQ.IA_q3zVGyqNhBp0GMeZZfYeicR0b-cfiUiKwdpXa-DM
 Content-Type: application/json
 
 {
-  "receiverId": "01ddd04e-069e-4326-8e2e-5864c9a5f05",
+  "receiverId": "01ddd04e-069e-4326-8e2e-5864c9a5f05e",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
 

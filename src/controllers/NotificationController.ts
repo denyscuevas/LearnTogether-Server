@@ -98,7 +98,7 @@ export const markAllAsRead = async (req: Request, res: Response) => {
 
         // Sending back the response message
         return res.status(200).json({
-            message: "Notifications marked as read"
+            message: "notifications.ts marked as read"
         });
     } catch (error) {
         return res.status(500).json({

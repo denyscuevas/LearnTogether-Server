@@ -9,7 +9,7 @@
     "build": "npx prisma generate tsc -p tsconfig.json",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
-    "ioserver": "node src/server.ts"
+    "ioserver": "node src/socket-server/socketServer.ts"
   },
   "keywords": [],
   "type": "module",

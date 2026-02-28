@@ -5,7 +5,16 @@ import type { Message } from "../services/message.ts";
 import { decrypt } from "../services/message.ts";
 import redis from "../services/redis.ts";
 import notifications from "../routes/notifications.ts";
-import {type Notification, sendNotification} from "../server.ts";
+import {sendNotification} from "../socket-server/notifications.ts";
+
+export interface Notification  {
+    receiverId: string,
+    name?: string,
+    profilePicture?: string,
+    content: string,
+    notificationType: "CONNECTION_REQUEST" | "REQUEST_ACCEPTED",
+    createdAt: Date,
+}
 
 //Message secret
 const key = process.env.MESSAGE_ENCRYPT_SECRET
@@ -117,10 +126,13 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
             return { connectionRequest, thread, notification };
         })
 
+
+        // Send a real-time notification to the receiver
         if (result.notification){
             const notification = result.notification
             if (!receiverProfile) return
 
+            // Create the notification object
             const notificationToSend: Notification = {
                 receiverId: receiverProfile.userId,
                 name: receiverProfile.name,
@@ -130,10 +142,9 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
                 notificationType: notification.type
             }
 
-            console.log("Sending notification", notificationToSend);
-            sendNotification(notificationToSend)
+            // Send the notification to the user through the socket
+            await sendNotification(notificationToSend)
         }
-
 
 
         // Invalidate the recipients request cache after they receive a new connection request
@@ -210,7 +221,7 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
         }
 
        // Modify the Thread and ConnectionRequest records to reflect the acceptance
-        await prisma.$transaction([
+        const [connection, thread, notification] = await prisma.$transaction([
             prisma.connectionRequest.update({
                 where: {
                     id: requestId!
@@ -241,6 +252,24 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
                 }
             })
         ]);
+
+        // Send a real-time notification to the receiver
+        if (notification){
+            if (!receiverProfile) return
+
+            // Create the notification object
+            const notificationToSend: Notification = {
+                receiverId: receiverProfile.userId,
+                name: receiverProfile.name,
+                profilePicture: receiverProfile.profilePicture || "",
+                content: notification.content,
+                createdAt: notification.createdAt,
+                notificationType: notification.type
+            }
+
+            // Send the notification to the user through the socket
+            await sendNotification(notificationToSend)
+        }
 
         // Invalidate the recipients requests cache after they accept a connection request
         await redis.del(`user:${userId}:requests`);
