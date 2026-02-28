@@ -375,6 +375,7 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
                 sender: true,
                 thread: {
                     include: {
+                        ThreadParticipant: true,
                         messages: {
                             take: 1,
                             orderBy: { createdAt: 'asc' }

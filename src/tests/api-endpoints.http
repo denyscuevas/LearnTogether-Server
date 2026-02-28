@@ -1,11 +1,12 @@
 // AUTHENTICATION TEST ENDPOINTS
+@bearer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMmUxNGY1LWM5Y2YtNGM5OS1iODljLWE5YmUxMTUwZTJmZCIsImVtYWlsIjoiemFja2FyeS5hbHRlbndlcnRoNTdAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIwNDQ1ODUsImV4cCI6MTc3MjA0NjM4NX0.Wh6qawPjOA-m9002NjSg8lQ9-2xzkyMmHuVUWvvEhi4
 
 ### POST Register a User Test Route
 POST {{ BASE_URL }}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "testuser2@uwindsor.ca",
+  "email": "testuser5@uwindsor.ca",
   "password": "newPassword@123",
   "password_confirmation": "newPassword@123"
 }
@@ -15,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "shaun.lind@uwindsor.ca",
+  "email": "perry.block@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -32,8 +33,8 @@ POST {{ BASE_URL }}/api/auth/verify-email
 Content-Type: application/json
 
 {
-  "id": "d0c2bd0e-2fb7-4697-aaa4-e17a2cf16a6d",
-  "otpCode": "376241"
+  "id": "3e2d6373-3494-4ec1-96a2-aa08a7bd85cd",
+  "otpCode": "388117"
 }
 
 ### POST Send a password reset email
@@ -77,7 +78,7 @@ Content-Type: application/json
 
 ### POST Create a profile
 POST {{ BASE_URL }}/api/profiles
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwYzJiZDBlLTJmYjctNDY5Ny1hYWE0LWUxN2EyY2YxNmE2ZCIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzkyMjYzLCJleHAiOjE3NzEzOTQwNjN9.L6LN4RjTOYYcQGmhZYauX49lrpj02xOpAJzLt3OdmxM
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
@@ -100,15 +101,15 @@ Content-Type: application/json
 
 ### GET a users information (ME)
 GET {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkNDlhMGRhLWZkMmMtNDBlMS1iNThmLTk1MjM3N2UyOGJhMSIsImVtYWlsIjoidGVzdHVzZXIyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxMzgzMTczLCJleHAiOjE3NzEzODQ5NzN9.-2BNviJNQjew5LoOxOsVe0paLs6JNVL82AdN2Y1toAQ
+Authorization: Bearer {{bearer}}
 
 ### GET a users information (OTHER)
 GET {{ BASE_URL }}/api/profiles/ee48e1f6-5c3a-40af-bdd0-3466eae490db
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+Authorization: Bearer {{bearer}}
 
 ### PUT update a users profile
 PUT {{ BASE_URL }}/api/profiles/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNzlhMzY1LWUwOTAtNDE3OC1hODZkLWEwMjBmOGE4MGExOCIsImVtYWlsIjoidGVzdHVzZXIxMUB1d2luZHNvci5jYSIsImlhdCI6MTc3MTEzMDQyOCwiZXhwIjoxNzcxMTMyMjI4fQ.4AOr5jyHiIkai-12NsYXw5n0w0n30w8yG_LHv8WEzUU
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
@@ -131,7 +132,7 @@ Content-Type: application/json
 
 ### POST create a thread
 POST {{ BASE_URL }}/api/threads
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzOGIyYmFiLWI0N2MtNDI2Yy1iN2Q2LTFmODllMTA4OWZkMyIsImVtYWlsIjoidGVzdHVzZXI3QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg4NDAyLCJleHAiOjE3NzAzOTAyMDJ9.zYP09WcrBH7bZESMXU5AlVgVi51xvQrzFFyx7H3seag
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
@@ -141,13 +142,13 @@ Content-Type: application/json
 
 ### GET a user's threads
 GET {{ BASE_URL }}/api/threads/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5NDMwLCJleHAiOjE3NzE1NDEyMzB9.BlT75us7FKYRWvDfnsgClHmZ4axoqhBhNxivuZ0_uC8
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 
 ### POST Create a message
 POST {{ BASE_URL }}/api/messages
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhZDdiMTE0LWQ5MDEtNGM4Ni1hY2JmLWY0M2RiN2NjMzhhYyIsImVtYWlsIjoidGVzdHVzZXI4QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzg5NDc1LCJleHAiOjE3NzAzOTEyNzV9.ByYTiYjZJh4rbMrv02CYc2FZj1JgRbHV8KynLzwtw9g
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
@@ -158,7 +159,7 @@ Content-Type: application/json
 
 ### GET Get messaegs from thread
 GET {{ BASE_URL }}/api/messages/ae8d8c70-0b61-4c24-9a74-1dce75c09e6e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBiN2VlY2RkLTRiYjctNGJiNi04ZjBkLTkyOTc0ZGM0YzA5NSIsImVtYWlsIjoidGVzdHVzZXI2QHV3aW5kc29yLmNhIiwiaWF0IjoxNzcwMzUzMDI1LCJleHAiOjE3NzAzNTQ4MjV9.zio04ot11cDnHCS_lx2iq-AvRESkPa3cLRiUJM6DfOg
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 
@@ -166,7 +167,7 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI4ZmE0NzVmLTExMmItNDEzOC04MTUzLWRiN2ViMzU4MTBkOCIsImVtYWlsIjoic2hhdW4ubGluZEB1d2luZHNvci5jYSIsImlhdCI6MTc3MjI5ODAxMSwiZXhwIjoxNzcyMjk5ODExfQ.IA_q3zVGyqNhBp0GMeZZfYeicR0b-cfiUiKwdpXa-DM
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
@@ -176,24 +177,24 @@ Content-Type: application/json
 
 ### PATCH Accept a ConnectionRequest
 PATCH {{ BASE_URL }}/api/requests/accept/ed59065b-94a1-432f-b415-e1f23963facc
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTM5NDMwLCJleHAiOjE3NzE1NDEyMzB9.BlT75us7FKYRWvDfnsgClHmZ4axoqhBhNxivuZ0_uC8
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 ### DELETE Decline a ConnectionRequest
 DELETE {{ BASE_URL }}/api/requests/decline/3bee1b94-993f-4880-bd69-4ceed2aa43fe
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTQwODE1LCJleHAiOjE3NzE1NDI2MTV9.lfDXDkpo6BwotryASD6KixCwmN4YexqX0uF-kA84bSo
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 ### GET Show a user's pending requests
 GET {{ BASE_URL }}/api/requests/received
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkM2U2ZjRkLTdhMTItNGQ2ZS04NTA3LTM4ZTlmYmU2NzZlYyIsImVtYWlsIjoidGVzdHVzZXIxQHV3aW5kc29yLmNhIiwiaWF0IjoxNzcxNTQwODE1LCJleHAiOjE3NzE1NDI2MTV9.lfDXDkpo6BwotryASD6KixCwmN4YexqX0uF-kA84bSo
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 // MATCHING/FEED TEST ENDPOINTS
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYyZTQ4ZDc4LThlMjYtNGM5Yy04N2E1LTk5OTZjZjY5NmVkNyIsImVtYWlsIjoicm9iZXJ0by5hYmJvdHRAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIyMTI2ODUsImV4cCI6MTc3MjIxNDQ4NX0.wSLnSeXUsSpND7jHYnyJmOT8oN4a_Cf5rpqx3xeqeIY
+Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 // NOTIFICATION TEST ENDPOINTS
