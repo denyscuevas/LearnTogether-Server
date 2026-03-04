@@ -16,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "perry.block@uwindsor.ca",
+  "email": "stuart.kuvalis@uwindsor.ca",
   "password": "newPassword@123"
 }
 

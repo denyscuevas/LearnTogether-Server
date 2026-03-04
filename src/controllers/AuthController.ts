@@ -156,8 +156,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         // Generate a refresh token using secure, random utility functions
         const refreshToken = generateRawToken();
-        const salt = await bcrypt.genSalt(10);
-        const hashedRefreshToken = await bcrypt.hash(refreshToken, salt);
+        const hashedRefreshToken = await hashToken(refreshToken);
 
         // Store the refresh token in the database (hashed), with a 7-day expiration
         await prisma.refreshToken.create({
@@ -598,42 +597,49 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
 
     try {
 
+        const hashedToken = await hashToken(existingToken);
+
         // Get all the refresh tokens that are not expired
-        const validTokens = await prisma.refreshToken.findMany({
+        const tokens = await prisma.refreshToken.findUnique({
             where: {
-                expiresAt: {gt: new Date()},
-                revokedAt: null
+                tokenHash: hashedToken
             }
         });
 
-        // Look for the token that matches the hash of the raw token that came in the header
-        let usersToken = null;
-        for (const token of validTokens) {
-            const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
-
-            if (isUsersToken) {
-                usersToken = token;
-                break;
-            }
-        }
-
         // If there was no result then a valid refresh doesn't exist
-        if (!usersToken) {
+        if (!tokens) {
             return res.status(401).json({
-                message: "Invalid refresh token"
+                message: "No token found"
             })
         }
 
-        // Delete all the refresh tokens for this user
+        // Check if the token is valid
+        const isExpired = new Date() > new Date(tokens.expiresAt);
+
+        // Delete all sessions if the user tries to use an expired token
+        if (isExpired) {
+            await prisma.refreshToken.deleteMany({
+                where: {
+                    userId: tokens.userId,
+                }
+            });
+            return res.status(401).json(
+                {
+                    message: "Session expired or compromised"
+                }
+                );
+        }
+
+        // Delete all tokens regardless
         await prisma.refreshToken.deleteMany({
             where: {
-                userId: usersToken.userId,
+                userId: tokens.userId,
             }
         });
 
         // Get the user this refresh token is associated with
         const user = await prisma.user.findUnique({
-            where: {id: usersToken.userId}
+            where: {id: tokens.userId}
         })
         if (!user) {
             return res.status(404).json({
@@ -653,13 +659,12 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
                 email: user.email
             },
             process.env.JWT_SECRET,
-            {expiresIn: "5m"}
+            {expiresIn: "30m"}
         );
 
         // Generate a refresh token using secure, random utility functions
         const newRefreshToken = generateRawToken();
-        const newSalt = await bcrypt.genSalt(10);
-        const newHashedRefreshToken = await bcrypt.hash(newRefreshToken, newSalt);
+        const newHashedRefreshToken = await hashToken(newRefreshToken)
 
         // Store the new hashed refresh token in the database
         await prisma.refreshToken.create({
@@ -691,7 +696,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
     }
 }
 
-// Logic to logout a user
+// Logic to log out a user
 export const logout = async (req: express.Request, res: express.Response) => {
 
     // Get the refresh token from the cookie in the header
@@ -701,29 +706,22 @@ export const logout = async (req: express.Request, res: express.Response) => {
 
         if (existingToken) {
 
-            // Look for all valid tokens
-            const userTokens = await prisma.refreshToken.findMany({
+            const hashedRefreshToken = await hashToken(existingToken);
+
+            const tokenRecord = await prisma.refreshToken.findUnique({
                 where: {
-                    expiresAt: {gt: new Date()},
-                    revokedAt: null
+                    tokenHash: hashedRefreshToken
+                },
+                select: {
+                    userId: true
                 }
             });
 
-            // Find the token that matches the hash of the raw token in the header
-            let tokenToRemove = null;
-            for (const token of userTokens) {
-                const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
-
-                if (isUsersToken) {
-                    tokenToRemove = token;
-                }
-            }
-
             // Delete all refresh tokens for this user
-            if (tokenToRemove) {
+            if (tokenRecord) {
                 await prisma.refreshToken.deleteMany({
                     where: {
-                        userId: tokenToRemove.userId,
+                        userId: tokenRecord.userId,
                     }
                 });
             }

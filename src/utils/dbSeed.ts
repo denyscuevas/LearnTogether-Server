@@ -93,7 +93,8 @@ async function main() {
                                     endMin: start + 120
                                 };
                             })
-                        }
+                        },
+                        profilePicture: "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1771305217/learntogether_profile_pictures/i6lahd0gexddtqfiu5jz.webp"
                     }
                 }
             }
