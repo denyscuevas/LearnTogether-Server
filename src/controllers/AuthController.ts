@@ -597,42 +597,49 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
 
     try {
 
+        const hashedToken = await hashToken(existingToken);
+
         // Get all the refresh tokens that are not expired
-        const validTokens = await prisma.refreshToken.findMany({
+        const tokens = await prisma.refreshToken.findUnique({
             where: {
-                expiresAt: {gt: new Date()},
-                revokedAt: null
+                tokenHash: hashedToken
             }
         });
 
-        // Look for the token that matches the hash of the raw token that came in the header
-        let usersToken = null;
-        for (const token of validTokens) {
-            const isUsersToken = await bcrypt.compare(existingToken, token.tokenHash);
-
-            if (isUsersToken) {
-                usersToken = token;
-                break;
-            }
-        }
-
         // If there was no result then a valid refresh doesn't exist
-        if (!usersToken) {
+        if (!tokens) {
             return res.status(401).json({
-                message: "Invalid refresh token"
+                message: "No token found"
             })
         }
 
-        // Delete all the refresh tokens for this user
+        // Check if the token is valid
+        const isExpired = new Date() > new Date(tokens.expiresAt);
+
+        // Delete all sessions if the user tries to use an expired token
+        if (isExpired) {
+            await prisma.refreshToken.deleteMany({
+                where: {
+                    userId: tokens.userId,
+                }
+            });
+            return res.status(401).json(
+                {
+                    message: "Session expired or compromised"
+                }
+                );
+        }
+
+        // Delete all tokens regardless
         await prisma.refreshToken.deleteMany({
             where: {
-                userId: usersToken.userId,
+                userId: tokens.userId,
             }
         });
 
         // Get the user this refresh token is associated with
         const user = await prisma.user.findUnique({
-            where: {id: usersToken.userId}
+            where: {id: tokens.userId}
         })
         if (!user) {
             return res.status(404).json({
@@ -652,7 +659,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
                 email: user.email
             },
             process.env.JWT_SECRET,
-            {expiresIn: "5m"}
+            {expiresIn: "30m"}
         );
 
         // Generate a refresh token using secure, random utility functions
@@ -702,15 +709,19 @@ export const logout = async (req: express.Request, res: express.Response) => {
             const hashedRefreshToken = await hashToken(existingToken);
 
             const tokenRecord = await prisma.refreshToken.findUnique({
-                where: { tokenHash: hashedRefreshToken },
-                select: { userId: true }
+                where: {
+                    tokenHash: hashedRefreshToken
+                },
+                select: {
+                    userId: true
+                }
             });
 
             // Delete all refresh tokens for this user
             if (tokenRecord) {
                 await prisma.refreshToken.deleteMany({
                     where: {
-                            userId: tokenRecord.userId,
+                        userId: tokenRecord.userId,
                     }
                 });
             }
