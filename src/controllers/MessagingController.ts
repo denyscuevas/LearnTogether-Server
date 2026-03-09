@@ -2,13 +2,13 @@ import express from "express";
 import type {Request, Response} from "express";
 import prisma from "../config/prismaClient.ts";
 import profile from "../routes/profile.ts";
-import type {Message} from "../generated/prisma/client.ts";
+import type {Message, ThreadParticipant, User} from "../generated/prisma/client.ts";
 import message from "../routes/message.ts";
 import {decrypt} from "../services/message.ts";
 import redis from "../services/redis.ts";
+import {mapOnlineStatus} from "../utils/getOnlineStatus.ts";
 
 // Create a new thread between two users //
-
 export const createThread = async (req: Request, res: Response) => {
     try {
 
@@ -103,38 +103,29 @@ export const getThreads = async (req: Request, res: Response) => {
             }, include: {
                 ThreadParticipant: {
                     where: {profileId: {not: userId,},},
-                    include: {user: {select: {profile: true,},},},
+                    include: {user: {select: {profile: true, email: true},},},
                 },
             }
         })
 
-        // Map the participant IDs to an array to prevent duplicates
-        const participantIds = threads.flatMap(u => {
-            return u.ThreadParticipant.map(p => p.profileId)
-        })
+        // Create a map of thread participant ids from the list of threads
+        const participants = threads.flatMap(u => u.ThreadParticipant.map(p => p.profileId))
 
-        // Create a pipeline to get the online status of each participant
-        // The redis pipeline is used runs multiple commands in parallel
-        const pipeline = redis.pipeline();
-        participantIds.forEach(id => pipeline.get(`user:${id}:online`))
-        const onlineUsers = await pipeline.exec();
-
-        // Create a map with participant IDs as keys and online status as values
-        const statusMap = new Map(
-            participantIds.map((id, i) => {
-                // Set online to true if the list exists and the user is online.
-                // onlineUsers[i][1] is the timestamp of the last online status
-                const isOnline = onlineUsers && onlineUsers[i] && onlineUsers[i][1] !== null
-                return [id, isOnline]
-            })
-        )
+        // Call the mapOnlineStatus function to get the online status of each participant
+        const statusMap = await mapOnlineStatus(participants)
 
         // Update the threads and add the online status to each participant
         const threadsWithStatus = threads.map(thread => ({
             ...thread,
             ThreadParticipant: thread.ThreadParticipant.map(participant => ({
                 ...participant,
-                isOnline: statusMap.get(participant.profileId)
+                user: {
+                    ...participant.user,
+                    profile: {
+                        ...participant.user.profile,
+                        isOnline: statusMap.get(participant.profileId)
+                    }
+                }
             }))
         }))
 
@@ -188,6 +179,7 @@ export const getMessages = async (req: Request, res: Response) => {
         return res.status(500).json({message: "Server error", error});
     }
 }
+
 
 //// MESSAGE CREATION IS HANDLED IN THE message.ts SERVICE ////
 
