@@ -1,5 +1,5 @@
 // AUTHENTICATION TEST ENDPOINTS
-@bearer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMmUxNGY1LWM5Y2YtNGM5OS1iODljLWE5YmUxMTUwZTJmZCIsImVtYWlsIjoiemFja2FyeS5hbHRlbndlcnRoNTdAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzIwNDQ1ODUsImV4cCI6MTc3MjA0NjM4NX0.Wh6qawPjOA-m9002NjSg8lQ9-2xzkyMmHuVUWvvEhi4
+@bearer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWJhZDJhLTRkNzItNGRkMS05OTkxLWJmMzk4YTNkZDg5MiIsImVtYWlsIjoiamFseW4ucnVlY2tlckB1d2luZHNvci5jYSIsImlhdCI6MTc3Mjc2NjUxNiwiZXhwIjoxNzcyNzY4MzE2fQ.J7HcmB4vl4LlinZk3QeGiDQz83Nj6NesJvhhV1aiT8E
 
 ### POST Register a User Test Route
 POST {{ BASE_URL }}/api/auth/register
@@ -16,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "stuart.kuvalis@uwindsor.ca",
+  "email": "jalyn.ruecker@uwindsor.ca",
   "password": "newPassword@123"
 }
 

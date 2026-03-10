@@ -178,7 +178,12 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         // Find the user's profile if it exists and add it to the response
         const profile = await prisma.profile.findFirst({
-            where: {userId: existingUser.id}
+            where: {userId: existingUser.id},
+            include: {
+                tutorCourses: {include: {course: true}},
+                tuteeCourses: {include: {course: true}},
+                availability: true,
+            }
         })
 
         // Returning the success response
@@ -627,7 +632,7 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
                 {
                     message: "Session expired or compromised"
                 }
-                );
+            );
         }
 
         // Delete all tokens regardless

@@ -2,6 +2,7 @@ import prisma from "../config/prismaClient.ts";
 import type {Request, Response} from "express";
 import {formatTime} from "../utils/formatDateTime.ts";
 import redis from "../services/redis.ts";
+import {mapOnlineStatus} from "../utils/getOnlineStatus.ts";
 
 // Get today's day
 const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
@@ -172,14 +173,30 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
         const topMatches = scoredMatches
             .filter(m => m.matchScore > 0)
             .sort((a, b) => b.matchScore - a.matchScore)
-            .slice(0, 10);
+            .slice(0, 10).map(({matchScore, matchReasons, ...profile}) => ({
+                profile,
+                matchScore,
+                matchReasons
+            }));
+
+        const userIds = topMatches.map(match => match.profile.userId);
+        const statusMap = await mapOnlineStatus(userIds)
+
+        // Add the online status to each match
+        const mappedMatches = topMatches.map((match, index) => ({
+            ...match,
+            profile: {
+                ...match.profile,
+                onlineStatus: statusMap.get(match.profile.userId),
+            }
+        }))
 
         // Cache the match data for 30 minutes to reduce lookup times
-        await redis.set(cacheKey, JSON.stringify(topMatches),'EX', 1800);
+        await redis.set(cacheKey, JSON.stringify(mappedMatches),'EX',  1800);
 
         return res.status(200).json({
             message: "Match results retrieved",
-            topMatches
+            mappedMatches
         });
 
     } catch (error) {
