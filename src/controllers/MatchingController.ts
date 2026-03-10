@@ -1,12 +1,22 @@
 import prisma from "../config/prismaClient.ts";
 import type {Request, Response} from "express";
-import {formatTime} from "../utils/formatDateTime.ts";
+import {formatTime, timeToMinutes} from "../utils/formatDateTime.ts";
 import redis from "../services/redis.ts";
 import {mapOnlineStatus} from "../utils/getOnlineStatus.ts";
 
 // Get today's day
 const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 const currentMin = (new Date().getHours() * 60) + new Date().getMinutes();
+
+const dayMapping: Record<string, string> = {
+    "Monday": "MON",
+    "Tuesday": "TUE",
+    "Wednesday": "WED",
+    "Thursday": "THU",
+    "Friday": "FRI",
+    "Saturday": "SAT",
+    "Sunday": "SUN"
+};
 
 // Method which gets recommended matches for a user based on their profile data
 export const getRecommendedMatches = async (req: Request, res: Response) => {
@@ -204,5 +214,80 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
         return res.status(500).json({
             message: "Server error in matching algorithm"
         });
+    }
+}
+
+// Method which gets the users when a user provides custom filters in their search
+export const getFilteredUsers = async (req: Request, res: Response) => {
+
+    try {
+
+        // Get the major, course, day, startTime, endTime, and userType filters from the query params
+        const { major, course, day, startTime, endTime, userType } = req.query;
+
+        const where: any = {};
+
+        // Get the major from the URL
+        if (major && major !== 'ALL') {
+            where.major = String(major);
+        }
+
+        // Get the userType from the URL
+        if (userType === 'TUTOR') {
+            where.isTutor = true;
+        } else if (userType === 'TUTEE') {
+            where.isTutee = true;
+        }
+
+        // Get the course from the URL
+        if (course && course !== 'ALL') {
+            where.OR = [
+                { tutorCourses: { some: { course: { code: String(course) } } } },
+                { tuteeCourses: { some: { course: { code: String(course) } } } },
+            ]
+        }
+
+        // Get the day and start/end times from the URL
+        if (day && day !== 'ALL') {
+            const enumDay = dayMapping[String(day)]
+            const startMinute = startTime ? timeToMinutes(String(startTime)) : null;
+            const endMinute = endTime ? timeToMinutes(String(endTime)) : null;
+
+            // Find availability where there is an overlap
+            where.availability = {
+                some: {
+                    day: enumDay,
+
+                    ...(startMinute !== null && endMinute !== null ? {
+                        startMin : { lt: endMinute },
+                        endMin : { gt: startMinute },
+                    } : {})
+                }
+            };
+        }
+
+        // The filter results which are sorted by alphabetical order using names
+        const filterResults = await prisma.profile.findMany({
+            where: where,
+            include: {
+                tutorCourses: true,
+                tuteeCourses: true,
+                availability: true,
+            },
+            orderBy: {
+                name: 'asc'
+            }
+        });
+
+        // Return the filter results
+        return res.status(200).json({
+            message: "Filtered users retrieved",
+            filterResults
+        })
+    } catch (error) {
+        console.error("Filter Error:", error);
+        return res.status(500).json({
+            message: "Server error in filtering users"
+        })
     }
 }
