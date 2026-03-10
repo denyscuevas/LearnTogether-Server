@@ -194,7 +194,7 @@ Content-Type: application/json
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer {{bearer}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTgzMTQzLCJleHAiOjE3NzMxODQ5NDN9.U1WljEagC3Fb9ipD9RP0XeDf66VNoosj7pQ18KCMlRA
 Content-Type: application/json
 
 ### GET Search for Computer Science Tutors
