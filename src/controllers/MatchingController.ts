@@ -279,10 +279,21 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
             }
         });
 
+        const filteredUserIds = filterResults.map(p => p.userId);
+        const filteredStatus = await mapOnlineStatus(filteredUserIds);
+        const updatedFilteredProfiles = filterResults.map((filterResult) => ({
+            ...filterResult,
+            profile: {
+                ...filterResult,
+                onlineStatus: filteredStatus.get(filterResult.userId)
+            }
+        }))
+
+
         // Return the filter results
         return res.status(200).json({
             message: "Filtered users retrieved",
-            filterResults
+            updatedFilteredProfiles
         })
     } catch (error) {
         console.error("Filter Error:", error);
