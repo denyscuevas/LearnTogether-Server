@@ -227,6 +227,7 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
 
         // Get the major, course, day, startTime, endTime, and userType filters from the query params
         const { major, course, day, startTime, endTime, userType } = req.query;
+        const userId = (req as any).user?.id;
 
         const where: any = {};
 
@@ -269,6 +270,32 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
             };
         }
 
+        // Get the users that the logged-in user has already connected with or a request exists between them
+        const existingRequests = await prisma.connectionRequest.findMany({
+            where: {
+                OR: [{
+                    senderId: userId },
+                    { receiverId: userId }]
+            },
+            select: {
+                senderId: true,
+                receiverId: true
+            }
+        });
+
+        // Remove duplicates
+        const excludedUserIds = new Set([
+            userId,
+            ...existingRequests.flatMap(r => [r.senderId, r.receiverId])
+        ]);
+
+        // Create th array including the excluded user ID's
+        const exclusionArray = Array.from(excludedUserIds);
+
+        where.userId = {
+            notIn: exclusionArray
+        }
+
         // The filter results which are sorted by alphabetical order using names
         const filterResults = await prisma.profile.findMany({
             where: where,
@@ -291,7 +318,6 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
                 onlineStatus: filteredStatus.get(filterResult.userId)
             }
         }))
-
 
         // Return the filter results
         return res.status(200).json({
