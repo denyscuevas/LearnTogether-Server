@@ -16,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "jalyn.ruecker@uwindsor.ca",
+  "email": "norman.stoltenberg@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -194,8 +194,29 @@ Content-Type: application/json
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer {{bearer}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTg5MjAzLCJleHAiOjE3NzMxOTEwMDN9.rbif4w4Wn93N564HSxiIxU2nnZcVhw3TPoKgiVXH3bg
 Content-Type: application/json
+
+### GET Search for Computer Science Tutors
+GET {{ BASE_URL }}/api/matches/filter?userType=TUTOR&major=Computer%20Science
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTgxOTA4LCJleHAiOjE3NzMxODM3MDh9.eF_ns_FqNsJ8oF5_b-BeYgznR6NGG1dbPrJI1tBrzRU
+Content-Type: application/json
+
+### GET Search for anyone available Monday 10:00 AM to 1:00 PM
+GET {{ BASE_URL }}/api/matches/filter?day=Monday&startTime=10:00%20AM&endTime=01:00%20PM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTgxOTA4LCJleHAiOjE3NzMxODM3MDh9.eF_ns_FqNsJ8oF5_b-BeYgznR6NGG1dbPrJI1tBrzRU
+Content-Type: application/json
+
+### GET Search for specific course
+GET {{ BASE_URL }}/api/matches/filter?course=BIOM-4510
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTgxOTA4LCJleHAiOjE3NzMxODM3MDh9.eF_ns_FqNsJ8oF5_b-BeYgznR6NGG1dbPrJI1tBrzRU
+Content-Type: application/json
+
+### GET Search for all tutors
+GET {{ BASE_URL }}/api/matches/filter?userType=TUTOR&course=BIOM-4510
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTgxOTA4LCJleHAiOjE3NzMxODM3MDh9.eF_ns_FqNsJ8oF5_b-BeYgznR6NGG1dbPrJI1tBrzRU
+Content-Type: application/json
+
 
 // NOTIFICATION TEST ENDPOINTS
 

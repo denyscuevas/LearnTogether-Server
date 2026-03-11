@@ -14,3 +14,19 @@ export const formatTime = (mins: number) => {
     // Returning the formatted value
     return `${hours12}:${formattedMinutes}${period}`;
 };
+
+// Helper method that allows 12h time formats to be converted back to minute values
+export const timeToMinutes = (timeStr: string): number => {
+    // Expected format: "02:30 PM" or "2:30 PM"
+    const [time, modifier] = timeStr.split(' ');
+    let [hours, minutes] = time!.split(':').map(Number);
+
+    if (modifier === 'PM' && hours! < 12) {
+        hours! += 12;
+    }
+    if (modifier === 'AM' && hours === 12) {
+        hours = 0;
+    }
+
+    return (hours! * 60) + minutes!;
+};

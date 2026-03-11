@@ -1,12 +1,22 @@
 import prisma from "../config/prismaClient.ts";
 import type {Request, Response} from "express";
-import {formatTime} from "../utils/formatDateTime.ts";
+import {formatTime, timeToMinutes} from "../utils/formatDateTime.ts";
 import redis from "../services/redis.ts";
 import {mapOnlineStatus} from "../utils/getOnlineStatus.ts";
 
 // Get today's day
 const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 const currentMin = (new Date().getHours() * 60) + new Date().getMinutes();
+
+const dayMapping: Record<string, string> = {
+    "Monday": "MON",
+    "Tuesday": "TUE",
+    "Wednesday": "WED",
+    "Thursday": "THU",
+    "Friday": "FRI",
+    "Saturday": "SAT",
+    "Sunday": "SUN"
+};
 
 // Method which gets recommended matches for a user based on their profile data
 export const getRecommendedMatches = async (req: Request, res: Response) => {
@@ -16,31 +26,251 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
 
         // Lookup the user's cache for any existing recommendations to read from
         const cachedData = await redis.get(cacheKey);
+        let matches;
+        let topMatches;
         if (cachedData) {
             console.log("Returning cached recommendations");
-            return res.status(200).json(JSON.parse(cachedData));
+            matches = JSON.parse(cachedData);
+        } else {
+            // Get the data of the logged-in user to compare other users to
+            const myProfile = await prisma.profile.findUnique({
+                where: { userId },
+                include: {
+                    availability: true,
+                    tutorCourses: true,
+                    tuteeCourses: true
+                }
+            });
+
+            // If a user is not found
+            if (!myProfile) {
+                return res.status(404).json({message: "Profile not found"});
+            }
+
+            // Converting the user's tutor and tutee courses to ID arrays for easier comparison
+            const isTutorCourses = myProfile.tutorCourses.map(c => c.courseId);
+            const isTuteeCourses = myProfile.tuteeCourses.map(c => c.courseId);
+
+            // Ensuring that user's that have existing connection requests are not shown since they are already aware
+            const existingRequests = await prisma.connectionRequest.findMany({
+                where: {
+                    OR: [{
+                        senderId: userId },
+                        { receiverId: userId }]
+                },
+                select: {
+                    senderId: true,
+                    receiverId: true
+                }
+            });
+
+            // Creating a set of all the IDs in order to remove duplicates
+            const excludedUserIds = new Set([
+                userId,
+                ...existingRequests.map(r => r.senderId),
+                ...existingRequests.map(r => r.receiverId)
+            ]);
+
+            // Getting the profile data of user's that are not in the excluded array (don't have current connection requests between them)
+            const candidates = await prisma.profile.findMany({
+                where: {
+                    userId: {
+                        notIn: Array.from(excludedUserIds)
+                    }
+                },
+                include: {
+                    availability: true,
+                    tutorCourses: {
+                        include: {
+                            course: true
+                        }
+                    },
+                    tuteeCourses: {
+                        include: {
+                            course: true
+                        }
+                    }
+                }
+            });
+
+            // The actual logic for determine matched users, which utilizes a weight-based scoring approach
+            const scoredMatches = candidates.map((candidate) => {
+                let score = 0;
+
+                // Creating the arrays to hold why users were matched together
+                const structuredReasons = {
+                    canHelpYou: [] as string[],
+                    youCanHelpThem: [] as string[],
+                    availabilityOverlap: [] as string[],
+                    commonDetails: [] as string[]
+                };
+
+                // Looking for users whose list of courses they can tutor contain courses in the logged-in user's tutee courses
+                // If there is any match, award 100 points for each course match
+                const tutorMeMatch = candidate.tutorCourses.filter(tc => isTuteeCourses.includes(tc.courseId));
+                if (tutorMeMatch.length > 0) {
+                    score += tutorMeMatch.length * 100;
+                    structuredReasons.canHelpYou = tutorMeMatch.map(tc => `${tc.course.code} (${tc.course.name})`);
+                }
+
+                // Looking for users whose list of courses that they need help in contains courses in the logged-in users can tutor courses
+                // If there is any match, award 80 points for each course match
+                const tutorThemMatch = candidate.tuteeCourses.filter(tc => isTutorCourses.includes(tc.courseId));
+                if (tutorThemMatch.length > 0) {
+                    score += tutorThemMatch.length * 80;
+                    structuredReasons.youCanHelpThem = tutorThemMatch.map(tc => `${tc.course.code} (${tc.course.name})`);
+                }
+
+                // Looking for users that have overlapping availability slots
+                // These people would have the same day, and to check the existence of an overlap, the latest start time is compared to the earliest end time
+                candidate.availability.forEach(theirTime => {
+                    const overlap = myProfile.availability.find(myTime =>
+                        theirTime.day === myTime.day &&
+                        Math.max(myTime.startMin, theirTime.startMin) < Math.min(myTime.endMin, theirTime.endMin)
+                    );
+
+                    // If there is an overlap, award the points, and if they have availability today, then award bonus points for instant connection opportunity
+                    if (overlap) {
+                        // let overlapPoints = 40;
+                        //
+                        // if (theirTime.day === today) {
+                        //     overlapPoints += 20;
+                        //     structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(Math.max(theirTime.startMin, overlap.startMin))} - ${formatTime(Math.min(theirTime.endMin, overlap.endMin))}`);
+                        // } else {
+                        //     const start = formatTime(Math.max(theirTime.startMin, overlap.startMin));
+                        //     const end = formatTime(Math.min(theirTime.endMin, overlap.endMin));
+                        //     structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${start} - ${end}`);
+                        // }
+                        //
+                        // score += overlapPoints;
+
+                        const windowStart = Math.max(theirTime.startMin, overlap.startMin);
+                        const windowEnd = Math.min(theirTime.endMin, overlap.endMin);
+
+                        // Giving more points is someone is available now or later today
+                        if (theirTime.day === today) {
+                            if (windowEnd > currentMin) {
+                                const isCurrentlyHappening = currentMin >= windowStart;
+
+                                if (isCurrentlyHappening) {
+                                    score += 60;
+                                    structuredReasons.availabilityOverlap.push(`Available RIGHT NOW (until ${formatTime(windowEnd)})`);
+                                } else {
+                                    score += 50;
+                                    structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
+                                }
+                            }
+                        } else {
+                            score += 40;
+                            structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
+                        }
+                    }
+                });
+
+                // Comparing if the user's have matching majors, which will award points as well
+                if (candidate.major === myProfile.major) {
+                    score += 30;
+                    structuredReasons.commonDetails.push(`Both are ${candidate.major} majors`);
+                }
+
+                return {
+                    ...candidate,
+                    matchScore: score,
+                    matchReasons: structuredReasons
+                };
+            });
+
+            // Returning the top 10 match results
+            topMatches = scoredMatches
+                .filter(m => m.matchScore > 0)
+                .sort((a, b) => b.matchScore - a.matchScore)
+                .slice(0, 10).map(({matchScore, matchReasons, ...profile}) => ({
+                    profile,
+                    matchScore,
+                    matchReasons
+                }));
+
+            // Cache the match data for 30 minutes to reduce lookup times
+            await redis.set(cacheKey, JSON.stringify(topMatches),'EX',  1800);
+            matches = topMatches;
         }
 
-        // Get the data of the logged-in user to compare other users to
-        const myProfile = await prisma.profile.findUnique({
-            where: { userId },
-            include: {
-                availability: true,
-                tutorCourses: true,
-                tuteeCourses: true
+        const userIds = matches.map((match: { profile: { userId: any; }; }) => match.profile.userId);
+        const statusMap = await mapOnlineStatus(userIds)
+
+        // Add the online status to each match
+        const mappedMatches = matches.map((match: { profile: { userId: string; }; }, index: any) => ({
+            ...match,
+            profile: {
+                ...match.profile,
+                onlineStatus: statusMap.get(match.profile.userId),
             }
+        }))
+
+        return res.status(200).json({
+            message: "Match results retrieved",
+            mappedMatches
         });
 
-        // If a user is not found
-        if (!myProfile) {
-            return res.status(404).json({message: "Profile not found"});
+    } catch (error) {
+        console.error("Match Error:", error);
+        return res.status(500).json({
+            message: "Server error in matching algorithm"
+        });
+    }
+}
+
+// Method which gets the users when a user provides custom filters in their search
+export const getFilteredUsers = async (req: Request, res: Response) => {
+
+    try {
+
+        // Get the major, course, day, startTime, endTime, and userType filters from the query params
+        const { major, course, day, startTime, endTime, userType } = req.query;
+        const userId = (req as any).user?.id;
+
+        const where: any = {};
+
+        // Get the major from the URL
+        if (major && major !== 'ALL') {
+            where.major = String(major);
         }
 
-        // Converting the user's tutor and tutee courses to ID arrays for easier comparison
-        const isTutorCourses = myProfile.tutorCourses.map(c => c.courseId);
-        const isTuteeCourses = myProfile.tuteeCourses.map(c => c.courseId);
+        // Get the userType from the URL
+        if (userType === 'TUTOR') {
+            where.isTutor = true;
+        } else if (userType === 'TUTEE') {
+            where.isTutee = true;
+        }
 
-        // Ensuring that user's that have existing connection requests are not shown since they are already aware
+        // Get the course from the URL
+        if (course && course !== 'ALL') {
+            where.OR = [
+                { tutorCourses: { some: { course: { code: String(course) } } } },
+                { tuteeCourses: { some: { course: { code: String(course) } } } },
+            ]
+        }
+
+        // Get the day and start/end times from the URL
+        if (day && day !== 'ALL') {
+            const enumDay = dayMapping[String(day)]
+            const startMinute = startTime ? timeToMinutes(String(startTime)) : null;
+            const endMinute = endTime ? timeToMinutes(String(endTime)) : null;
+
+            // Find availability where there is an overlap
+            where.availability = {
+                some: {
+                    day: enumDay,
+
+                    ...(startMinute !== null && endMinute !== null ? {
+                        startMin : { lt: endMinute },
+                        endMin : { gt: startMinute },
+                    } : {})
+                }
+            };
+        }
+
+        // Get the users that the logged-in user has already connected with or a request exists between them
         const existingRequests = await prisma.connectionRequest.findMany({
             where: {
                 OR: [{
@@ -53,156 +283,51 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             }
         });
 
-        // Creating a set of all the IDs in order to remove duplicates
+        // Remove duplicates
         const excludedUserIds = new Set([
             userId,
-            ...existingRequests.map(r => r.senderId),
-            ...existingRequests.map(r => r.receiverId)
+            ...existingRequests.flatMap(r => [r.senderId, r.receiverId])
         ]);
 
-        // Getting the profile data of user's that are not in the excluded array (don't have current connection requests between them)
-        const candidates = await prisma.profile.findMany({
-            where: {
-                userId: {
-                    notIn: Array.from(excludedUserIds)
-                }
-            },
+        // Create th array including the excluded user ID's
+        const exclusionArray = Array.from(excludedUserIds);
+
+        where.userId = {
+            notIn: exclusionArray
+        }
+
+        // The filter results which are sorted by alphabetical order using names
+        const filterResults = await prisma.profile.findMany({
+            where: where,
             include: {
+                tutorCourses: true,
+                tuteeCourses: true,
                 availability: true,
-                tutorCourses: {
-                    include: {
-                        course: true
-                    }
-                },
-                tuteeCourses: {
-                    include: {
-                        course: true
-                    }
-                }
+            },
+            orderBy: {
+                name: 'asc'
             }
         });
 
-        // The actual logic for determine matched users, which utilizes a weight-based scoring approach
-        const scoredMatches = candidates.map((candidate) => {
-            let score = 0;
-
-            // Creating the arrays to hold why users were matched together
-            const structuredReasons = {
-                canHelpYou: [] as string[],
-                youCanHelpThem: [] as string[],
-                availabilityOverlap: [] as string[],
-                commonDetails: [] as string[]
-            };
-
-            // Looking for users whose list of courses they can tutor contain courses in the logged-in user's tutee courses
-            // If there is any match, award 100 points for each course match
-            const tutorMeMatch = candidate.tutorCourses.filter(tc => isTuteeCourses.includes(tc.courseId));
-            if (tutorMeMatch.length > 0) {
-                score += tutorMeMatch.length * 100;
-                structuredReasons.canHelpYou = tutorMeMatch.map(tc => `${tc.course.code} (${tc.course.name})`);
-            }
-
-            // Looking for users whose list of courses that they need help in contains courses in the logged-in users can tutor courses
-            // If there is any match, award 80 points for each course match
-            const tutorThemMatch = candidate.tuteeCourses.filter(tc => isTutorCourses.includes(tc.courseId));
-            if (tutorThemMatch.length > 0) {
-                score += tutorThemMatch.length * 80;
-                structuredReasons.youCanHelpThem = tutorThemMatch.map(tc => `${tc.course.code} (${tc.course.name})`);
-            }
-
-            // Looking for users that have overlapping availability slots
-            // These people would have the same day, and to check the existence of an overlap, the latest start time is compared to the earliest end time
-            candidate.availability.forEach(theirTime => {
-                const overlap = myProfile.availability.find(myTime =>
-                    theirTime.day === myTime.day &&
-                    Math.max(myTime.startMin, theirTime.startMin) < Math.min(myTime.endMin, theirTime.endMin)
-                );
-
-                // If there is an overlap, award the points, and if they have availability today, then award bonus points for instant connection opportunity
-                if (overlap) {
-                    // let overlapPoints = 40;
-                    //
-                    // if (theirTime.day === today) {
-                    //     overlapPoints += 20;
-                    //     structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(Math.max(theirTime.startMin, overlap.startMin))} - ${formatTime(Math.min(theirTime.endMin, overlap.endMin))}`);
-                    // } else {
-                    //     const start = formatTime(Math.max(theirTime.startMin, overlap.startMin));
-                    //     const end = formatTime(Math.min(theirTime.endMin, overlap.endMin));
-                    //     structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${start} - ${end}`);
-                    // }
-                    //
-                    // score += overlapPoints;
-
-                    const windowStart = Math.max(theirTime.startMin, overlap.startMin);
-                    const windowEnd = Math.min(theirTime.endMin, overlap.endMin);
-
-                    // Giving more points is someone is available now or later today
-                    if (theirTime.day === today) {
-                        if (windowEnd > currentMin) {
-                            const isCurrentlyHappening = currentMin >= windowStart;
-
-                            if (isCurrentlyHappening) {
-                                score += 60;
-                                structuredReasons.availabilityOverlap.push(`Available RIGHT NOW (until ${formatTime(windowEnd)})`);
-                            } else {
-                                score += 50;
-                                structuredReasons.availabilityOverlap.push(`Available TODAY: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
-                            }
-                        }
-                    } else {
-                        score += 40;
-                        structuredReasons.availabilityOverlap.push(`${theirTime.day}: ${formatTime(windowStart)} - ${formatTime(windowEnd)}`);
-                    }
-                }
-            });
-
-            // Comparing if the user's have matching majors, which will award points as well
-            if (candidate.major === myProfile.major) {
-                score += 30;
-                structuredReasons.commonDetails.push(`Both are ${candidate.major} majors`);
-            }
-
-            return {
-                ...candidate,
-                matchScore: score,
-                matchReasons: structuredReasons
-            };
-        });
-
-        // Returning the top 10 match results
-        const topMatches = scoredMatches
-            .filter(m => m.matchScore > 0)
-            .sort((a, b) => b.matchScore - a.matchScore)
-            .slice(0, 10).map(({matchScore, matchReasons, ...profile}) => ({
-                profile,
-                matchScore,
-                matchReasons
-            }));
-
-        const userIds = topMatches.map(match => match.profile.userId);
-        const statusMap = await mapOnlineStatus(userIds)
-
-        // Add the online status to each match
-        const mappedMatches = topMatches.map((match, index) => ({
-            ...match,
+        const filteredUserIds = filterResults.map(p => p.userId);
+        const filteredStatus = await mapOnlineStatus(filteredUserIds);
+        const updatedFilteredProfiles = filterResults.map((filterResult) => ({
+            ...filterResult,
             profile: {
-                ...match.profile,
-                onlineStatus: statusMap.get(match.profile.userId),
+                ...filterResult,
+                onlineStatus: filteredStatus.get(filterResult.userId)
             }
         }))
 
-        // Cache the match data for 30 minutes to reduce lookup times
-        await redis.set(cacheKey, JSON.stringify(mappedMatches),'EX',  1800);
-
+        // Return the filter results
         return res.status(200).json({
-            message: "Match results retrieved",
-            mappedMatches
-        });
-
+            message: "Filtered users retrieved",
+            updatedFilteredProfiles
+        })
     } catch (error) {
-        console.error("Match Error:", error);
+        console.error("Filter Error:", error);
         return res.status(500).json({
-            message: "Server error in matching algorithm"
-        });
+            message: "Server error in filtering users"
+        })
     }
 }
