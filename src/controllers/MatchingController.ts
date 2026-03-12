@@ -5,18 +5,8 @@ import redis from "../services/redis.ts";
 import {mapOnlineStatus} from "../utils/getOnlineStatus.ts";
 
 // Get today's day
-const today = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+const today = new Date().toLocaleDateString('en-US', {weekday: 'short'}).toUpperCase();
 const currentMin = (new Date().getHours() * 60) + new Date().getMinutes();
-
-const dayMapping: Record<string, string> = {
-    "Monday": "MON",
-    "Tuesday": "TUE",
-    "Wednesday": "WED",
-    "Thursday": "THU",
-    "Friday": "FRI",
-    "Saturday": "SAT",
-    "Sunday": "SUN"
-};
 
 // Method which gets recommended matches for a user based on their profile data
 export const getRecommendedMatches = async (req: Request, res: Response) => {
@@ -34,7 +24,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
         } else {
             // Get the data of the logged-in user to compare other users to
             const myProfile = await prisma.profile.findUnique({
-                where: { userId },
+                where: {userId},
                 include: {
                     availability: true,
                     tutorCourses: true,
@@ -54,9 +44,8 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             // Ensuring that user's that have existing connection requests are not shown since they are already aware
             const existingRequests = await prisma.connectionRequest.findMany({
                 where: {
-                    OR: [{
-                        senderId: userId },
-                        { receiverId: userId }]
+                    OR: [{senderId: userId},
+                        {receiverId: userId}]
                 },
                 select: {
                     senderId: true,
@@ -191,7 +180,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
                 }));
 
             // Cache the match data for 30 minutes to reduce lookup times
-            await redis.set(cacheKey, JSON.stringify(topMatches),'EX',  1800);
+            await redis.set(cacheKey, JSON.stringify(topMatches), 'EX', 1800);
             matches = topMatches;
         }
 
@@ -209,7 +198,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
 
         return res.status(200).json({
             message: "Match results retrieved",
-            mappedMatches
+            matches: mappedMatches
         });
 
     } catch (error) {
@@ -226,7 +215,7 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
     try {
 
         // Get the major, course, day, startTime, endTime, and userType filters from the query params
-        const { major, course, day, startTime, endTime, userType } = req.query;
+        const {major, course, day, startTime, endTime, userType} = req.query;
         const userId = (req as any).user?.id;
 
         const where: any = {};
@@ -246,25 +235,24 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         // Get the course from the URL
         if (course && course !== 'ALL') {
             where.OR = [
-                { tutorCourses: { some: { course: { code: String(course) } } } },
-                { tuteeCourses: { some: { course: { code: String(course) } } } },
+                {tutorCourses: {some: {course: {code: String(course)}}}},
+                {tuteeCourses: {some: {course: {code: String(course)}}}},
             ]
         }
 
         // Get the day and start/end times from the URL
         if (day && day !== 'ALL') {
-            const enumDay = dayMapping[String(day)]
             const startMinute = startTime ? timeToMinutes(String(startTime)) : null;
             const endMinute = endTime ? timeToMinutes(String(endTime)) : null;
 
             // Find availability where there is an overlap
             where.availability = {
                 some: {
-                    day: enumDay,
+                    day: day,
 
                     ...(startMinute !== null && endMinute !== null ? {
-                        startMin : { lt: endMinute },
-                        endMin : { gt: startMinute },
+                        startMin: {lt: endMinute},
+                        endMin: {gt: startMinute},
                     } : {})
                 }
             };
@@ -273,9 +261,8 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         // Get the users that the logged-in user has already connected with or a request exists between them
         const existingRequests = await prisma.connectionRequest.findMany({
             where: {
-                OR: [{
-                    senderId: userId },
-                    { receiverId: userId }]
+                OR: [{senderId: userId},
+                    {receiverId: userId}]
             },
             select: {
                 senderId: true,
@@ -300,9 +287,17 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         const filterResults = await prisma.profile.findMany({
             where: where,
             include: {
-                tutorCourses: true,
-                tuteeCourses: true,
                 availability: true,
+                tutorCourses: {
+                    include: {
+                        course: true
+                    }
+                },
+                tuteeCourses: {
+                    include: {
+                        course: true
+                    }
+                }
             },
             orderBy: {
                 name: 'asc'
@@ -312,7 +307,6 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         const filteredUserIds = filterResults.map(p => p.userId);
         const filteredStatus = await mapOnlineStatus(filteredUserIds);
         const updatedFilteredProfiles = filterResults.map((filterResult) => ({
-            ...filterResult,
             profile: {
                 ...filterResult,
                 onlineStatus: filteredStatus.get(filterResult.userId)
@@ -322,7 +316,7 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         // Return the filter results
         return res.status(200).json({
             message: "Filtered users retrieved",
-            updatedFilteredProfiles
+            matches: updatedFilteredProfiles
         })
     } catch (error) {
         console.error("Filter Error:", error);
