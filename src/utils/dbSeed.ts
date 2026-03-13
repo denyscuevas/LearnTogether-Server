@@ -9,6 +9,7 @@ async function main() {
 
     // Deleting all related database tables before seeding
     await prisma.connectionRequest.deleteMany();
+    await prisma.thread.deleteMany();
     await prisma.availabilitySlot.deleteMany();
     await prisma.profileTutorCourse.deleteMany();
     await prisma.profileTuteeCourse.deleteMany();
@@ -25,22 +26,54 @@ async function main() {
         throw new Error("No courses found in database");
     }
 
-    // Including the first 50 courses in the seeding to maximize matches
-    const focusedCourseIds = allCourses.slice(1, 51).map(c => c.id);
+    // Including the first 250 courses in the seeding to maximize matches
+    const focusedCourseIds = allCourses.slice(1, 100).map(c => c.id);
 
     // Seeding some initial majors and days
-    const majors = ['Computer Science', 'Mathematics', 'Business', 'Accounting', 'Biomedical Science'];
+    const majors = ['Bachelor of Computer Science (Honours & Co-op)', 'Business Administration (Accounting)', 'Mechanical Engineering', 'Criminology', 'Psychology',
+    'Kinesiology', 'Political Science', 'Sociology', 'English', 'B.Sc. Honours Biochemistry', 'Electrical and Computer Engineering', 'B.Sc. Honours Biological Sciences',
+    'Collaborative Bachelor of Science in Nursing (BScN)', 'History', 'Bachelor of Mathematics (General and Honours) and Honours Mathematics and Statistics',
+    'B.Sc. Honours Physics (and Co-op)'];
     const days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
 
-    console.log(`Seeding 100 users with password: newPassword@123 ...`);
+    // A list of 16 majors to randomly assign
+    const profilePictures = [
+        "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1771305217/learntogether_profile_pictures/i6lahd0gexddtqfiu5jz.webp",
+        "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1773374359/15519_sbs6xq.jpg",
+        "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1773374359/15527_xmqhbv.jpg",
+        "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1773374359/59335_rrdnrz.jpg"
+    ]
+
+    console.log(`Seeding 250 users with password: newPassword@123 ...`);
 
     // Iterating through each of the 100 to be inserted faker records
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 250; i++) {
 
         // Using fakerjs to get two random names to create a user's fullname
         const firstName = faker.person.firstName();
         const lastName = faker.person.lastName();
         const fullName = `${firstName} ${lastName}`;
+
+        let isTutor = faker.datatype.boolean(0.7);
+        let isTutee = faker.datatype.boolean(0.6);
+
+        // Ensuring the user is at least one role
+        if (!isTutor && !isTutee) {
+            faker.datatype.boolean(0.5) ? (isTutor = true) : (isTutee = true);
+        }
+
+        // Adding courses to their lists
+        const tutorCoursesData = isTutor
+            ? faker.helpers.arrayElements(focusedCourseIds, { min: 1, max: 3 }).map(id => ({
+                course: { connect: { id } }
+            }))
+            : [];
+
+        const tuteeCoursesData = isTutee
+            ? faker.helpers.arrayElements(focusedCourseIds, { min: 1, max: 2 }).map(id => ({
+                course: { connect: { id } }
+            }))
+            : [];
 
         // Creating the records for the user
         await prisma.user.create({
@@ -58,29 +91,17 @@ async function main() {
                         bio: faker.person.bio(),
                         major: faker.helpers.arrayElement(majors),
                         yearOfStudy: faker.number.int({ min: 1, max: 4 }),
-                        isTutor: faker.datatype.boolean(0.7),
-                        isTutee: faker.datatype.boolean(0.6),
+                        isTutor,
+                        isTutee,
 
                         // Creating a collection of 1-3 courses the user can tutor in
                         tutorCourses: {
-                            create: faker.helpers.arrayElements(focusedCourseIds,
-                                { min: 1, max: 3
-                                }).map(id => ({
-                                course: {
-                                    connect: { id }
-                                }
-                            }))
+                            create: tutorCoursesData
                         },
 
                         // Creating a collection of 1-2 courses the user needs help in
                         tuteeCourses: {
-                            create: faker.helpers.arrayElements(focusedCourseIds,
-                                { min: 1, max: 2
-                                }).map(id => ({
-                                course: {
-                                    connect: { id }
-                                }
-                            }))
+                            create: tuteeCoursesData
                         },
 
                         // Creating random availability slots, with different day + time combinations and 2-4 total slots
@@ -94,14 +115,14 @@ async function main() {
                                 };
                             })
                         },
-                        profilePicture: "https://res.cloudinary.com/dw1bzsnhe/image/upload/v1771305217/learntogether_profile_pictures/i6lahd0gexddtqfiu5jz.webp"
+                        profilePicture: faker.helpers.arrayElement(profilePictures)
                     }
                 }
             }
         });
     }
 
-    console.log("Seeding complete! 100 users added.");
+    console.log("Seeding complete! 250 users added.");
 
     // Get all the User objects after seeding
     const allUsers = await prisma.user.findMany();
