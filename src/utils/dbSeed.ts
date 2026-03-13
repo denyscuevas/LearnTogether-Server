@@ -26,7 +26,7 @@ async function main() {
         throw new Error("No courses found in database");
     }
 
-    // Including the first 250 courses in the seeding to maximize matches
+    // Including the first 100 courses in the seeding to maximize matches
     const focusedCourseIds = allCourses.slice(1, 100).map(c => c.id);
 
     // Seeding some initial majors and days
