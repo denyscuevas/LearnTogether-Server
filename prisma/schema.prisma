@@ -294,8 +294,8 @@ model Notification {
   isRead      Boolean          @default(false)
   createdAt   DateTime         @default(now())
 
-  recipient Profile @relation("RecipientProfile", fields: [recipientId], references: [id], onDelete: Cascade)
-  sender    Profile @relation("SenderProfile", fields: [senderId], references: [id], onDelete: Cascade)
+  recipient Profile @relation("RecipientProfile", fields: [recipientId], references: [userId], onDelete: Cascade)
+  sender    Profile @relation("SenderProfile", fields: [senderId], references: [userId], onDelete: Cascade)
 
   @@index([recipientId])
 }

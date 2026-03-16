@@ -1,5 +1,5 @@
 // AUTHENTICATION TEST ENDPOINTS
-@bearer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWJhZDJhLTRkNzItNGRkMS05OTkxLWJmMzk4YTNkZDg5MiIsImVtYWlsIjoiamFseW4ucnVlY2tlckB1d2luZHNvci5jYSIsImlhdCI6MTc3Mjc2NjUxNiwiZXhwIjoxNzcyNzY4MzE2fQ.J7HcmB4vl4LlinZk3QeGiDQz83Nj6NesJvhhV1aiT8E
+@bearer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNhZDIwYWIyLTY3YjEtNDNkZC04OTIzLTA0OGIwZDMxYTEwYiIsImVtYWlsIjoiYW1vc19wcm9zYWNjbzZAdXdpbmRzb3IuY2EiLCJpYXQiOjE3NzM0NTIzNDYsImV4cCI6MTc3MzQ1MjQwNn0.V2gRVVLNYcriQfMeOLDB-x15jjQWyFpMB4yq5OqruT0
 
 ### POST Register a User Test Route
 POST {{ BASE_URL }}/api/auth/register
@@ -16,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "norman.stoltenberg@uwindsor.ca",
+  "email": "amos_prosacco6@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -171,12 +171,12 @@ Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 {
-  "receiverId": "01ddd04e-069e-4326-8e2e-5864c9a5f05e",
+  "receiverId": "283e49fe-d0c7-487f-a298-829cd4e343d2",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
 
 ### PATCH Accept a ConnectionRequest
-PATCH {{ BASE_URL }}/api/requests/accept/ed59065b-94a1-432f-b415-e1f23963facc
+PATCH {{ BASE_URL }}/api/requests/accept/f94bac09-5756-4ea5-b490-1340fa49c0d7
 Authorization: Bearer {{bearer}}
 Content-Type: application/json
 

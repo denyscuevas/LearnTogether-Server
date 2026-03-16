@@ -26,7 +26,7 @@ export const getNotifications = async (req: Request, res: Response) => {
         // Get the 10 most recent notifications for this user
         const notifications = await prisma.notification.findMany({
             where: {
-                recipientId: userProfile!.id
+                recipientId: userId
             },
             orderBy: {
                 createdAt: 'desc'
@@ -45,7 +45,7 @@ export const getNotifications = async (req: Request, res: Response) => {
         // Get the number of unread notifications
         const unreadCount = await prisma.notification.count({
             where: {
-                recipientId: userProfile!.id,
+                recipientId: userId,
                 isRead: false
             }
         });
@@ -88,7 +88,7 @@ export const markAllAsRead = async (req: Request, res: Response) => {
         // Updating all notifications for this user where isRead was false to true to make them READ
         await prisma.notification.updateMany({
             where: {
-                recipientId: profile.id,
+                recipientId: userId,
                 isRead: false
             },
             data: {

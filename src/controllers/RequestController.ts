@@ -105,8 +105,8 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
             // Create the notification object
             const notification = await tx.notification.create({
                 data: {
-                    recipientId: receiverProfile!.id,
-                    senderId: senderProfile!.id,
+                    recipientId: receiverProfile!.userId,
+                    senderId: senderProfile!.userId,
                     type: 'CONNECTION_REQUEST',
                     content: `${senderProfile!.name} sent you a connection request`,
                     entityId: connectionRequest.id
@@ -244,8 +244,8 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
             // Create the notification object
             prisma.notification.create({
                 data: {
-                    recipientId: senderProfile.id,
-                    senderId: receiverProfile.id,
+                    recipientId: senderProfile.userId,
+                    senderId: receiverProfile.userId,
                     type: 'REQUEST_ACCEPTED',
                     content: `${receiverProfile.name} accepted your connection request`,
                     entityId: connectionRequest.threadId
@@ -259,7 +259,7 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
 
             // Create the notification object
             const notificationToSend: Notification = {
-                receiverId: receiverProfile.userId,
+                receiverId: senderProfile.userId,
                 name: receiverProfile.name,
                 profilePicture: receiverProfile.profilePicture || "",
                 content: notification.content,
