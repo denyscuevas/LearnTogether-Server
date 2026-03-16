@@ -234,10 +234,19 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
 
         // Get the course from the URL
         if (course && course !== 'ALL') {
-            where.OR = [
-                {tutorCourses: {some: {course: {code: String(course)}}}},
-                {tuteeCourses: {some: {course: {code: String(course)}}}},
-            ]
+            const courseCode = String(course);
+
+            // Checking the type of user being filtered for to look for their courses
+            if (userType === 'TUTOR') {
+                where.tutorCourses = { some: { course: { code: courseCode } } };
+            } else if (userType === 'TUTEE') {
+                where.tuteeCourses = { some: { course: { code: courseCode } } };
+            } else {
+                where.OR = [
+                    { tutorCourses: { some: { course: { code: courseCode } } } },
+                    { tuteeCourses: { some: { course: { code: courseCode } } } },
+                ];
+            }
         }
 
         // Get the day and start/end times from the URL
