@@ -170,8 +170,8 @@ export const login = async (req: express.Request, res: express.Response) => {
         // Forward the refresh token to the frontend in an HTTP Cookie
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: "/"
         });
@@ -470,8 +470,8 @@ export const verifyResetOTP = async (req: express.Request, res: express.Response
         // Send the reset token in a cookie, which is attached in the /reset-password endpoint
         res.cookie('password_reset_token', passwordResetToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
+            secure: true,
+            sameSite: 'none',
             maxAge: 15 * 60 * 1000,
             path: "/api/auth/reset-password",
         });
@@ -683,8 +683,8 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
         // Send the raw refresh token in a cookie again, which is valid for 7 days
         res.cookie('refreshToken', newRefreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
@@ -735,8 +735,8 @@ export const logout = async (req: express.Request, res: express.Response) => {
         // Clear the cookie as well
         res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             path: "/",
         });
 
