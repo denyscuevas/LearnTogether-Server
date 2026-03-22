@@ -149,6 +149,8 @@ export const sendConnectionRequest = async (req: Request, res: Response) => {
 
         // Invalidate the recipients request cache after they receive a new connection request
         await redis.del(`user:${receiverId}:requests`);
+        await redis.del(`recommendation:${senderId}`);
+        await redis.del(`recommendation:${receiverId}`);
 
         return res.status(201).json({
             message: "Request sent successfully",
@@ -273,6 +275,8 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
 
         // Invalidate the recipients requests cache after they accept a connection request
         await redis.del(`user:${userId}:requests`);
+        await redis.del(`recommendation:${userId}`);
+        await redis.del(`recommendation:${connectionRequest!.senderId}`);
 
         return res.status(200).json({
             message: "Request accepted"
@@ -332,6 +336,8 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
 
         // Invalidate the recipents request cache after they reject a connection request
         await redis.del(`user:${userId}:requests`);
+        await redis.del(`recommendation:${userId}`);
+        await redis.del(`recommendation:${connectionRequest!.senderId}`);
 
         return res.status(200).json({
             message: "Request declined"

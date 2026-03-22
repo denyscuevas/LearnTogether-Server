@@ -16,7 +16,7 @@ POST {{ BASE_URL }}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "amos_prosacco6@uwindsor.ca",
+  "email": "ed.turner@uwindsor.ca",
   "password": "newPassword@123"
 }
 
@@ -167,11 +167,11 @@ Content-Type: application/json
 
 ### POST Send a ConnectionRequest
 POST {{ BASE_URL }}/api/requests/send
-Authorization: Bearer {{bearer}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyZTAxMzI4LWM0OGItNDFkYi1hMGQwLThhMGYyNWZhNDQ5YiIsImVtYWlsIjoiZWQudHVybmVyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzc0MTUyMTM2LCJleHAiOjE3NzQxNTM5MzZ9.xP_VTcHiddVbBorfqYUu8NggquannS4AC14MNaI-Djk
 Content-Type: application/json
 
 {
-  "receiverId": "283e49fe-d0c7-487f-a298-829cd4e343d2",
+  "receiverId": "75dcd433-d82a-4dc6-b1f4-1bce90467bdd",
   "messageContent": "Hey! I saw you tutor COMP 3250. I'd love some help with the Data Analytics project."
 }
 
@@ -181,20 +181,20 @@ Authorization: Bearer {{bearer}}
 Content-Type: application/json
 
 ### DELETE Decline a ConnectionRequest
-DELETE {{ BASE_URL }}/api/requests/decline/3bee1b94-993f-4880-bd69-4ceed2aa43fe
-Authorization: Bearer {{bearer}}
+DELETE {{ BASE_URL }}/api/requests/decline/f33f4da4-cbbb-4659-b2f9-19a0ceaad22e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1ZGNkNDMzLWQ4MmEtNGRjNi1iMWY0LTFiY2U5MDQ2N2JkZCIsImVtYWlsIjoiamF2b250ZS5sZWhuZXI0M0B1d2luZHNvci5jYSIsImlhdCI6MTc3NDE1MjQ5NywiZXhwIjoxNzc0MTU0Mjk3fQ.YylGXLppytA2KAvYoFzmkCg5Y0Bjzbn9vp96eUQYLao
 Content-Type: application/json
 
 ### GET Show a user's pending requests
 GET {{ BASE_URL }}/api/requests/received
-Authorization: Bearer {{bearer}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1ZGNkNDMzLWQ4MmEtNGRjNi1iMWY0LTFiY2U5MDQ2N2JkZCIsImVtYWlsIjoiamF2b250ZS5sZWhuZXI0M0B1d2luZHNvci5jYSIsImlhdCI6MTc3NDE1MjQ5NywiZXhwIjoxNzc0MTU0Mjk3fQ.YylGXLppytA2KAvYoFzmkCg5Y0Bjzbn9vp96eUQYLao
 Content-Type: application/json
 
 // MATCHING/FEED TEST ENDPOINTS
 
 ### GET Show a user's best matches
 GET {{ BASE_URL }}/api/matches/recommendations
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmY5ZGQ5LTMzMTEtNDNjYS04Njg4LTFlMjljNGE1MmUzMyIsImVtYWlsIjoibm9ybWFuLnN0b2x0ZW5iZXJnQHV3aW5kc29yLmNhIiwiaWF0IjoxNzczMTg5MjAzLCJleHAiOjE3NzMxOTEwMDN9.rbif4w4Wn93N564HSxiIxU2nnZcVhw3TPoKgiVXH3bg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyZTAxMzI4LWM0OGItNDFkYi1hMGQwLThhMGYyNWZhNDQ5YiIsImVtYWlsIjoiZWQudHVybmVyQHV3aW5kc29yLmNhIiwiaWF0IjoxNzc0MTUyNTk5LCJleHAiOjE3NzQxNTQzOTl9.qhIRV2foYu6qt1DaEOTLxUN1aIgSLknaSvG8bJZqm_Q
 Content-Type: application/json
 
 ### GET Search for Computer Science Tutors
