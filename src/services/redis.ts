@@ -8,7 +8,7 @@ if (!redisURL) {
 }
 
 // Establishing a Redis instance, with a maximum retires set to 4
-const redis = new Redis(redisURL, {
+const redis = new Redis(`${redisURL}`, {
     maxRetriesPerRequest: null,
     enableReadyCheck: true,
     retryStrategy: (times) => {
