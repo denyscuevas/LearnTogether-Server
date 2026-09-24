@@ -185,6 +185,11 @@ export const getProfile = async (req: express.Request, res: express.Response) =>
                 tutorCourses: { include: { course: true } },
                 tuteeCourses: { include: { course: true } },
                 availability: true,
+                reviewsReceived:{
+                    select:{
+                        rating : true
+                    }
+                }
             },
         });
 

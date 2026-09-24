@@ -133,6 +133,10 @@ model Profile {
   notificationsReceived Notification[]       @relation("RecipientProfile")
   notificationsSent     Notification[]       @relation("SenderProfile")
 
+  reviewsGiven          Review[]            @relation("ReviewsGiven")
+  reviewsReceived       Review[]            @relation("ReviewsReceived")
+
+
   @@index([major])
   @@index([yearOfStudy])
   @@index([isTutor])
@@ -304,4 +308,21 @@ model Notification {
 enum NotificationType {
   CONNECTION_REQUEST
   REQUEST_ACCEPTED
+}
+
+model Review{
+  id                  String           @id @default(uuid())
+  reviewer_id         String
+  reviewee_id         String
+  course_id           String
+  rating              Int
+  comments            String?
+  createdAt           DateTime         @default(now())
+
+  reviewer            Profile          @relation("ReviewsGiven", fields: [reviewer_id], references: [userId], onDelete: Cascade)
+  reviewee            Profile          @relation("ReviewsReceived", fields: [reviewee_id], references: [userId], onDelete: Cascade)
+
+
+  @@index([reviewer_id])
+  @@index([reviewee_id])
 }
