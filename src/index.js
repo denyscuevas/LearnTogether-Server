@@ -8,13 +8,13 @@ import threadRoutes from './routes/thread.ts'
 import requestRoutes from './routes/requests.ts'
 import matchRoutes from './routes/matches.ts'
 import notificationRoutes from './routes/notifications.ts'
+import reviewRoutes from './routes/review.ts'
 import cookieParser from "cookie-parser";
 import {cleanupNotifications, cleanupPendingRequests} from "./services/cleanup.ts";
 import {createSocketServer} from "./socket-server/socket.ts";
 import {createServer} from "node:http";
 
 dotenv.config();
-
 const app = express();
 
 // Explicitly create a new HTTP server so we can attach Socket.IO
@@ -38,6 +38,7 @@ app.use("/api/threads", threadRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/matches", matchRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/reviews", reviewRoutes)
 
 app.get("/", (_, res) => {
     res.send("API running");

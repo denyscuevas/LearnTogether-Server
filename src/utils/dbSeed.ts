@@ -126,6 +126,31 @@ async function main() {
 
     // Get all the User objects after seeding
     const allUsers = await prisma.user.findMany();
+    for (const user of allUsers){
+        for (let i =0 ; i< 5; i++){
+            const randomCourseIndex = Math.floor(Math.random() * allCourses.length);
+            const randomCourse = await prisma.course.findFirst({
+            skip: randomCourseIndex,
+            take: 1,
+            });
+            const randomIndex = Math.floor(Math.random() * allUsers.length);
+            const randomUser = await prisma.user.findFirst({
+            skip: randomIndex,
+            take: 1,
+            });
+            if (randomUser != user){
+                await prisma.review.create({
+                    data:{
+                        reviewee_id : user.id,
+                        reviewer_id : randomUser!.id,
+                        rating: Math.floor(Math.random() * 5) + 1,
+                        course_id : randomCourse!.code,
+                        comments: "this is a test from our DB"
+                    }
+                })
+            }
+        }
+    }
 
     console.log("Creating 3 empty threads for each user");
 

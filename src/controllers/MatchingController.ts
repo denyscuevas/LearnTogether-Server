@@ -79,6 +79,21 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
                             course: true
                         }
                     }
+                    
+                }
+            });
+            const ratings = await prisma.review.groupBy({
+                by: ["reviewee_id"],
+                where: {
+                    reviewee_id: {
+                        notIn: Array.from(excludedUserIds)
+                    }
+                },
+                _avg: {
+                    rating: true
+                },
+                _count: {
+                    rating: true
                 }
             });
 
@@ -161,9 +176,22 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
                     score += 30;
                     structuredReasons.commonDetails.push(`Both are ${candidate.major} majors`);
                 }
+                const ratingMap = new Map(
+                    ratings.map(rating => [
+                        rating.reviewee_id,
+                        {
+                            averageRating: rating._avg.rating,
+                            reviewCount: rating._count.rating
+                        }
+                    ])
+                );
+                const rating = ratingMap.get(candidate.userId)
 
                 return {
                     ...candidate,
+                    averageRating: rating?.averageRating,
+                    reviewCount : rating?.reviewCount,
+
                     matchScore: score,
                     matchReasons: structuredReasons
                 };
@@ -193,7 +221,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             profile: {
                 ...match.profile,
                 onlineStatus: statusMap.get(match.profile.userId),
-            }
+            },
         }))
 
         return res.status(200).json({
