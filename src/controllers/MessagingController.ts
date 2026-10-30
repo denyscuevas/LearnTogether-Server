@@ -103,7 +103,14 @@ export const getThreads = async (req: Request, res: Response) => {
             }, include: {
                 ThreadParticipant: {
                     where: {profileId: {not: userId,},},
-                    include: {user: {select: {profile: true, email: true},},},
+                    include: {
+                        user: {
+                            select: {
+                                profile: {include: {availability: true}},
+                                email: true
+                            },
+                        },
+                    },
                 },
             }
         })
