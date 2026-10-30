@@ -9,6 +9,8 @@ import requestRoutes from './routes/requests.ts'
 import matchRoutes from './routes/matches.ts'
 import notificationRoutes from './routes/notifications.ts'
 import reviewRoutes from './routes/review.ts'
+import reportRoutes from './routes/report.ts'
+import adminRoutes from './routes/admin.ts'
 import cookieParser from "cookie-parser";
 import {cleanupNotifications, cleanupPendingRequests} from "./services/cleanup.ts";
 import {createSocketServer} from "./socket-server/socket.ts";
@@ -39,6 +41,8 @@ app.use("/api/requests", requestRoutes);
 app.use("/api/matches", matchRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/reviews", reviewRoutes)
+app.use("/api/reports", reportRoutes)
+app.use("/api/admin", adminRoutes)
 
 app.get("/", (_, res) => {
     res.send("API running");

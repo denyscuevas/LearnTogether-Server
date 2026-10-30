@@ -63,6 +63,7 @@ export const getRecommendedMatches = async (req: Request, res: Response) => {
             // Getting the profile data of user's that are not in the excluded array (don't have current connection requests between them)
             const candidates = await prisma.profile.findMany({
                 where: {
+                    user: {status: "ACTIVE"},
                     userId: {
                         notIn: Array.from(excludedUserIds)
                     }
@@ -246,7 +247,7 @@ export const getFilteredUsers = async (req: Request, res: Response) => {
         const {major, course, day, startTime, endTime, userType} = req.query;
         const userId = (req as any).user?.id;
 
-        const where: any = {};
+        const where: any = {user: {status: "ACTIVE"}};
 
         // Get the major from the URL
         if (major && major !== 'ALL') {

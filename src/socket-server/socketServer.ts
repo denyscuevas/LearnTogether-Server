@@ -2,13 +2,14 @@ import express from 'express';
 import {Server} from "socket.io"
 import jwt from "jsonwebtoken";
 import {createMessage} from "../services/message.ts";
+import {isSuspended} from "../services/accountStatus.ts";
 import {deleteOnlineStatus, deleteSocket, setOnlineStatus, setSocket} from "./redisSocketService.ts";
 
 // The socket server runs withing this function
 export function startSocketServer(ioServer: Server) {
 
     // Middleware to authenticate socket connections using JWT tokens
-    ioServer.use((socket, next) => {
+    ioServer.use(async (socket, next) => {
         try {
             const token = socket.handshake.auth.token
 
@@ -19,6 +20,10 @@ export function startSocketServer(ioServer: Server) {
             // Decode the JWT token and verify its authenticity
             const decoded = jwt.verify(token!, process.env.JWT_SECRET) as any;
 
+            // Suspended users are not allowed to connect
+            if (await isSuspended(decoded.id)) {
+                return next(new Error("Account suspended"));
+            }
             // Set the socket's id to the user's id retrieved from the JWT
             socket.data.userId = decoded.id;
             next();

@@ -96,7 +96,9 @@ export const getThreads = async (req: Request, res: Response) => {
                 ThreadParticipant: {
                     some: {
                         profileId: {in: [userId]}
-                    }
+                    },
+                    // Hide threads with suspended users
+                    none: {user: {status: "SUSPENDED"}}
                 }
                 // Include participant profiles in the thread object
                 // Exclude the user's own profile from the participant list

@@ -134,6 +134,13 @@ export const login = async (req: express.Request, res: express.Response) => {
             })
         }
 
+        // Suspended accounts cannot log in
+        if (existingUser.status === "SUSPENDED") {
+            return res.status(403).json({
+                message: "Your account has been suspended",
+            })
+        }
+
         // Indicate if the user is unverified and how they can do this before being allowed to login
         if (!existingUser.isVerified) {
             return res.status(400).json({
@@ -150,6 +157,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         const token = jwt.sign({
             id: existingUser.id,
             email: existingUser.email,
+            role: existingUser.role,
         }, process.env.JWT_SECRET, {
             expiresIn: '30m',
         });
@@ -190,7 +198,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         return res.status(200).json({
             message: 'User successfully logged in',
             token,
-            user: {id: existingUser.id, email: existingUser.email},
+            user: {id: existingUser.id, email: existingUser.email, role: existingUser.role},
             profile: profile
         });
     } catch (error) {
@@ -652,6 +660,12 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
             })
         }
 
+        if (user.status === "SUSPENDED") {
+            return res.status(403).json({
+                message: "Your account has been suspended"
+            })
+        }
+
         // Ensuring a JWT_SECRET is available
         if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
             throw Error('JWT_SECRET is not defined');
@@ -661,7 +675,8 @@ export const refreshToken = async (req: express.Request, res: express.Response) 
         const newAccessToken = jwt.sign(
             {
                 id: user.id,
-                email: user.email
+                email: user.email,
+                role: user.role
             },
             process.env.JWT_SECRET,
             {expiresIn: "30m"}

@@ -41,9 +41,90 @@ model User {
   resetTokens            PasswordResetToken[]
   passwordHistory        PasswordHistory[]
 
+  role             UserRole        @default(USER)
+  status           AccountStatus   @default(ACTIVE)
+  suspendedAt      DateTime?
+  suspensionReason String?
+  reportsFiled     Report[]        @relation("ReportsFiled")
+  reportsReceived  Report[]        @relation("ReportsReceived")
+  reportsResolved  Report[]        @relation("ReportsResolved")
+  adminActions     AdminAuditLog[] @relation("AdminActor")
+  auditTargets     AdminAuditLog[] @relation("AuditTarget")
+
   profile           Profile?
   Message           Message[]
   ThreadParticipant ThreadParticipant[]
+
+  @@index([status])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportReason {
+  HARASSMENT
+  SPAM
+  INAPPROPRIATE_CONTENT
+  FAKE_PROFILE
+  OTHER
+}
+
+enum AdminActionType {
+  USER_SUSPENDED
+  USER_REINSTATED
+  REPORT_RESOLVED
+  REPORT_DISMISSED
+}
+
+// A report filed by a user against another user
+model Report {
+  id             String       @id @default(uuid())
+  reporterId     String
+  reportedUserId String
+  reason         ReportReason
+  details        String?
+  status         ReportStatus @default(PENDING)
+  resolvedById   String?
+  resolvedAt     DateTime?
+  resolutionNote String?
+  createdAt      DateTime     @default(now())
+
+  reporter     User  @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUser User  @relation("ReportsReceived", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  resolvedBy   User? @relation("ReportsResolved", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([reportedUserId])
+}
+
+// Record of actions taken by admins; rows survive user deletion
+model AdminAuditLog {
+  id           String          @id @default(uuid())
+  adminId      String?
+  action       AdminActionType
+  targetUserId String?
+  reportId     String?
+  note         String?
+  createdAt    DateTime        @default(now())
+
+  admin      User? @relation("AdminActor", fields: [adminId], references: [id], onDelete: SetNull)
+  targetUser User? @relation("AuditTarget", fields: [targetUserId], references: [id], onDelete: SetNull)
+
+  @@index([adminId, createdAt])
+  @@index([targetUserId])
 }
 
 // A refresh token model
