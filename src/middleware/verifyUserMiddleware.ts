@@ -1,7 +1,8 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import {isSuspended} from "../services/accountStatus.ts";
 
-export const requireAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const requireAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
 
         // Getting the authorization portion of the incoming HTTP request
@@ -26,7 +27,11 @@ export const requireAuth = (req: express.Request, res: express.Response, next: e
         }
 
         // Send back the fetched userId and user email
-        (req as any).user = { id: decoded.id, email: decoded.email };
+        (req as any).user = { id: decoded.id, email: decoded.email, role: decoded.role };
+
+        if (await isSuspended(decoded.id)) {
+            return res.status(403).json({ message: "Account suspended" });
+        }
         return next();
     } catch (error) {
         return res.status(401).json({ message: "Invalid or expired token" });
