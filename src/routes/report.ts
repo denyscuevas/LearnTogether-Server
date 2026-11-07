@@ -13,6 +13,10 @@ router.post("/", requireAuth, [
     body("reason").isIn(reasons).withMessage(`Reason must be one of: ${reasons.join(", ")}`),
     body("details").optional({values: "null"}).isString().trim().isLength({max: 1000})
         .withMessage("Details must be at most 1000 characters"),
+    body("shareConversation").optional().isBoolean({strict: true})
+        .withMessage("shareConversation must be a boolean"),
+    body("conversationId").optional().isUUID()
+        .withMessage("conversationId must be a valid UUID"),
 ], (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

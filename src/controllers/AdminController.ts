@@ -1,6 +1,7 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
 import {applySuspensionEffects, clearSuspensionEffects} from "../services/accountStatus.ts";
+import {decrypt} from "../services/message.ts";
 
 // Explicit selects so sensitive fields such as passwordHash are never returned
 const userSummary = {id: true, email: true, profile: {select: {name: true}}} as const;
@@ -140,6 +141,88 @@ export const getReport = async (req: express.Request, res: express.Response) => 
     } catch (error) {
         console.error("Admin report error:", error);
         return res.status(500).json({message: "Server error"});
+    }
+};
+
+// Return a paginated, decrypted transcript only when the reporter explicitly shared it
+export const getReportConversation = async (req: express.Request, res: express.Response) => {
+    try {
+        const adminId = (req as any).user.id;
+        const reportId = String(req.params.id);
+        const {page, limit, skip} = parsePaging(req);
+
+        const report = await prisma.report.findUnique({
+            where: {id: reportId},
+            select: {
+                id: true,
+                shareConversation: true,
+                sharedConversationThreadId: true,
+                conversationSharedAt: true
+            }
+        });
+        if (!report) {
+            return res.status(404).json({message: "Report not found"});
+        }
+        if (!report.shareConversation || !report.sharedConversationThreadId || !report.conversationSharedAt) {
+            return res.status(404).json({message: "Conversation history was not shared for this report"});
+        }
+
+        const key = process.env.MESSAGE_ENCRYPT_SECRET;
+        if (!key) {
+            console.error("MESSAGE_ENCRYPT_SECRET is not configured");
+            return res.status(500).json({message: "Message decryption is unavailable"});
+        }
+
+        const where = {
+            threadId: report.sharedConversationThreadId,
+            createdAt: {lte: report.conversationSharedAt}
+        };
+        const [total, messages] = await prisma.$transaction([
+            prisma.message.count({where}),
+            prisma.message.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy: [{createdAt: "asc"}, {id: "asc"}],
+                select: {
+                    id: true,
+                    senderId: true,
+                    content: true,
+                    iv: true,
+                    authTag: true,
+                    createdAt: true,
+                    sender: {select: {profile: {select: {name: true}}}}
+                }
+            })
+        ]);
+
+        const decryptedMessages = messages.map(({content, iv, authTag, ...message}) => {
+            const decryptedContent = decrypt(content, key, iv, authTag);
+            if (typeof decryptedContent !== "string") {
+                throw new Error(`Failed to decrypt message ${message.id}`);
+            }
+            return {...message, content: decryptedContent};
+        });
+
+        await prisma.adminAuditLog.create({
+            data: {
+                adminId,
+                action: "CONVERSATION_VIEWED",
+                reportId,
+                note: `Viewed shared conversation transcript (page ${page})`
+            }
+        });
+
+        return res.status(200).json({
+            message: "Shared conversation fetched successfully",
+            reportId,
+            conversationSharedAt: report.conversationSharedAt,
+            messages: decryptedMessages,
+            pagination: {page, limit, total, totalPages: Math.ceil(total / limit)}
+        });
+    } catch (error) {
+        console.error("Admin report conversation error:", error);
+        return res.status(500).json({message: "Unable to retrieve shared conversation"});
     }
 };
 
