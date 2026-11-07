@@ -87,27 +87,33 @@ enum AdminActionType {
   USER_REINSTATED
   REPORT_RESOLVED
   REPORT_DISMISSED
+  CONVERSATION_VIEWED
 }
 
 // A report filed by a user against another user
 model Report {
-  id             String       @id @default(uuid())
-  reporterId     String
-  reportedUserId String
-  reason         ReportReason
-  details        String?
-  status         ReportStatus @default(PENDING)
-  resolvedById   String?
-  resolvedAt     DateTime?
-  resolutionNote String?
-  createdAt      DateTime     @default(now())
+  id                         String       @id @default(uuid())
+  reporterId                 String
+  reportedUserId             String
+  reason                     ReportReason
+  details                    String?
+  status                     ReportStatus @default(PENDING)
+  resolvedById               String?
+  resolvedAt                 DateTime?
+  resolutionNote             String?
+  shareConversation          Boolean      @default(false)
+  sharedConversationThreadId String?
+  conversationSharedAt       DateTime?
+  createdAt                  DateTime     @default(now())
 
-  reporter     User  @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: Cascade)
-  reportedUser User  @relation("ReportsReceived", fields: [reportedUserId], references: [id], onDelete: Cascade)
-  resolvedBy   User? @relation("ReportsResolved", fields: [resolvedById], references: [id], onDelete: SetNull)
+  reporter                 User    @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUser             User    @relation("ReportsReceived", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  resolvedBy               User?   @relation("ReportsResolved", fields: [resolvedById], references: [id], onDelete: SetNull)
+  sharedConversationThread Thread? @relation("SharedConversationReports", fields: [sharedConversationThreadId], references: [id], onDelete: SetNull)
 
   @@index([status, createdAt])
   @@index([reportedUserId])
+  @@index([sharedConversationThreadId])
 }
 
 // Record of actions taken by admins; rows survive user deletion
@@ -214,9 +220,8 @@ model Profile {
   notificationsReceived Notification[]       @relation("RecipientProfile")
   notificationsSent     Notification[]       @relation("SenderProfile")
 
-  reviewsGiven          Review[]            @relation("ReviewsGiven")
-  reviewsReceived       Review[]            @relation("ReviewsReceived")
-
+  reviewsGiven    Review[] @relation("ReviewsGiven")
+  reviewsReceived Review[] @relation("ReviewsReceived")
 
   @@index([major])
   @@index([yearOfStudy])
@@ -294,6 +299,7 @@ model Thread {
   messages          Message[]
   ThreadParticipant ThreadParticipant[]
   ConnectionRequest ConnectionRequest?
+  sharedReports     Report[]            @relation("SharedConversationReports")
 
   @@index([updatedAt])
 }
@@ -391,18 +397,17 @@ enum NotificationType {
   REQUEST_ACCEPTED
 }
 
-model Review{
-  id                  String           @id @default(uuid())
-  reviewer_id         String
-  reviewee_id         String
-  course_id           String
-  rating              Int
-  comments            String?
-  createdAt           DateTime         @default(now())
+model Review {
+  id          String   @id @default(uuid())
+  reviewer_id String
+  reviewee_id String
+  course_id   String
+  rating      Int
+  comments    String?
+  createdAt   DateTime @default(now())
 
-  reviewer            Profile          @relation("ReviewsGiven", fields: [reviewer_id], references: [userId], onDelete: Cascade)
-  reviewee            Profile          @relation("ReviewsReceived", fields: [reviewee_id], references: [userId], onDelete: Cascade)
-
+  reviewer Profile @relation("ReviewsGiven", fields: [reviewer_id], references: [userId], onDelete: Cascade)
+  reviewee Profile @relation("ReviewsReceived", fields: [reviewee_id], references: [userId], onDelete: Cascade)
 
   @@index([reviewer_id])
   @@index([reviewee_id])
