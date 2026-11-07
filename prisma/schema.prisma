@@ -54,6 +54,7 @@ model User {
   profile           Profile?
   Message           Message[]
   ThreadParticipant ThreadParticipant[]
+  meetingsCreated   Meeting[]           @relation("MeetingCreator")
 
   @@index([status])
 }
@@ -214,9 +215,8 @@ model Profile {
   notificationsReceived Notification[]       @relation("RecipientProfile")
   notificationsSent     Notification[]       @relation("SenderProfile")
 
-  reviewsGiven          Review[]            @relation("ReviewsGiven")
-  reviewsReceived       Review[]            @relation("ReviewsReceived")
-
+  reviewsGiven    Review[] @relation("ReviewsGiven")
+  reviewsReceived Review[] @relation("ReviewsReceived")
 
   @@index([major])
   @@index([yearOfStudy])
@@ -231,6 +231,7 @@ model Course {
   name               String
   ProfileTutorCourse ProfileTutorCourse[]
   ProfileTuteeCourse ProfileTuteeCourse[]
+  meetings           Meeting[]
 
   @@index([code])
 }
@@ -391,19 +392,36 @@ enum NotificationType {
   REQUEST_ACCEPTED
 }
 
-model Review{
-  id                  String           @id @default(uuid())
-  reviewer_id         String
-  reviewee_id         String
-  course_id           String
-  rating              Int
-  comments            String?
-  createdAt           DateTime         @default(now())
+model Review {
+  id          String   @id @default(uuid())
+  reviewer_id String
+  reviewee_id String
+  course_id   String
+  rating      Int
+  comments    String?
+  createdAt   DateTime @default(now())
 
-  reviewer            Profile          @relation("ReviewsGiven", fields: [reviewer_id], references: [userId], onDelete: Cascade)
-  reviewee            Profile          @relation("ReviewsReceived", fields: [reviewee_id], references: [userId], onDelete: Cascade)
-
+  reviewer Profile @relation("ReviewsGiven", fields: [reviewer_id], references: [userId], onDelete: Cascade)
+  reviewee Profile @relation("ReviewsReceived", fields: [reviewee_id], references: [userId], onDelete: Cascade)
 
   @@index([reviewer_id])
   @@index([reviewee_id])
+}
+
+// A tutoring meeting; attendeeIds holds the user IDs of everyone in the meeting
+model Meeting {
+  id          String   @id @default(uuid())
+  creatorId   String
+  courseId    Int
+  attendeeIds String[]
+  startTime   DateTime
+  endTime     DateTime
+  createdAt   DateTime @default(now())
+
+  creator User   @relation("MeetingCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  course  Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  @@index([creatorId])
+  @@index([courseId])
+  @@index([startTime])
 }
