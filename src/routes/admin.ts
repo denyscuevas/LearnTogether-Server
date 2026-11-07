@@ -7,6 +7,7 @@ import {limiter} from "../middleware/endpointRateLimiter.ts";
 import {
     getAuditLog,
     getReport,
+    getReportConversation,
     getReports,
     getUsers,
     getUserStats,
@@ -50,6 +51,11 @@ router.get("/reports", [
     query("status").optional().isIn(["PENDING", "RESOLVED", "DISMISSED", "ALL"]).withMessage("Invalid status"),
 ], checkRequestErrors, getReports);
 
+router.get("/reports/:id/conversation", [
+    idParam,
+    ...paging,
+], checkRequestErrors, getReportConversation);
+
 router.get("/reports/:id", [idParam], checkRequestErrors, getReport);
 
 router.patch("/reports/:id/resolve", [
@@ -64,7 +70,7 @@ router.get("/audit-log", [
     ...paging,
     query("adminId").optional().isUUID().withMessage("adminId must be a UUID"),
     query("targetUserId").optional().isUUID().withMessage("targetUserId must be a UUID"),
-    query("action").optional().isIn(["USER_SUSPENDED", "USER_REINSTATED", "REPORT_RESOLVED", "REPORT_DISMISSED"]).withMessage("Invalid action"),
+    query("action").optional().isIn(["USER_SUSPENDED", "USER_REINSTATED", "REPORT_RESOLVED", "REPORT_DISMISSED", "CONVERSATION_VIEWED"]).withMessage("Invalid action"),
 ], checkRequestErrors, getAuditLog);
 
 export default router;
