@@ -1,6 +1,28 @@
 import express from "express";
 import prisma from "../config/prismaClient.ts";
 
+const meetingDetails = {
+    course: { select: { code: true, name: true } },
+    confirmations: { select: { userId: true, confirmedAt: true } },
+} as const;
+
+function withConfirmationStatus<T extends {
+    attendeeIds: string[];
+    confirmations: { userId: string; confirmedAt: Date }[];
+}>(meeting: T) {
+    const confirmedIds = new Set(meeting.confirmations.map((confirmation) => confirmation.userId));
+    const attendeeIds = [...new Set(meeting.attendeeIds)];
+    const confirmedCount = attendeeIds.filter((id) => confirmedIds.has(id)).length;
+    return {
+        ...meeting,
+        confirmationStatus: {
+            confirmedCount,
+            totalAttendees: attendeeIds.length,
+            isFullyConfirmed: attendeeIds.length > 0 && confirmedCount === attendeeIds.length,
+        },
+    };
+}
+
 export const createMeeting = async (req: express.Request, res: express.Response) => {
     try {
         const creatorId = (req as any).user?.id;
@@ -69,11 +91,11 @@ export const getMyMeetings = async (req: express.Request, res: express.Response)
 
         const meetings = await prisma.meeting.findMany({
             where: { OR: [{ creatorId: userId }, { attendeeIds: { has: userId } }] },
-            include: { course: { select: { code: true, name: true } } },
+            include: meetingDetails,
             orderBy: { startTime: "desc" },
         });
 
-        return res.status(200).json({ meetings });
+        return res.status(200).json({ meetings: meetings.map(withConfirmationStatus) });
     } catch (error) {
         console.error("Get Meetings Error:", error);
         return res.status(500).json({ message: "Failed to fetch meetings" });
@@ -85,16 +107,56 @@ export const getMeeting = async (req: express.Request, res: express.Response) =>
         const userId = (req as any).user?.id;
         const meeting = await prisma.meeting.findUnique({
             where: { id: String(req.params.meetingId) },
-            include: { course: { select: { code: true, name: true } } },
+            include: meetingDetails,
         });
 
         if (!meeting || (meeting.creatorId !== userId && !meeting.attendeeIds.includes(userId))) {
             return res.status(404).json({ message: "Meeting not found" });
         }
 
-        return res.status(200).json({ meeting });
+        return res.status(200).json({ meeting: withConfirmationStatus(meeting) });
     } catch (error) {
         console.error("Get Meeting Error:", error);
         return res.status(500).json({ message: "Failed to fetch meeting" });
+    }
+};
+
+export const confirmMeeting = async (req: express.Request, res: express.Response) => {
+    try {
+        const userId: string | undefined = (req as any).user?.id;
+        if (!userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        const meetingId = req.params.meetingId;
+        if (!meetingId) {
+            return res.status(400).json({ message: "Meeting ID is required" });
+        }
+
+        const meeting = await prisma.meeting.findUnique({ where: { id: meetingId } });
+        if (!meeting || !meeting.attendeeIds.includes(userId)) {
+            return res.status(404).json({ message: "Meeting not found" });
+        }
+        if (meeting.endTime > new Date()) {
+            return res.status(409).json({ message: "Meeting cannot be confirmed before it ends" });
+        }
+
+        await prisma.meetingConfirmation.createMany({
+            data: [{ meetingId, userId }],
+            skipDuplicates: true,
+        });
+
+        const updatedMeeting = await prisma.meeting.findUnique({
+            where: { id: meetingId },
+            include: meetingDetails,
+        });
+        if (!updatedMeeting) {
+            return res.status(404).json({ message: "Meeting not found" });
+        }
+
+        return res.status(200).json({ meeting: withConfirmationStatus(updatedMeeting) });
+    } catch (error) {
+        console.error("Confirm Meeting Error:", error);
+        return res.status(500).json({ message: "Failed to confirm meeting" });
     }
 };

@@ -425,10 +425,21 @@ model Meeting {
   endTime     DateTime
   createdAt   DateTime @default(now())
 
-  creator User   @relation("MeetingCreator", fields: [creatorId], references: [id], onDelete: Cascade)
-  course  Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  creator       User                  @relation("MeetingCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  course        Course                @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  confirmations MeetingConfirmation[]
 
   @@index([creatorId])
   @@index([courseId])
   @@index([startTime])
+}
+
+model MeetingConfirmation {
+  meetingId   String
+  userId      String
+  confirmedAt DateTime @default(now())
+
+  meeting Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  @@id([meetingId, userId])
 }

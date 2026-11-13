@@ -123,6 +123,36 @@ npm start
 
 * * * * *
 
+### Course lookup
+
+`GET /api/courses/:courseId` looks up a course by its numeric database ID.
+Include a Bearer token. A successful response contains the course code and
+name, for example `{"code":"COMP-1000","name":"Introduction to Computing"}`.
+Invalid IDs return 400, and IDs that do not match a course return 404.
+
+### Meeting confirmations
+
+Authenticated attendees can confirm a meeting after its `endTime` with
+`POST /api/meetings/:meetingId/confirm` (Bearer token required; no request body).
+Each attendee, including the creator, must confirm individually. Repeating the
+request is safe. A successful response contains `meeting`, including
+`confirmations` (user IDs and confirmation times) and `confirmationStatus`
+(`confirmedCount`, `totalAttendees`, and `isFullyConfirmed`). The same fields
+are included in `GET /api/meetings/me` and `GET /api/meetings/:meetingId`.
+An early confirmation returns 409; a missing meeting or a non-attendee returns
+404.
+
+The attendee list is fixed by the current meeting API. Confirmation records
+retain user IDs if a non-creator account is deleted; an attendee deleted before
+confirming cannot confirm, so such a meeting remains unconfirmed. Deleting the
+meeting (including when its creator is deleted) removes its confirmations.
+Confirmation does not yet restrict review creation.
+
+Deploy the new schema with `npx prisma migrate deploy` and regenerate the Prisma
+client with `npx prisma generate`.
+
+* * * * *
+
 ### Common Issues & Fixes
 
 | **Issue** | **Potential Cause** | **Fix** |
