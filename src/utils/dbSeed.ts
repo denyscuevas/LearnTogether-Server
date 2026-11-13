@@ -144,7 +144,7 @@ async function main() {
                         reviewee_id : user.id,
                         reviewer_id : randomUser!.id,
                         rating: Math.floor(Math.random() * 5) + 1,
-                        course_id : randomCourse!.code,
+                        course_id : String(randomCourse!.id),
                         comments: "this is a test from our DB"
                     }
                 })
