@@ -374,6 +374,77 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
         // Get all the connection requests that are pending to the logged-in user, and include the threads and initial message
         const pendingRequests = await prisma.connectionRequest.findMany({
             where: {
+                senderId: userId,
+                status: 'PENDING'
+            },
+            include: {
+                receiver: true,
+                thread: {
+                    include: {
+                        ThreadParticipant: true,
+                        messages: {
+                            take: 1,
+                            orderBy: { createdAt: 'asc' }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Decrypting the initial message with each pending request, so that it's visible in plaintext
+        const pendingRequestsInitialMessage = pendingRequests.map(req => {
+            const firstMessage = req.thread?.messages[0];
+            let decrypted = req.message;
+
+            if (firstMessage && key) {
+                try {
+                    decrypted = decrypt(firstMessage.content, key, firstMessage.iv, firstMessage.authTag) || "Hi, I want to connect!";
+                } catch (e) {
+                    console.error("Decryption failed");
+                }
+            }
+
+            return {
+                ...req,
+                introMessage: decrypted
+            };
+        });
+
+        // Setting the cache key to the queried requests if the Redis cache was empty, and set an expiration of one hour
+        await redis.set(cacheKey, JSON.stringify(pendingRequestsInitialMessage), 'EX', 3600);
+
+        // Send back the data
+        return res.status(200).json({
+            message: "Requests fetched successfully",
+            requests: pendingRequestsInitialMessage
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error });
+    }
+}
+
+export const getSentRequests = async (req: Request, res: Response) => {
+
+    try {
+
+        //Get the user's id and their cache key
+        const userId = (req as any).user?.id;
+        const cacheKey = `user:${userId}:sent-requests`;
+
+        // Get the data in redis with their cache key
+        const cachedData = await redis.get(cacheKey);
+
+        // If the cache contains the requests, early return with the data
+        if (cachedData) {
+            return res.status(200).json({
+                message: "Requests fetched successfully",
+                requests: JSON.parse(cachedData)
+            });
+        }
+
+        // Get all the connection requests that are pending to the logged-in user, and include the threads and initial message
+        const pendingRequests = await prisma.connectionRequest.findMany({
+            where: {
                 receiverId: userId,
                 status: 'PENDING'
             },
