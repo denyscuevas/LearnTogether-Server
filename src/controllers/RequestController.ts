@@ -290,7 +290,7 @@ export const acceptConnectionRequest = async (req: Request, res: Response) => {
     }
 };
 
-// Method that handles the declining of connect requests between users
+// Method that handles the declining of connect requests between users, from the Recipient
 export const rejectConnectionRequest = async (req: Request, res: Response) => {
     try {
 
@@ -334,10 +334,12 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
             }),
         ]);
 
-        // Invalidate the recipents request cache after they reject a connection request
+        // Invalidate the sender & recipents request cache after they reject a connection request
         await redis.del(`user:${userId}:requests`);
+        await redis.del(`user:${connectionRequest.senderId}:sent-requests`);
+
         await redis.del(`recommendation:${userId}`);
-        await redis.del(`recommendation:${connectionRequest!.senderId}`);
+        await redis.del(`recommendation:${connectionRequest.senderId}`);
 
         return res.status(200).json({
             message: "Request declined"
@@ -351,6 +353,70 @@ export const rejectConnectionRequest = async (req: Request, res: Response) => {
     }
 };
 
+// Tweaked Copy of the rejectConnectionRequest method above
+// Method that handles the cancellation of connect requests between users, from the Sender
+export const cancelConnectionRequest = async (req: Request, res: Response) => {
+    try {
+
+        // Getting the ID of the user that the request was cancelled by, and the requestID itself
+        const userId = (req as any).user?.id;
+        const { requestId } = req.params;
+
+        // Making sure the request exists
+        const connectionRequest = await prisma.connectionRequest.findUnique({
+            where: {
+                id: requestId!
+            },
+        });
+
+        // If there is no connection request record indicate to the user of this
+        if (!connectionRequest) {
+            return res.status(404).json({
+                message: "Request not found"
+            });
+        }
+
+        // Ensuring the logged-in user is the sender of this request
+        if (connectionRequest.senderId !== userId) {
+            return res.status(403).json({
+                message: "You are not authorized to cancel this request"
+            });
+        }
+
+        // Deleting the Thread and ConnectionRequest records to reflect the cancellation
+        await prisma.$transaction([
+            prisma.connectionRequest.delete({
+                where: {
+                    id: requestId!
+                }
+            }),
+
+            prisma.thread.delete({
+                where: {
+                    id: connectionRequest.threadId!
+                }
+            }),
+        ]);
+
+        // Invalidate the sender & recipents request cache after they cancel a connection request
+        await redis.del(`user:${userId}:sent-requests`);
+        await redis.del(`user:${connectionRequest.receiverId}:requests`);
+
+        await redis.del(`recommendation:${userId}`);
+        await redis.del(`recommendation:${connectionRequest.receiverId}`);
+
+        return res.status(200).json({
+            message: "Request cancelled"
+        });
+
+    } catch (error) {
+        console.error("Cancellation Error:", error);
+        return res.status(500).json({
+            message: "Failed to cancel request"
+        });
+    }
+};
+
 // Method that gets the pending requests for the logged-in user, including the thread and intro message
 export const getConnectionRequests = async (req: Request, res: Response) => {
 
@@ -359,77 +425,6 @@ export const getConnectionRequests = async (req: Request, res: Response) => {
         //Get the user's id and their cache key
         const userId = (req as any).user?.id;
         const cacheKey = `user:${userId}:requests`;
-
-        // Get the data in redis with their cache key
-        const cachedData = await redis.get(cacheKey);
-
-        // If the cache contains the requests, early return with the data
-        if (cachedData) {
-            return res.status(200).json({
-                message: "Requests fetched successfully",
-                requests: JSON.parse(cachedData)
-            });
-        }
-
-        // Get all the connection requests that are pending to the logged-in user, and include the threads and initial message
-        const pendingRequests = await prisma.connectionRequest.findMany({
-            where: {
-                senderId: userId,
-                status: 'PENDING'
-            },
-            include: {
-                receiver: true,
-                thread: {
-                    include: {
-                        ThreadParticipant: true,
-                        messages: {
-                            take: 1,
-                            orderBy: { createdAt: 'asc' }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Decrypting the initial message with each pending request, so that it's visible in plaintext
-        const pendingRequestsInitialMessage = pendingRequests.map(req => {
-            const firstMessage = req.thread?.messages[0];
-            let decrypted = req.message;
-
-            if (firstMessage && key) {
-                try {
-                    decrypted = decrypt(firstMessage.content, key, firstMessage.iv, firstMessage.authTag) || "Hi, I want to connect!";
-                } catch (e) {
-                    console.error("Decryption failed");
-                }
-            }
-
-            return {
-                ...req,
-                introMessage: decrypted
-            };
-        });
-
-        // Setting the cache key to the queried requests if the Redis cache was empty, and set an expiration of one hour
-        await redis.set(cacheKey, JSON.stringify(pendingRequestsInitialMessage), 'EX', 3600);
-
-        // Send back the data
-        return res.status(200).json({
-            message: "Requests fetched successfully",
-            requests: pendingRequestsInitialMessage
-        });
-    } catch (error) {
-        return res.status(500).json({ message: "Server error", error });
-    }
-}
-
-export const getSentRequests = async (req: Request, res: Response) => {
-
-    try {
-
-        //Get the user's id and their cache key
-        const userId = (req as any).user?.id;
-        const cacheKey = `user:${userId}:sent-requests`;
 
         // Get the data in redis with their cache key
         const cachedData = await redis.get(cacheKey);
@@ -493,3 +488,97 @@ export const getSentRequests = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Server error", error });
     }
 }
+
+// Method that gets the pending requests FROM the logged-in user, including the thread and intro message - p.much a copy of the above function, just tweaked
+export const getSentRequests = async (req: Request, res: Response) => {
+    try {
+        // Get the authenticated user's ID and cache key
+        const userId = (req as any).user?.id;
+
+        if (!userId) {
+            return res.status(401).json({
+                message: "Unauthorized"
+            });
+        }
+
+        // Use a separate cache key for outgoing requests
+        const cacheKey = `user:${userId}:sent-requests`;
+
+        // Check Redis for cached outgoing requests
+        const cachedData = await redis.get(cacheKey);
+
+        if (cachedData) {
+            return res.status(200).json({
+                message: "Sent requests fetched successfully",
+                requests: JSON.parse(cachedData)
+            });
+        }
+
+        // Find pending requests SENT BY the logged-in user
+        const pendingRequests = await prisma.connectionRequest.findMany({
+            where: {
+                senderId: userId,
+                status: 'PENDING'
+            },
+            include: {
+                receiver: true,
+                thread: {
+                    include: {
+                        ThreadParticipant: true,
+                        messages: {
+                            take: 1,
+                            orderBy: {
+                                createdAt: 'asc'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Decrypt the initial message
+        const pendingRequestsInitialMessage = pendingRequests.map(req => {
+            const firstMessage = req.thread?.messages[0];
+            let decrypted = req.message;
+
+            if (firstMessage && key) {
+                try {
+                    decrypted = decrypt(
+                        firstMessage.content,
+                        key,
+                        firstMessage.iv,
+                        firstMessage.authTag
+                    ) || "Hi, I want to connect!";
+                } catch (e) {
+                    console.error("Decryption failed");
+                }
+            }
+
+            return {
+                ...req,
+                introMessage: decrypted
+            };
+        });
+
+        // Cache the outgoing requests for one hour
+        await redis.set(
+            cacheKey,
+            JSON.stringify(pendingRequestsInitialMessage),
+            'EX',
+            3600
+        );
+
+        return res.status(200).json({
+            message: "Sent requests fetched successfully",
+            requests: pendingRequestsInitialMessage
+        });
+
+    } catch (error) {
+        console.error("Get Sent Requests Error:", error);
+
+        return res.status(500).json({
+            message: "Failed to fetch sent requests",
+            error
+        });
+    }
+};
